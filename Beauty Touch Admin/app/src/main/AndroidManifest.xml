@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.flatcode.beautytouchadmin">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="com.flatcode.beautytouchadmin.Unit.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@drawable/icon"
+        android:supportsRtl="false"
+        android:theme="@style/OneTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:supportsRtl"
+        tools:targetApi="33">
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.ToolsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.AboutMeActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.ShoppingCentresEditActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.ShoppingCentersAddActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.PostEditActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.ADsInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.ADsMeterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.flatcode.beautytouchadmin.Activity.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.flatcode.beautytouchadmin.Auth.LoginActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.MainActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.SessionOldInfoActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.SessionNowInfoActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.PostDetailsActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.PostAddActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.SliderShowActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.ShoppingCentersActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.HotProductActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.UserDetailActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.PostsActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.ProfileActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Activity.UsersActivity" />
+        <activity android:name="com.flatcode.beautytouchadmin.Auth.ForgetPasswordActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+    </application>
+
+</manifest>

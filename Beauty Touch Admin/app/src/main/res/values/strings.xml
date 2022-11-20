@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name">Beauty Touch Admin</string>
+    //New
+    <string name="number_phone">Number phone</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="register">Register</string>
+    <string name="email_phone">01********</string>
+    <string name="none_display">There are no items to display</string>
+
+    //Add
+    <string name="name_product">Name Product</string>
+    <string name="price_product">Price Product</string>
+
+    //Post detail
+    <string name="Indications">Indications</string>
+    <string name="How_to_use">How To Use</string>
+    <string name="post_detail">Post Detail</string>
+    <string name="favorites">Favorites</string>
+
+    //Theme
+    <string name="one_theme">Basic</string>
+    <string name="two_theme">Gradual</string>
+    <string name="three_theme">Blue</string>
+    <string name="four_theme">Orange 1</string>
+    <string name="five_theme">Orange 2</string>
+    <string name="six_theme">Fuchsia</string>
+    <string name="seven_theme">Pink</string>
+    <string name="eight_theme">Brown</string>
+    <string name="nine_theme">Red</string>
+    <string name="teen_theme">Green</string>
+
+    //Night Mode
+    <string name="night_theme">Grey</string>
+    <string name="corner_one">Gradual 1</string>
+    <string name="corner_two">Gradual 2</string>
+    <string name="corner_three">Gradual 3</string>
+    <string name="corner_four">Gradual 4</string>
+    <string name="corner_five">Gradual 5</string>
+    <string name="corner_six">Gradual 6</string>
+
+    //Login
+    <string name="password">Password</string>
+
+    //Slider_Show
+    <string name="plus_slider">+</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="teen">10</string>
+    <string name="eleven">11</string>
+    <string name="twelfth">12</string>
+    <string name="thirteen">13</string>
+    <string name="fourteenth">14</string>
+    <string name="fifteenth">15</string>
+    <string name="sixteen">16</string>
+    <string name="seventeen">17</string>
+    <string name="eighteen">18</string>
+    <string name="nineteen">19</string>
+    <string name="twenty">20</string>
+
+    //Data
+    <string name="users">Users</string>
+    <string name="tools">Tools</string>
+    <string name="previous_session_image">Previous Session image</string>
+    <string name="current_session_image">Current Session image</string>
+    <string name="previous_session_logo">Previous Session Logo</string>
+    <string name="current_session_logo">Current Session Logo</string>
+    <string name="previous_session_number">Previous Session Number</string>
+    <string name="current_session_number">Current Session Number</string>
+    <string name="previous_session_name">Previous Session Name</string>
+    <string name="current_session_name">Current Session Name</string>
+    <string name="last_year">Last year</string>
+    <string name="current_year">Current year</string>
+    <string name="most_popular">Most popular</string>
+    <string name="more">More</string>
+    <string name="all">All</string>
+    <string name="skin">Skin</string>
+    <string name="hair">Hair</string>
+    <string name="slider_show">Slider Show</string>
+    <string name="shopping_centers">Shopping Centers</string>
+    <string name="hot_product">Hot Product</string>
+    <string name="zero">0</string>
+
+    <string name="users_ads">Ad Monitor</string>
+    <string name="newest_users">Newest Users</string>
+    <string name="ad_load">Ads appear</string>
+    <string name="ad_click">Ad clicks</string>
+    <string name="info_ads">Info ADs</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="do_you_want_to_delete_the_post">Do you want to delete the post?</string>
+    <string name="do_you_want_to_delete_the_pharmacy">Do you want to delete the pharmacy?</string>
+    <string name="publish">Publish</string>
+    <string name="product_skin">Product Skin</string>
+    <string name="product_hair">Product Hair</string>
+    <string name="product_category">Product Category</string>
+    <string name="add_post">Add Post</string>
+    <string name="location_one">City</string>
+    <string name="location_two">Neighborhood</string>
+    <string name="location_three">Street</string>
+    <string name="center_name">Center Name</string>
+    <string name="about_me">About Me</string>
+    <string name="show_sheet">Show Sheet</string>
+    <string name="about_my">Who Am I</string>
+
+</resources>
