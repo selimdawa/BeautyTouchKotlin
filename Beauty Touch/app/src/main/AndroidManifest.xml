@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.flatcode.beautytouch">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -18,9 +17,6 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:supportsRtl"
         tools:targetApi="33">
-        <!--android:multiprocess="true" //or maybe
-       android:process=":remote"
-       -->
         <activity
             android:name=".Activity.SplashActivity"
             android:exported="true">

@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.flatcode.beautytouch.Fragment.HairProductsFragment
 import com.flatcode.beautytouch.Fragment.HomeFragment
 import com.flatcode.beautytouch.Fragment.ShoppingCentersFragment
@@ -43,6 +42,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import meow.bottomnavigation.MeowBottomNavigation
 import java.text.MessageFormat
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
