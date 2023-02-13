@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.flatcode.beautytouch.Fragment.HairProductsFragment
 import com.flatcode.beautytouch.Fragment.HomeFragment
 import com.flatcode.beautytouch.Fragment.ShoppingCentersFragment
@@ -37,12 +38,10 @@ import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityMainBinding
 import com.google.android.gms.ads.MobileAds
-import com.flatcode.beautytouch.BuildConfig
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import meow.bottomnavigation.MeowBottomNavigation
 import java.text.MessageFormat
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var skin_product = "Skin Products"
     var hair_product = "Hair Products"
     var shopping_center = "Shopping Centers"
-    var number_product = ""
+    var number_product = DATA.EMPTY
     var meowBottomNavigation: MeowBottomNavigation? = null
     var publisher: String = DATA.PUBLISHER_NAME
     var aname: String = DATA.APP_NAME
