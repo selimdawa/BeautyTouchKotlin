@@ -37,7 +37,7 @@ import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityMainBinding
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.initialization.InitializationStatus
+import com.flatcode.beautytouch.BuildConfig
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             )
         }
 
-        MobileAds.initialize(this) { initializationStatus: InitializationStatus? -> }
+        MobileAds.initialize(this) { }
 
         VOID.InterstitialAd(activity!!)
 
@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var i = 0
-                    for (snapshot in dataSnapshot.getChildren()) {
+                    for (snapshot in dataSnapshot.children) {
                         val post: Post = snapshot.getValue(Post::class.java)!!
                         if (post.category == DATA.HAIR_PRODUCTS) if (post.publisher == publisher)
                             if (post.aname == aname) i++
@@ -449,6 +449,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     companion object {
         private const val SETTINGS_CODE = 234
-        public var mInterstitialAd: InterstitialAd? = null
+        var mInterstitialAd: InterstitialAd? = null
     }
 }

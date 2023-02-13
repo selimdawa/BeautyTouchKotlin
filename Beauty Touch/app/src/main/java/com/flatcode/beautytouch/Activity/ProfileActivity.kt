@@ -37,11 +37,10 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityProfileBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)

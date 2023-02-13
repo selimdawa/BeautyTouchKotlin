@@ -29,13 +29,11 @@ class FavoritesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityFavoritesBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityFavoritesBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
-        binding!!.toolbar.nameSpace.setText(R.string.favorites)
 
+        binding!!.toolbar.nameSpace.setText(R.string.favorites)
         BannerAd(applicationContext, binding!!.adView, DATA.BANNER_FAVORITES)
 
         //binding.recyclerView.setHasFixedSize(true);
@@ -72,9 +70,8 @@ class FavoritesActivity : AppCompatActivity() {
                         assert(post != null)
                         if (post!!.publisher == publisher) {
                             if (post.aname == aname) {
-                                if (post.postid == id) {
+                                if (post.postid == id)
                                     postList!!.add(post)
-                                }
                             }
                         }
                     }

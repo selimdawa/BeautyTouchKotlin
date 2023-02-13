@@ -27,11 +27,10 @@ class PostDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityPostDetailBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityPostDetailBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         val intent = intent
         postId = intent.getStringExtra(DATA.POST_ID)
         binding!!.toolbar.nameSpace.setText(R.string.post_detail)

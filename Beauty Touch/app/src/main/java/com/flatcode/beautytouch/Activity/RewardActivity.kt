@@ -16,7 +16,6 @@ import com.flatcode.beautytouch.Unit.VOID.AdRewardCount
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRewardBinding
 import com.google.android.gms.ads.*
-import com.google.android.gms.ads.initialization.InitializationStatus
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
@@ -40,22 +39,15 @@ class RewardActivity : AppCompatActivity() {
         binding = ActivityRewardBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         binding!!.toolbar.nameSpace.setText(R.string.earn_points)
         binding!!.leaderboardCard.setOnClickListener {
-            VOID.Intent1(
-                context,
-                CLASS.LEADERBOARD
-            )
+            VOID.Intent1(context, CLASS.LEADERBOARD)
         }
         binding!!.leaderboardCardOld.setOnClickListener {
-            VOID.Intent1(
-                context,
-                CLASS.LEADERBOARD_OLD
-            )
+            VOID.Intent1(context, CLASS.LEADERBOARD_OLD)
         }
-        MobileAds.initialize(
-            context
-        ) { initializationStatus: InitializationStatus? -> }
+        MobileAds.initialize(context) { }
         loadRewardedAd()
     }
 
