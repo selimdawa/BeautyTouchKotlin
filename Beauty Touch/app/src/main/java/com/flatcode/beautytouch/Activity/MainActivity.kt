@@ -32,6 +32,7 @@ import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.Model.Tools
 import com.flatcode.beautytouch.Model.User
 import com.flatcode.beautytouch.R
+import com.flatcode.beautytouch.BuildConfig
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
@@ -41,7 +42,11 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.MessageFormat
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
@@ -206,7 +211,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     var i = 0
-                    for (snapshot in dataSnapshot.getChildren()) {
+                    for (snapshot in dataSnapshot.children) {
                         val post: Post = snapshot.getValue(Post::class.java)!!
                         if (post.category == DATA.SKIN_PRODUCTS) if (post.publisher == publisher)
                             if (post.aname == aname) i++
@@ -252,7 +257,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     binding!!.numberShoppingCenters.text =
-                        MessageFormat.format("{0}", dataSnapshot.getChildrenCount())
+                        MessageFormat.format("{0}", dataSnapshot.childrenCount)
                     meowBottomNavigation!!.setCount(
                         4,
                         binding!!.numberShoppingCenters.text as String
@@ -419,7 +424,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // Color Mode ----------------------------- Start
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == DATA.COLOR_OPTION) {
             this.recreate()
         }
