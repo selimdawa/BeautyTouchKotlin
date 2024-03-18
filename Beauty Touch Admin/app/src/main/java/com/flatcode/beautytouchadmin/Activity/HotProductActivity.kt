@@ -8,8 +8,8 @@ import com.flatcode.beautytouchadmin.Adapter.HotProductAddAdapter
 import com.flatcode.beautytouchadmin.Adapter.HotProductRemoveAdapter
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivityHotProductBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,11 +29,10 @@ class HotProductActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityHotProductBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityHotProductBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         binding!!.toolbar.nameSpace.setText(R.string.hot_product)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
@@ -42,7 +41,7 @@ class HotProductActivity : AppCompatActivity() {
         hotpostAdapter = HotProductRemoveAdapter(context, hotpostLists as ArrayList<Post?>)
         binding!!.recyclerView.adapter = hotpostAdapter
 
-        //binding.recyclerView.setHasFixedSize(true);
+        //binding.recyclerView2.setHasFixedSize(true);
         allpostLists = ArrayList()
         allpostAdapter = HotProductAddAdapter(context, allpostLists as ArrayList<Post?>)
         binding!!.recyclerView2.adapter = allpostAdapter
@@ -90,7 +89,7 @@ class HotProductActivity : AppCompatActivity() {
     }
 
     private val moreProduct: Unit
-        private get() {
+        get() {
             val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {

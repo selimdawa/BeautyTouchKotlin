@@ -6,7 +6,7 @@ class Main {
     var number = 0
     var c: Class<*>? = null
 
-    constructor() {}
+    constructor()
 
     constructor(image: Int, title: String?, number: Int, c: Class<*>?) {
         this.image = image

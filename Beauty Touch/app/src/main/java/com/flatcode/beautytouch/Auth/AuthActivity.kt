@@ -2,7 +2,6 @@ package com.flatcode.beautytouch.Auth
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
@@ -22,6 +21,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(view)
 
         VOID.Intro(baseContext, binding!!.background, binding!!.backWhite, binding!!.backBlack)
+
         binding!!.loginBtn.setOnClickListener { VOID.Intent1(context, CLASS.LOGIN) }
         binding!!.skipBtn.setOnClickListener { VOID.Intent1(context, CLASS.REGISTER) }
     }

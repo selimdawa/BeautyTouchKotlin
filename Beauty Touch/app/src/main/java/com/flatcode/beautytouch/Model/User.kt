@@ -12,21 +12,12 @@ class User {
     var typingTo: String? = null
     var mversion: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(
-        category: String?,
-        id: String?,
-        imageurl: String?,
-        location: String?,
-        location2: String?,
-        password: String?,
-        phonenumber: String?,
-        status: String?,
-        username: String?,
-        city: String?,
-        typingTo: String?,
-        mversion: String?
+        category: String?, id: String?, imageurl: String?, location: String?, location2: String?,
+        password: String?, phonenumber: String?, status: String?, username: String?, city: String?,
+        typingTo: String?, mversion: String?
     ) {
         this.category = category
         this.id = id

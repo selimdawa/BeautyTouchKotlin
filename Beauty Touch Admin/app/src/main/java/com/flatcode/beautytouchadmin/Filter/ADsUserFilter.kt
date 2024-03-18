@@ -6,11 +6,9 @@ import com.flatcode.beautytouchadmin.Model.User
 import java.util.*
 
 class ADsUserFilter(var list: ArrayList<User?>, var adapter: ADsUserAdapter) : Filter() {
-
     override fun performFiltering(constraint: CharSequence): FilterResults {
         var constraint: CharSequence? = constraint
         val results = FilterResults()
-
         if (constraint != null && constraint.length > 0) {
             constraint = constraint.toString().uppercase(Locale.getDefault())
             val filter = ArrayList<User?>()

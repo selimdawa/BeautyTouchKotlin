@@ -28,16 +28,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(view)
 
         VOID.Intro(baseContext, binding!!.background, binding!!.backWhite, binding!!.backBlack)
+
         auth = FirebaseAuth.getInstance()
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
-        binding!!.forget.setOnClickListener {
-            VOID.Intent1(
-                context,
-                CLASS.FORGET_PASSWORD
-            )
-        }
+
+        binding!!.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
         binding!!.noAccount.setOnClickListener { VOID.Intent1(context, CLASS.REGISTER) }
         binding!!.loginBtn.setOnClickListener { validateDate() }
     }
@@ -69,9 +66,7 @@ class LoginActivity : AppCompatActivity() {
                 loginUser()
             } else {
                 Toast.makeText(
-                    context,
-                    "Please enter a valid phone number and password! ",
-                    Toast.LENGTH_SHORT
+                    context, "Please enter a valid phone number and password! ", Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -85,15 +80,11 @@ class LoginActivity : AppCompatActivity() {
                 dialog!!.dismiss()
                 Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
             }.addOnSuccessListener {
-                VOID.IntentClear(
-                    context,
-                    CLASS.MAIN
-                )
-            }
-                .addOnFailureListener { e: Exception ->
-                    dialog!!.dismiss()
-                    Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()
-                }.addOnCompleteListener { dialog!!.show() }
+                VOID.IntentClear(context, CLASS.MAIN)
+            }.addOnFailureListener { e: Exception ->
+                dialog!!.dismiss()
+                Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()
+            }.addOnCompleteListener { dialog!!.show() }
         } catch (e: Exception) {
             dialog!!.dismiss()
             Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()

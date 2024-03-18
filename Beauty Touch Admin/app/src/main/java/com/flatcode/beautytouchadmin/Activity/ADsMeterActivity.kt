@@ -7,10 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Adapter.ADsUserAdapter
 import com.flatcode.beautytouchadmin.Model.User
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivityAdsMeterBinding
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 
 class ADsMeterActivity : AppCompatActivity() {
 
@@ -23,11 +27,10 @@ class ADsMeterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityAdsMeterBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityAdsMeterBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         type = DATA.AD_LOAD
         binding!!.toolbar.nameSpace.setText(R.string.users_ads)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
@@ -36,6 +39,7 @@ class ADsMeterActivity : AppCompatActivity() {
         list = ArrayList()
         adapter = ADsUserAdapter(context, list!!, true)
         binding!!.recyclerView.adapter = adapter
+
         binding!!.adLoad.setOnClickListener {
             type = DATA.AD_LOAD
             getData(type)
@@ -56,9 +60,7 @@ class ADsMeterActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 list!!.clear()
                 for (data in dataSnapshot.children) {
-                    val item = data.getValue(
-                        User::class.java
-                    )!!
+                    val item = data.getValue(User::class.java)!!
                     if (!(item.adLoad == 0 && item.adClick == 0)) list!!.add(item)
                 }
                 adapter!!.notifyDataSetChanged()

@@ -29,6 +29,8 @@ class UsersActivity : AppCompatActivity() {
         binding = ActivityUsersBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
+        binding!!.toolbar.nameSpace.setText(R.string.users)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
         //binding.recyclerView.setHasFixedSize(true);
@@ -43,9 +45,7 @@ class UsersActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 list!!.clear()
                 for (snapshot in dataSnapshot.children) {
-                    val user = snapshot.getValue(
-                        User::class.java
-                    )!!
+                    val user = snapshot.getValue(User::class.java)!!
                     if (user.id != DATA.FirebaseUserUid) {
                         list!!.add(user)
                     }

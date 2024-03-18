@@ -24,6 +24,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         auth = FirebaseAuth.getInstance()
         Handler().postDelayed({ checkUser() }, time_final.toLong())
     }

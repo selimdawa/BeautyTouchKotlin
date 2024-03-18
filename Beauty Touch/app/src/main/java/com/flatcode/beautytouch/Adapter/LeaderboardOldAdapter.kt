@@ -4,7 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouch.Filter.LeaderboardOldFilter
 import com.flatcode.beautytouch.Model.Tools
@@ -91,9 +95,7 @@ class LeaderboardOldAdapter(private val mContext: Context, var list: ArrayList<U
     }
 
     private fun Points(year: String?, session: String?, points: TextView, id: String?) {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS).child(
-            id!!
-        )
+        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS).child(id!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val key = year + "_" + session

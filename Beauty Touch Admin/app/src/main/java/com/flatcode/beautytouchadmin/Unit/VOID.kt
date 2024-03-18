@@ -49,12 +49,7 @@ object VOID {
     }
 
     fun IntentExtra2(
-        context: Context,
-        c: Class<*>?,
-        key: String?,
-        value: String?,
-        key2: String?,
-        value2: String?
+        context: Context, c: Class<*>?, key: String?, value: String?, key2: String?, value2: String?
     ) {
         val intent = Intent(context, c)
         intent.putExtra(key, value)
@@ -101,9 +96,7 @@ object VOID {
     }
 
     fun Intro(context: Context?, background: ImageView, backWhite: ImageView, backDark: ImageView) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(
-            context!!
-        )
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context!!)
         if (sharedPreferences.getString("color_option", "ONE") == "ONE" ||
             sharedPreferences.getString("color_option", "TWO") == "TWO" ||
             sharedPreferences.getString("color_option", "THREE") == "THREE" ||
@@ -216,31 +209,27 @@ object VOID {
         } else {
             title.setText(R.string.do_you_want_to_delete_the_post)
         }
-        dialog.findViewById<View>(R.id.yes).setOnClickListener { view: View? ->
+        dialog.findViewById<View>(R.id.yes).setOnClickListener {
             if (isPharmacy) {
                 delete(dialog, context, DATA.SHOPPING_CENTERS, id, name)
             } else {
                 delete(dialog, context, DATA.POSTS, id, name)
             }
         }
-        dialog.findViewById<View>(R.id.no).setOnClickListener { view2: View? -> dialog.dismiss() }
+        dialog.findViewById<View>(R.id.no).setOnClickListener { dialog.dismiss() }
         dialog.show()
         dialog.window!!.attributes = lp
     }
 
     fun delete(
-        dialogDelete: Dialog,
-        context: Context?,
-        database: String?,
-        id: String?,
-        name: String
+        dialogDelete: Dialog, context: Context?, database: String?, id: String?, name: String
     ) {
         val dialog = ProgressDialog(context)
         dialog.setTitle("Please wait")
         dialog.setMessage("is deleted  $name ...")
         dialog.show()
         val reference = FirebaseDatabase.getInstance().getReference(database!!)
-        reference.child(id!!).removeValue().addOnSuccessListener { unused: Void? ->
+        reference.child(id!!).removeValue().addOnSuccessListener {
             dialog.dismiss()
             Toast.makeText(context, "Post deleted successfully...", Toast.LENGTH_SHORT).show()
             dialogDelete.dismiss()

@@ -30,17 +30,19 @@ class PostDetailAdapter(private val mContext: Context, private val mPost: Mutabl
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = mPost!![position]
+
         VOID.Glide(false, mContext, post!!.postimage, holder.image_product)
-        VOID.Glide(false, mContext, post!!.postimage, holder.image_product_1)
-        VOID.Glide(false, mContext, post!!.postimage2, holder.image_product_2)
-        VOID.Glide(false, mContext, post!!.postimage3, holder.image_product_3)
-        VOID.Glide(false, mContext, post!!.postimage4, holder.image_product_4)
-        VOID.Glide(false, mContext, post!!.postimage5, holder.image_product_5)
-        VOID.Glide(false, mContext, post!!.postimage6, holder.image_product_6)
-        VOID.Glide(false, mContext, post!!.postimage7, holder.image_product_7)
-        VOID.Glide(false, mContext, post!!.postimage8, holder.image_product_8)
-        VOID.Glide(false, mContext, post!!.postimage9, holder.image_product_9)
-        VOID.Glide(false, mContext, post!!.postimage10, holder.image_product_10)
+        VOID.Glide(false, mContext, post.postimage, holder.image_product_1)
+        VOID.Glide(false, mContext, post.postimage2, holder.image_product_2)
+        VOID.Glide(false, mContext, post.postimage3, holder.image_product_3)
+        VOID.Glide(false, mContext, post.postimage4, holder.image_product_4)
+        VOID.Glide(false, mContext, post.postimage5, holder.image_product_5)
+        VOID.Glide(false, mContext, post.postimage6, holder.image_product_6)
+        VOID.Glide(false, mContext, post.postimage7, holder.image_product_7)
+        VOID.Glide(false, mContext, post.postimage8, holder.image_product_8)
+        VOID.Glide(false, mContext, post.postimage9, holder.image_product_9)
+        VOID.Glide(false, mContext, post.postimage10, holder.image_product_10)
+
         if (post.postimage2 == DATA.EMPTY) {
             holder.image_product_2.visibility = View.GONE
         } else {
@@ -123,10 +125,12 @@ class PostDetailAdapter(private val mContext: Context, private val mPost: Mutabl
             holder.how_to_use.visibility = View.VISIBLE
             holder.how_to_use.text = post.use
         }
+
         isLiked(post.postid, holder.like)
         isSaved(post.postid, holder.save)
         nrLikes(holder.like_number, post.postid)
-        holder.save.setOnClickListener { view: View? ->
+
+        holder.save.setOnClickListener {
             if (holder.save.tag == "save") {
                 FirebaseDatabase.getInstance().reference.child(DATA.SAVES)
                     .child(DATA.FirebaseUserUid)
@@ -146,85 +150,35 @@ class PostDetailAdapter(private val mContext: Context, private val mPost: Mutabl
                     .child(DATA.FirebaseUserUid).removeValue()
             }
         }
-        holder.image_product_1.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage,
-                holder.image_product
-            )
+        holder.image_product_1.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage, holder.image_product)
         }
-        holder.image_product_2.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage2,
-                holder.image_product
-            )
+        holder.image_product_2.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage2, holder.image_product)
         }
-        holder.image_product_3.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage3,
-                holder.image_product
-            )
+        holder.image_product_3.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage3, holder.image_product)
         }
-        holder.image_product_4.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage4,
-                holder.image_product
-            )
+        holder.image_product_4.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage4, holder.image_product)
         }
-        holder.image_product_5.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage5,
-                holder.image_product
-            )
+        holder.image_product_5.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage5, holder.image_product)
         }
-        holder.image_product_6.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage6,
-                holder.image_product
-            )
+        holder.image_product_6.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage6, holder.image_product)
         }
-        holder.image_product_7.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage7,
-                holder.image_product
-            )
+        holder.image_product_7.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage7, holder.image_product)
         }
-        holder.image_product_8.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage8,
-                holder.image_product
-            )
+        holder.image_product_8.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage8, holder.image_product)
         }
-        holder.image_product_9.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage9,
-                holder.image_product
-            )
+        holder.image_product_9.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage9, holder.image_product)
         }
-        holder.image_product_10.setOnClickListener { v: View? ->
-            VOID.Glide(
-                false,
-                mContext,
-                post.postimage10,
-                holder.image_product
-            )
+        holder.image_product_10.setOnClickListener {
+            VOID.Glide(false, mContext, post.postimage10, holder.image_product)
         }
     }
 
@@ -325,9 +279,7 @@ class PostDetailAdapter(private val mContext: Context, private val mPost: Mutabl
     }
 
     private fun nrLikes(likes: TextView, postId: String?) {
-        val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(
-            postId!!
-        )
+        val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(postId!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 likes.text = MessageFormat.format("{0}", dataSnapshot.childrenCount)

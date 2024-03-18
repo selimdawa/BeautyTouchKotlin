@@ -2,13 +2,12 @@ package com.flatcode.beautytouchadmin.Activity
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Adapter.PostDetailAdapter
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivityPostDetailsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,15 +25,15 @@ class PostDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityPostDetailsBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityPostDetailsBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         val intent = intent
         postId = intent.getStringExtra(DATA.POST_ID)
+
         binding!!.toolbar.nameSpace.setText(R.string.post_detail)
-        binding!!.toolbar.back.setOnClickListener { v: View? -> onBackPressed() }
+        binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
         //binding.recyclerView.setHasFixedSize(true);
         list = ArrayList()
@@ -43,9 +42,7 @@ class PostDetailsActivity : AppCompatActivity() {
     }
 
     private fun readPost() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(
-            postId!!
-        )
+        val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(postId!!)
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 list!!.clear()

@@ -9,16 +9,11 @@ class Reward {
     var reward5: String? = null
     var reward6: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(
-        range: String?,
-        reward: String?,
-        reward2: String?,
-        reward3: String?,
-        reward4: String?,
-        reward5: String?,
-        reward6: String?
+        range: String?, reward: String?, reward2: String?, reward3: String?,
+        reward4: String?, reward5: String?, reward6: String?
     ) {
         this.range = range
         this.reward = reward

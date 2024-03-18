@@ -7,11 +7,9 @@ import java.util.*
 
 class LeaderboardOldFilter(var list: ArrayList<User?>, var adapter: LeaderboardOldAdapter) :
     Filter() {
-
     override fun performFiltering(constraint: CharSequence): FilterResults {
         var constraint: CharSequence? = constraint
         val results = FilterResults()
-
         if (constraint != null && constraint.length > 0) {
             constraint = constraint.toString().uppercase(Locale.getDefault())
             val filter = ArrayList<User?>()

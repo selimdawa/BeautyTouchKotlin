@@ -7,11 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Adapter.ADsInfoAdapter
 import com.flatcode.beautytouchadmin.Model.ADs
 import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityAdsInfoBinding
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 
 class ADsInfoActivity : AppCompatActivity() {
 
@@ -24,13 +28,13 @@ class ADsInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityAdsInfoBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityAdsInfoBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         val intent = intent
         profileId = intent.getStringExtra(DATA.PROFILE_ID)
+
         binding!!.toolbar.nameSpace.setText(R.string.info_ads)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
@@ -46,6 +50,7 @@ class ADsInfoActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val username = DATA.EMPTY + snapshot.child(DATA.USER_NAME).value
                 val profileImage = DATA.EMPTY + snapshot.child(DATA.IMAGE_URL).value
+
                 binding!!.username.text = username
                 VOID.Glide(true, context, profileImage, binding!!.profileImage)
             }
@@ -55,9 +60,7 @@ class ADsInfoActivity : AppCompatActivity() {
     }
 
     private fun loadAds(orderBy: String) {
-        val ref: Query = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(
-            profileId!!
-        )
+        val ref: Query = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(profileId!!)
         ref.orderByChild(orderBy).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 list!!.clear()

@@ -7,10 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Adapter.LeaderboardAdapter
 import com.flatcode.beautytouchadmin.Model.Tools
 import com.flatcode.beautytouchadmin.Model.User
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivitySessionNowInfoBinding
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 
 class SessionNowInfoActivity : AppCompatActivity() {
 
@@ -22,11 +26,10 @@ class SessionNowInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivitySessionNowInfoBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivitySessionNowInfoBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         binding!!.toolbar.nameSpace.text = "Session Now"
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
@@ -59,9 +62,7 @@ class SessionNowInfoActivity : AppCompatActivity() {
                     list!!.clear()
                     for (data in dataSnapshot.children) {
                         if (data.child(orderBy).exists()) {
-                            val item = data.getValue(
-                                User::class.java
-                            )!!
+                            val item = data.getValue(User::class.java)!!
                             list!!.add(item)
                         }
                     }

@@ -12,9 +12,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityPostAddBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -37,18 +37,20 @@ class PostEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityPostAddBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityPostAddBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         val intent = intent
         id = intent.getStringExtra(DATA.POST_ID)
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.toolbar.nameSpace.setText(R.string.add_post)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
+
         binding!!.typeOne.setOnClickListener {
             typePost = "Skin Products"
             binding!!.typeOne.text = "Skin Products ✓"
@@ -59,6 +61,7 @@ class PostEditActivity : AppCompatActivity() {
             binding!!.typeOne.text = "Skin Products"
             binding!!.typeTwo.text = "Hair Products ✓"
         }
+
         loadPostInfo()
         binding!!.toolbar.nameSpace.text = "Edit post"
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
@@ -127,7 +130,7 @@ class PostEditActivity : AppCompatActivity() {
             hashMap["postimage"] = DATA.EMPTY + imageUrl
         }
         val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-        reference.child(id!!).updateChildren(hashMap).addOnSuccessListener { unused: Void? ->
+        reference.child(id!!).updateChildren(hashMap).addOnSuccessListener {
             dialog!!.dismiss()
             Toast.makeText(context, "Modified", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener { e: Exception ->
@@ -147,11 +150,13 @@ class PostEditActivity : AppCompatActivity() {
                 val howToUse = item.use
                 val category = item.category
                 val image = item.postimage
+
                 typePost = category
                 VOID.Glide(true, context, image, binding!!.image)
                 binding!!.name.setText(name)
                 binding!!.price.setText(price)
                 binding!!.indications.setText(indications)
+
                 binding!!.howToUse.setText(howToUse)
                 if (category == "Skin Products") {
                     binding!!.typeOne.text = "Skin Products ✓"

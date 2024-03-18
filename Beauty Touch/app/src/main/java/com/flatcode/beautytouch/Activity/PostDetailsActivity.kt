@@ -3,7 +3,9 @@ package com.flatcode.beautytouch.Activity
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.flatcode.beautytouch.Adapter.PostDetailAdapter
 import com.flatcode.beautytouch.Model.Post
+import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.databinding.ActivityPostDetailBinding
@@ -12,9 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.flatcode.beautytouch.Adapter.PostDetailAdapter
-import com.flatcode.beautytouch.R
-import java.util.*
+import java.util.Objects
 
 class PostDetailsActivity : AppCompatActivity() {
 
@@ -42,9 +42,7 @@ class PostDetailsActivity : AppCompatActivity() {
     }
 
     private fun readPost() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(
-            postId!!
-        )
+        val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(postId!!)
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 list!!.clear()

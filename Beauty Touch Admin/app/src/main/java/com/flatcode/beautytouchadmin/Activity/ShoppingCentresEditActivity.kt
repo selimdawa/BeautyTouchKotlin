@@ -11,9 +11,9 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Model.ShoppingCenter
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityShoppingCentersAddBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -39,16 +39,17 @@ class ShoppingCentresEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityShoppingCentersAddBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityShoppingCentersAddBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         val intent = intent
         id = intent.getStringExtra(DATA.SHOPPING_CENTER_ID)
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.addImage.setOnClickListener {
             VOID.CropImageShoppingCenter(activity)
             IMAGE_NUMBER = IMAGE_PIC
@@ -57,6 +58,7 @@ class ShoppingCentresEditActivity : AppCompatActivity() {
             VOID.CropImageShoppingCenter(activity)
             IMAGE_NUMBER = IMAGE_MAP
         }
+
         Data()
         binding!!.toolbar.nameSpace.text = "Edit the shopping center"
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
@@ -150,7 +152,7 @@ class ShoppingCentresEditActivity : AppCompatActivity() {
         if (imageUri != null) hashMap["imageurl"] = DATA.EMPTY + image
         if (imageUri2 != null) hashMap["imageurl2"] = DATA.EMPTY + image2
         val reference = FirebaseDatabase.getInstance().getReference(DATA.SHOPPING_CENTERS)
-        reference.child(id!!).updateChildren(hashMap).addOnSuccessListener { unused: Void? ->
+        reference.child(id!!).updateChildren(hashMap).addOnSuccessListener {
             dialog!!.dismiss()
             Toast.makeText(context, "Modified", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener { e: Exception ->
@@ -171,6 +173,7 @@ class ShoppingCentresEditActivity : AppCompatActivity() {
                 val numberPhone = item.numberPhone
                 val image = item.imageurl
                 val image2 = item.imageurl2
+
                 binding!!.name.setText(name)
                 binding!!.location.setText(locationOne)
                 binding!!.location2.setText(locationTwo)

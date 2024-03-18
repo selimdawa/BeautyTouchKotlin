@@ -1,7 +1,6 @@
 package com.flatcode.beautytouchadmin.Adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.Main
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemMainBinding
 import java.text.MessageFormat
 
@@ -21,11 +21,7 @@ class MainAdapter(private val context: Context, var list: List<Main>) :
     private var binding: ItemMainBinding? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemMainBinding.inflate(
-            LayoutInflater.from(
-                context
-            ), parent, false
-        )
+        binding = ItemMainBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding!!.root)
     }
 
@@ -36,6 +32,7 @@ class MainAdapter(private val context: Context, var list: List<Main>) :
         val name = model.title
         //String id = list.getId();
         val c = model.c
+
         if (image != 0) holder.image.setImageResource(image) else holder.image.setImageResource(R.drawable.ic_load)
         if (number != 0) {
             holder.number.visibility = View.VISIBLE
@@ -44,10 +41,7 @@ class MainAdapter(private val context: Context, var list: List<Main>) :
             holder.number.visibility = View.GONE
         }
         holder.name.text = name
-        holder.itemView.setOnClickListener {
-            val intent = Intent(context, c)
-            context.startActivity(intent)
-        }
+        holder.itemView.setOnClickListener { VOID.Intent1(context, c) }
     }
 
     override fun getItemCount(): Int {

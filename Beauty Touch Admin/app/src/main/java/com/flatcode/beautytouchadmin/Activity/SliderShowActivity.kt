@@ -11,9 +11,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivitySliderShowBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -37,16 +37,17 @@ class SliderShowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivitySliderShowBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivitySliderShowBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         binding!!.toolbar.nameSpace.setText(R.string.slider_show)
-        binding!!.toolbar.back.setOnClickListener { v: View? -> onBackPressed() }
+        binding!!.toolbar.back.setOnClickListener { onBackPressed() }
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.addOne.setOnClickListener {
             VOID.CropImageSlider(activity)
             IMAGE_NUMBER = 1
@@ -268,6 +269,7 @@ class SliderShowActivity : AppCompatActivity() {
                 val eighteen = DATA.EMPTY + dataSnapshot.child("18").value
                 val nineteen = DATA.EMPTY + dataSnapshot.child("19").value
                 val twenty = DATA.EMPTY + dataSnapshot.child("20").value
+
                 VOID.Glide(false, context, one, binding!!.imageOne)
                 VOID.Glide(false, context, two, binding!!.imageTwo)
                 VOID.Glide(false, context, three, binding!!.imageThree)
@@ -321,7 +323,7 @@ class SliderShowActivity : AppCompatActivity() {
             hashMap[DATA.EMPTY + name] = DATA.EMPTY + imageUrl
         }
         val reference = FirebaseDatabase.getInstance().getReference(DATA.SLIDER_SHOW)
-        reference.updateChildren(hashMap).addOnSuccessListener { unused: Void? ->
+        reference.updateChildren(hashMap).addOnSuccessListener {
             dialog!!.dismiss()
             Toast.makeText(context, "published...", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener { e: Exception ->

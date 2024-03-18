@@ -31,7 +31,9 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = mPost[position]
+
         VOID.Glide(false, mContext, post!!.postimage, holder.image_product)
+
         if (post.name == DATA.EMPTY) {
             holder.name.visibility = View.GONE
         } else {
@@ -44,9 +46,11 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
             holder.price.visibility = View.VISIBLE
             holder.price.text = MessageFormat.format("{0} SYP", post.price)
         }
+
         isLiked(post.postid, holder.like)
         isSaved(post.postid, holder.save)
         nrLikes(holder.likes, post.postid)
+
         holder.like.setOnClickListener {
             if (holder.like.tag == "like") {
                 FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(post.postid!!)
@@ -68,12 +72,7 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
             }
         }
         holder.card.setOnClickListener {
-            VOID.IntentExtra(
-                mContext,
-                CLASS.POST_DETAILS,
-                DATA.POST_ID,
-                post.postid
-            )
+            VOID.IntentExtra(mContext, CLASS.POST_DETAILS, DATA.POST_ID, post.postid)
         }
     }
 
@@ -104,8 +103,7 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
     }
 
     private fun isLiked(postId: String?, imageView: ImageView) {
-        val reference = FirebaseDatabase.getInstance().reference
-            .child(DATA.LIKES).child(postId!!)
+        val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(postId!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.child(DATA.FirebaseUserUid).exists()) {
@@ -140,9 +138,7 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
     }
 
     private fun nrLikes(likes: TextView, postId: String?) {
-        val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(
-            postId!!
-        )
+        val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(postId!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 likes.text = MessageFormat.format("{0}", dataSnapshot.childrenCount)

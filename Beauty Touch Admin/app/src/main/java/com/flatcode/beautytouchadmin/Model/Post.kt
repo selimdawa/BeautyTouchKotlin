@@ -20,27 +20,13 @@ class Post {
     var publisher: String? = null
     var aname: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(
-        category: String?,
-        name: String?,
-        postid: String?,
-        postimage: String?,
-        postimage2: String?,
-        postimage3: String?,
-        postimage4: String?,
-        postimage5: String?,
-        postimage6: String?,
-        postimage7: String?,
-        postimage8: String?,
-        postimage9: String?,
-        postimage10: String?,
-        price: String?,
-        indications: String?,
-        use: String?,
-        publisher: String?,
-        aname: String?
+        category: String?, name: String?, postid: String?, postimage: String?, postimage2: String?,
+        postimage3: String?, postimage4: String?, postimage5: String?, postimage6: String?,
+        postimage7: String?, postimage8: String?, postimage9: String?, postimage10: String?,
+        price: String?, indications: String?, use: String?, publisher: String?, aname: String?
     ) {
         this.category = category
         this.name = name

@@ -12,18 +12,11 @@ class ShoppingCenter {
     var publisher: String? = null
     var aname: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(
-        id: String?,
-        name: String?,
-        imageurl: String?,
-        imageurl2: String?,
-        location: String?,
-        location2: String?,
-        location3: String?,
-        numberPhone: String?,
-        publisher: String?,
+        id: String?, name: String?, imageurl: String?, imageurl2: String?, location: String?,
+        location2: String?, location3: String?, numberPhone: String?, publisher: String?,
         aname: String?
     ) {
         this.id = id

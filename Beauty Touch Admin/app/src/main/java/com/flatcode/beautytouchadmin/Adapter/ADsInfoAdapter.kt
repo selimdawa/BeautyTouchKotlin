@@ -24,16 +24,13 @@ class ADsInfoAdapter(private val context: Context, var list: ArrayList<ADs?>, is
     var isUser: Boolean
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemInfoAdsBinding.inflate(
-            LayoutInflater.from(
-                context
-            ), parent, false
-        )
+        binding = ItemInfoAdsBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding!!.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
+
         val name = item!!.name
         val adsLoadedCount = item.adsLoadedCount
         val adsClickedCount = item.adsClickedCount
@@ -55,9 +52,7 @@ class ADsInfoAdapter(private val context: Context, var list: ArrayList<ADs?>, is
         return filter!!
     }
 
-    inner class ViewHolder(view: View?) : RecyclerView.ViewHolder(
-        view!!
-    ) {
+    inner class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
         var numberADsClick: TextView
         var numberADsLoad: TextView
         var name: TextView

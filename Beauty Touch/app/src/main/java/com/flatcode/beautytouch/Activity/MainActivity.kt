@@ -24,6 +24,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
+import com.flatcode.beautytouch.BuildConfig
 import com.flatcode.beautytouch.Fragment.HairProductsFragment
 import com.flatcode.beautytouch.Fragment.HomeFragment
 import com.flatcode.beautytouch.Fragment.ShoppingCentersFragment
@@ -32,7 +33,6 @@ import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.Model.Tools
 import com.flatcode.beautytouch.Model.User
 import com.flatcode.beautytouch.R
-import com.flatcode.beautytouch.BuildConfig
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
@@ -84,20 +84,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .commit()
         // Color Mode -------------------------------- End
 
-        binding!!.toolbar.image.setOnClickListener {
-            VOID.Intent1(
-                context,
-                CLASS.PROFILE
-            )
-        }
+        binding!!.toolbar.image.setOnClickListener { VOID.Intent1(context, CLASS.PROFILE) }
         binding!!.toolbar.drawer.setOnClickListener {
-            binding!!.drawerLayout.openDrawer(
-                GravityCompat.START
-            )
+            binding!!.drawerLayout.openDrawer(GravityCompat.START)
         }
 
         MobileAds.initialize(this) { }
-
         VOID.InterstitialAd(activity!!)
 
         binding!!.myProfile.setOnClickListener {
@@ -142,11 +134,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (item.id) {
                 1 -> Toast.makeText(applicationContext, skin_product, Toast.LENGTH_SHORT)
                     .show()
+
                 2 -> {
                     Toast.makeText(applicationContext, home, Toast.LENGTH_SHORT).show()
                 }
+
                 3 -> Toast.makeText(applicationContext, hair_product, Toast.LENGTH_SHORT)
                     .show()
+
                 4 -> {
                     Toast.makeText(applicationContext, shopping_center, Toast.LENGTH_SHORT)
                         .show()
@@ -158,18 +153,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (item.id) {
                 1 -> Toast.makeText(applicationContext, skin_product, Toast.LENGTH_SHORT)
                     .show()
+
                 2 -> Toast.makeText(applicationContext, home, Toast.LENGTH_SHORT).show()
                 3 -> Toast.makeText(applicationContext, hair_product, Toast.LENGTH_SHORT)
                     .show()
+
                 4 -> Toast.makeText(applicationContext, shopping_center, Toast.LENGTH_SHORT)
                     .show()
             }
         }
         val toggle = ActionBarDrawerToggle(
-            this,
-            binding!!.drawerLayout,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
+            this, binding!!.drawerLayout,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         binding!!.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -198,6 +193,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ) {
             binding!!.imageNight.setBackgroundResource(R.drawable.moon)
         }
+
         nrSkin
         nrHair
         nrShoppingCenters
@@ -217,8 +213,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             if (post.aname == aname) i++
                         binding!!.numberProductSkin.text = MessageFormat.format("{0}", i)
                         meowBottomNavigation!!.setCount(
-                            1,
-                            binding!!.numberProductSkin.text as String
+                            1, binding!!.numberProductSkin.text as String
                         )
                     }
                 }
@@ -240,8 +235,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             if (post.aname == aname) i++
                         binding!!.numberProductHair.text = MessageFormat.format("{0}", i)
                         meowBottomNavigation!!.setCount(
-                            3,
-                            binding!!.numberProductHair.text as String
+                            3, binding!!.numberProductHair.text as String
                         )
                     }
                 }
@@ -259,8 +253,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     binding!!.numberShoppingCenters.text =
                         MessageFormat.format("{0}", dataSnapshot.childrenCount)
                     meowBottomNavigation!!.setCount(
-                        4,
-                        binding!!.numberShoppingCenters.text as String
+                        4, binding!!.numberShoppingCenters.text as String
                     )
                 }
 
@@ -315,9 +308,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             FirebaseDatabase.getInstance().getReference(DATA.USERS).child(DATA.FirebaseUserUid)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: User = dataSnapshot.getValue(
-                    User::class.java
-                )!!
+                val user: User = dataSnapshot.getValue(User::class.java)!!
+
                 Glide.with(context).load(user.imageurl).into(binding!!.imageDrawer)
                 Glide.with(context).load(user.imageurl).into(binding!!.toolbar.image)
                 binding!!.name.text = user.username
@@ -351,6 +343,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val tools: Tools = dataSnapshot.getValue(Tools::class.java)!!
                 val aboutMe: String = tools.aboutMe!!
                 val imageMe: String = tools.imageMe!!
+
                 VOID.Glide(true, context, imageMe, image)
                 text.text = aboutMe
             }
@@ -369,8 +362,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lp.copyFrom(dialog.window!!.attributes)
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        dialog.findViewById<View>(R.id.linear_rate)
-            .setOnClickListener { VOID.RateUs(activity!!) }
+        dialog.findViewById<View>(R.id.linear_rate).setOnClickListener { VOID.RateUs(activity!!) }
         dialog.findViewById<View>(R.id.facebook_design)
             .setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View) {
@@ -438,9 +430,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     class Setting2Fragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(
-                R.xml.root_preferences_night, rootKey
-            )
+            setPreferencesFromResource(R.xml.root_preferences_night, rootKey)
         }
     }
 

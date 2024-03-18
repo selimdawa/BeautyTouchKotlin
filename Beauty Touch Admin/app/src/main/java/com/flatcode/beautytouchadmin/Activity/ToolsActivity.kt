@@ -46,9 +46,11 @@ class ToolsActivity : AppCompatActivity() {
         binding = ActivityToolsBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.editImageSessionNow.setOnClickListener {
             VOID.CropImageSession(activity)
             IMAGE_NUMBER = IMAGE_NOW
@@ -97,8 +99,7 @@ class ToolsActivity : AppCompatActivity() {
                 updatePost(DATA.EMPTY, DATA.EMPTY, DATA.EMPTY, DATA.EMPTY)
             } else {
                 if (imageUri != null) uploadImage() else if (imageUri2 != null) uploadImage2(null) else if (imageUri3 != null) uploadImage3(
-                    null,
-                    null
+                    null, null
                 ) else if (imageUri4 != null) uploadImage4(null, null, null)
             }
         }
@@ -237,6 +238,7 @@ class ToolsActivity : AppCompatActivity() {
                 val ImageOld = tools.oldImageSession
                 val logoNow = tools.imageLogo
                 val logoOld = tools.oldImageLogo
+
                 VOID.Glide(false, context, ImageNow, binding!!.imageSessionNow)
                 VOID.Glide(false, context, ImageOld, binding!!.imageSessionOld)
                 VOID.Glide(false, context, logoNow, binding!!.logoSessionNow)
@@ -258,14 +260,22 @@ class ToolsActivity : AppCompatActivity() {
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK) {
             val uri = CropImage.getPickImageResultUri(context, data)
             if (CropImage.isReadExternalStoragePermissionsRequired(context, uri)) {
-                if (IMAGE_NUMBER == IMAGE_NOW) {
-                    imageUri = uri
-                } else if (IMAGE_NUMBER == IMAGE_OLD) {
-                    imageUri2 = uri
-                } else if (IMAGE_NUMBER == LOGO_NOW) {
-                    imageUri3 = uri
-                } else if (IMAGE_NUMBER == LOGO_OLD) {
-                    imageUri4 = uri
+                when (IMAGE_NUMBER) {
+                    IMAGE_NOW -> {
+                        imageUri = uri
+                    }
+
+                    IMAGE_OLD -> {
+                        imageUri2 = uri
+                    }
+
+                    LOGO_NOW -> {
+                        imageUri3 = uri
+                    }
+
+                    LOGO_OLD -> {
+                        imageUri4 = uri
+                    }
                 }
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
             } else {
@@ -275,18 +285,26 @@ class ToolsActivity : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
-                if (IMAGE_NUMBER == IMAGE_NOW) {
-                    imageUri = result.uri
-                    binding!!.imageSessionNow.setImageURI(imageUri)
-                } else if (IMAGE_NUMBER == IMAGE_OLD) {
-                    imageUri2 = result.uri
-                    binding!!.imageSessionOld.setImageURI(imageUri2)
-                } else if (IMAGE_NUMBER == LOGO_NOW) {
-                    imageUri3 = result.uri
-                    binding!!.logoSessionNow.setImageURI(imageUri3)
-                } else if (IMAGE_NUMBER == LOGO_OLD) {
-                    imageUri4 = result.uri
-                    binding!!.logoSessionOld.setImageURI(imageUri4)
+                when (IMAGE_NUMBER) {
+                    IMAGE_NOW -> {
+                        imageUri = result.uri
+                        binding!!.imageSessionNow.setImageURI(imageUri)
+                    }
+
+                    IMAGE_OLD -> {
+                        imageUri2 = result.uri
+                        binding!!.imageSessionOld.setImageURI(imageUri2)
+                    }
+
+                    LOGO_NOW -> {
+                        imageUri3 = result.uri
+                        binding!!.logoSessionNow.setImageURI(imageUri3)
+                    }
+
+                    LOGO_OLD -> {
+                        imageUri4 = result.uri
+                        binding!!.logoSessionOld.setImageURI(imageUri4)
+                    }
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error

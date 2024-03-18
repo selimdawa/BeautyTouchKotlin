@@ -14,7 +14,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.*
 
 class HairProductsFragment : Fragment() {
 
@@ -25,15 +24,11 @@ class HairProductsFragment : Fragment() {
     var aname = "Beauty Touch"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHairProductsBinding.inflate(
-            LayoutInflater.from(
-                context
-            ), container, false
-        )
+        binding =
+            FragmentHairProductsBinding.inflate(LayoutInflater.from(context), container, false)
 
         BannerAd(context, binding!!.adView, DATA.BANNER_HAIR)
 
@@ -41,13 +36,14 @@ class HairProductsFragment : Fragment() {
         list = ArrayList()
         adapter = ProductsStaggeredAdapter(context, list as ArrayList<Post?>)
         binding!!.recyclerView.adapter = adapter
+
         return binding!!.root
     }
 
     private val allPosts: Unit
-        private get() {
+        get() {
             val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-            reference.addValueEventListener(object : ValueEventListener {
+            reference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     list!!.clear()
                     for (snapshot in dataSnapshot.children) {
@@ -60,9 +56,9 @@ class HairProductsFragment : Fragment() {
                             }
                         }
                     }
-                    Collections.reverse(list)
+                    list!!.reverse()
                     binding!!.bar.visibility = View.GONE
-                    if (!list!!.isEmpty()) {
+                    if (list!!.isNotEmpty()) {
                         binding!!.recyclerView.visibility = View.VISIBLE
                         binding!!.emptyText.visibility = View.GONE
                     } else {

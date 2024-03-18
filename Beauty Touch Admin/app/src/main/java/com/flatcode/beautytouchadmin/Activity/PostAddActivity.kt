@@ -11,9 +11,9 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityPostAddBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -33,16 +33,17 @@ class PostAddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityPostAddBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityPostAddBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.toolbar.nameSpace.setText(R.string.add_post)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
+
         binding!!.typeOne.setOnClickListener {
             typePost = "Skin Products"
             binding!!.typeOne.text = "Skin Products ✓"

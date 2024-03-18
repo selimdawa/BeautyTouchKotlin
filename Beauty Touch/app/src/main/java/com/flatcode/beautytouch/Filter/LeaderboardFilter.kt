@@ -6,11 +6,9 @@ import com.flatcode.beautytouch.Model.User
 import java.util.*
 
 class LeaderboardFilter(var list: ArrayList<User?>, var adapter: LeaderboardAdapter) : Filter() {
-
     override fun performFiltering(constraint: CharSequence): FilterResults {
         var constraint: CharSequence? = constraint
         val results = FilterResults()
-
         if (constraint != null && constraint.length > 0) {
             constraint = constraint.toString().uppercase(Locale.getDefault())
             val filter = ArrayList<User?>()

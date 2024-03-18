@@ -1,4 +1,5 @@
 package com.flatcode.beautytouch.Unit
+
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -12,11 +13,15 @@ import com.bumptech.glide.Glide
 import com.flatcode.beautytouch.Activity.MainActivity.Companion.mInterstitialAd
 import com.flatcode.beautytouch.Model.ADs
 import com.flatcode.beautytouch.R
-import com.google.android.gms.ads.*
-import com.google.android.gms.ads.initialization.InitializationStatus
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -43,12 +48,7 @@ object VOID {
     }
 
     fun IntentExtra2(
-        context: Context,
-        c: Class<*>?,
-        key: String?,
-        value: String?,
-        key2: String?,
-        value2: String?
+        context: Context, c: Class<*>?, key: String?, value: String?, key2: String?, value2: String?
     ) {
         val intent = Intent(context, c)
         intent.putExtra(key, value)
@@ -127,9 +127,8 @@ object VOID {
     }
 
     fun BannerAd(context: Context?, adView: AdView, bannerName: String?) {
-        if (context != null) {
-            MobileAds.initialize(context) { initializationStatus: InitializationStatus? -> }
-        }
+        if (context != null) MobileAds.initialize(context) { }
+
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
         adView.adListener = object : AdListener() {
@@ -148,9 +147,7 @@ object VOID {
     fun InterstitialAd(activity: Activity) {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
-            activity,
-            activity.resources.getString(R.string.admob_interstitial),
-            adRequest,
+            activity, activity.resources.getString(R.string.admob_interstitial), adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
                     super.onAdLoaded(interstitialAd)
@@ -200,9 +197,7 @@ object VOID {
     }
 
     fun AdCount(userId: String?, bannerName: String?, key: String?) {
-        val ref = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(
-            userId!!
-        )
+        val ref = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(userId!!)
         ref.child(bannerName!!).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //get views count
@@ -213,16 +208,10 @@ object VOID {
                 val newAdCount = adCount.toLong() + 1
                 val hashMap = HashMap<String?, Any>()
                 hashMap[key] = newAdCount
-                val reference = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(
-                    userId
-                )
-                reference.child(bannerName).updateChildren(hashMap)
-                    .addOnCompleteListener { task: Task<Void?>? ->
-                        AdName(
-                            DATA.FirebaseUserUid,
-                            bannerName
-                        )
-                    }
+                val reference = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(userId)
+                reference.child(bannerName).updateChildren(hashMap).addOnCompleteListener {
+                    AdName(DATA.FirebaseUserUid, bannerName)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {}
@@ -263,10 +252,8 @@ object VOID {
                 val newAdCount = adCount.toLong() + number
                 val hashMap = HashMap<String?, Any>()
                 hashMap[key] = newAdCount
-                val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS).child(
-                    userId
-                )
-                reference.updateChildren(hashMap)
+                val ref = FirebaseDatabase.getInstance().getReference(DATA.USERS).child(userId)
+                ref.updateChildren(hashMap)
             }
 
             override fun onCancelled(error: DatabaseError) {}
@@ -274,9 +261,7 @@ object VOID {
     }
 
     fun AdName(userId: String?, bannerName: String?) {
-        val ref = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(
-            userId!!
-        )
+        val ref = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(userId!!)
         ref.child(bannerName!!).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //get views count
@@ -284,10 +269,8 @@ object VOID {
                 if (item.name == null) {
                     val hashMap = HashMap<String?, Any?>()
                     hashMap[DATA.NAME] = bannerName
-                    val reference = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(
-                        userId
-                    )
-                    reference.child(bannerName).updateChildren(hashMap)
+                    val ref = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(userId)
+                    ref.child(bannerName).updateChildren(hashMap)
                 }
             }
 

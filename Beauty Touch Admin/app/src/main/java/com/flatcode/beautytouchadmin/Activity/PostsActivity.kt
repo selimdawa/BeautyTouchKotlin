@@ -6,8 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Adapter.MyPostsAdapter
 import com.flatcode.beautytouchadmin.Model.Post
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivityPostsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,11 +25,10 @@ class PostsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityPostsBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityPostsBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         binding!!.toolbar.nameSpace.text = "My Posts"
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
@@ -37,6 +36,7 @@ class PostsActivity : AppCompatActivity() {
         list = ArrayList()
         adapter = MyPostsAdapter(context, list as ArrayList<Post?>)
         binding!!.recyclerView.adapter = adapter
+
         binding!!.all.setOnClickListener {
             type = DATA.ALL
             getData(type)

@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Adapter.FavoritesAdapter
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.Model.User
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityUserDetailBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,11 +28,10 @@ class UserDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityUserDetailBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityUserDetailBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         val intent = intent
         profileId = intent.getStringExtra(DATA.PROFILE_ID)
 
@@ -44,9 +43,7 @@ class UserDetailActivity : AppCompatActivity() {
 
     private fun Saves() {
         mySaves = ArrayList()
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.SAVES).child(
-            profileId!!
-        )
+        val reference = FirebaseDatabase.getInstance().getReference(DATA.SAVES).child(profileId!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 (mySaves as ArrayList<String?>).clear()
@@ -87,14 +84,11 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private fun userInfo() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS).child(
-            profileId!!
-        )
+        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS).child(profileId!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue(
-                    User::class.java
-                )!!
+                val user = dataSnapshot.getValue(User::class.java)!!
+
                 VOID.Glide(true, context, user.imageurl, binding!!.image)
                 binding!!.name.text = user.username
             }

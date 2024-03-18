@@ -5,16 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.flatcode.beautytouch.Adapter.ProductsStaggeredAdapter
 import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.Unit.DATA
+import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.databinding.FragmentSkinProductsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.flatcode.beautytouch.Adapter.ProductsStaggeredAdapter
-import com.flatcode.beautytouch.Unit.VOID
-import java.util.*
 
 class SkinProductsFragment : Fragment() {
 
@@ -25,15 +24,11 @@ class SkinProductsFragment : Fragment() {
     var aname = "Beauty Touch"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSkinProductsBinding.inflate(
-            LayoutInflater.from(
-                context
-            ), container, false
-        )
+        binding =
+            FragmentSkinProductsBinding.inflate(LayoutInflater.from(context), container, false)
 
         VOID.BannerAd(context, binding!!.adView, DATA.BANNER_SKIN)
 
@@ -41,6 +36,7 @@ class SkinProductsFragment : Fragment() {
         list = ArrayList()
         adapter = ProductsStaggeredAdapter(context, list as ArrayList<Post?>)
         binding!!.recyclerView.adapter = adapter
+
         return binding!!.root
     }
 

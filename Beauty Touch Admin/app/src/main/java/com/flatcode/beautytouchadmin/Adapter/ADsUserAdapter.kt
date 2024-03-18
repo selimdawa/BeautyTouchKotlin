@@ -4,14 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Filter.ADsUserFilter
 import com.flatcode.beautytouchadmin.Model.User
-import com.flatcode.beautytouchadmin.Unit.MyApplication
 import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.MyApplication
+import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemAdsUserBinding
 import java.text.MessageFormat
 
@@ -24,11 +28,7 @@ class ADsUserAdapter(private val context: Context, var list: ArrayList<User?>, i
     var isUser: Boolean
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemAdsUserBinding.inflate(
-            LayoutInflater.from(
-                context
-            ), parent, false
-        )
+        binding = ItemAdsUserBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding!!.root)
     }
 
@@ -41,6 +41,7 @@ class ADsUserAdapter(private val context: Context, var list: ArrayList<User?>, i
         val adLoaded = DATA.EMPTY + item.adLoad
         val adClicked = DATA.EMPTY + item.adClick
         val formattedDate: String = MyApplication.formatTimestamp(timestamp.toLong())
+
         VOID.Glide(true, context, profileImage, holder.profileImage)
         if (username == DATA.EMPTY) {
             holder.username.visibility = View.GONE
@@ -48,16 +49,16 @@ class ADsUserAdapter(private val context: Context, var list: ArrayList<User?>, i
             holder.username.visibility = View.VISIBLE
             holder.username.text = username
         }
+
         val First = holder.position
         val Final = list.size - First
         holder.time.text = formattedDate
         holder.rank.text = MessageFormat.format("{0}", Final)
         holder.numberADsLoad.text = MessageFormat.format("{0}{1}", DATA.EMPTY, adLoaded)
         holder.numberADsClick.text = MessageFormat.format("{0}{1}", DATA.EMPTY, adClicked)
-        holder.item.setOnClickListener { view: View? ->
-            VOID.IntentExtra(
-                context, CLASS.ADS_INFO, DATA.PROFILE_ID, userId
-            )
+
+        holder.item.setOnClickListener {
+            VOID.IntentExtra(context, CLASS.ADS_INFO, DATA.PROFILE_ID, userId)
         }
     }
 
@@ -72,9 +73,7 @@ class ADsUserAdapter(private val context: Context, var list: ArrayList<User?>, i
         return filter!!
     }
 
-    inner class ViewHolder(view: View?) : RecyclerView.ViewHolder(
-        view!!
-    ) {
+    inner class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
         var profileImage: ImageView
         var username: TextView
         var rank: TextView

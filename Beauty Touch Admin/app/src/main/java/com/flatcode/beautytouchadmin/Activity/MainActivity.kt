@@ -15,9 +15,9 @@ import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.Model.User
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.CLASS
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityMainBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,9 +36,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             .registerOnSharedPreferenceChangeListener(this)
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
 
@@ -105,26 +103,18 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
         ) {
             binding!!.toolbar.mode.setBackgroundResource(R.drawable.moon)
         }
-        binding!!.toolbar.image.setOnClickListener { v: View? ->
-            VOID.IntentExtra(
-                context,
-                CLASS.PROFILE,
-                DATA.PROFILE_ID,
-                DATA.FirebaseUserUid
-            )
+        binding!!.toolbar.image.setOnClickListener {
+            VOID.IntentExtra(context, CLASS.PROFILE, DATA.PROFILE_ID, DATA.FirebaseUserUid)
         }
-        binding!!.recyclerView.setHasFixedSize(true)
+
+        //binding!!.recyclerView.setHasFixedSize(true)
         list = ArrayList()
         adapter = MainAdapter(context, list as ArrayList<Main>)
         binding!!.recyclerView.adapter = adapter
     }
 
     private fun IdeaPosts(
-        users: Int,
-        hotProduct: Int,
-        posts: Int,
-        shoppingCentres: Int,
-        sliderShow: Int
+        users: Int, hotProduct: Int, posts: Int, shoppingCentres: Int, sliderShow: Int
     ) {
         list!!.clear()
         val item1 = Main(R.drawable.ic_person_white, "Users", users - 1, CLASS.USERS)
@@ -162,9 +152,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             FirebaseDatabase.getInstance().getReference(DATA.USERS).child(DATA.FirebaseUserUid)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue(
-                    User::class.java
-                )!!
+                val user = dataSnapshot.getValue(User::class.java)!!
+
                 VOID.Glide(true, context, user.imageurl, binding!!.toolbar.image)
             }
 
@@ -183,9 +172,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 U = 0
                 for (data in dataSnapshot.children) {
-                    val item = data.getValue(
-                        User::class.java
-                    )!!
+                    val item = data.getValue(User::class.java)!!
                     if (item.id != null) U++
                 }
                 nrHotProduct()

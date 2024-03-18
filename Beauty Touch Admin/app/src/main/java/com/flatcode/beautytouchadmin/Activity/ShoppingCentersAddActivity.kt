@@ -10,9 +10,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityShoppingCentersAddBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -35,14 +35,14 @@ class ShoppingCentersAddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityShoppingCentersAddBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityShoppingCentersAddBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.addImage.setOnClickListener {
             VOID.CropImageShoppingCenter(activity)
             IMAGE_NUMBER = IMAGE_PIC
@@ -51,6 +51,7 @@ class ShoppingCentersAddActivity : AppCompatActivity() {
             VOID.CropImageShoppingCenter(activity)
             IMAGE_NUMBER = IMAGE_MAP
         }
+
         binding!!.toolbar.nameSpace.text = "Add a shopping center"
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
         binding!!.go.setOnClickListener { validateData() }
@@ -149,7 +150,7 @@ class ShoppingCentersAddActivity : AppCompatActivity() {
         hashMap["timeStamp"] = DATA.EMPTY + System.currentTimeMillis()
         hashMap["publisher"] = DATA.EMPTY + DATA.FirebaseUserUid
         assert(id != null)
-        ref.child(id!!).setValue(hashMap).addOnSuccessListener { unused: Void? ->
+        ref.child(id!!).setValue(hashMap).addOnSuccessListener {
             dialog!!.dismiss()
             Toast.makeText(context, "uploaded", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener { e: Exception ->

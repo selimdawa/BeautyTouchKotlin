@@ -14,7 +14,12 @@ import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityLeaderboardBinding
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 
 class LeaderboardActivity : AppCompatActivity() {
 
@@ -44,10 +49,12 @@ class LeaderboardActivity : AppCompatActivity() {
                 val year: String = tools.year!!
                 val session: String = tools.session!!
                 val sessionNumber: String = tools.sessionNumber!!
+
                 VOID.Glide(false, context, tools.imageSession, binding!!.imageSession)
                 VOID.Glide(false, context, tools.imageLogo, binding!!.imageLogo)
                 binding!!.sessionNumber.text = session
                 val key = year + "_" + sessionNumber
+
                 getData(key)
                 Reward(key)
             }
@@ -64,9 +71,7 @@ class LeaderboardActivity : AppCompatActivity() {
                     list!!.clear()
                     for (data in dataSnapshot.children) {
                         if (data.child(orderBy).exists()) {
-                            val item: User = data.getValue(
-                                User::class.java
-                            )!!
+                            val item: User = data.getValue(User::class.java)!!
                             list!!.add(item)
                         }
                     }
@@ -86,28 +91,22 @@ class LeaderboardActivity : AppCompatActivity() {
                 if (dataSnapshot.child(key).exists()) {
                     if (dataSnapshot.exists()) {
                         if (reward.reward != null) ReadReward(
-                            reward.reward!!,
-                            binding!!.reward
+                            reward.reward!!, binding!!.reward
                         )
                         if (reward.reward2 != null) ReadReward(
-                            reward.reward2!!,
-                            binding!!.reward2
+                            reward.reward2!!, binding!!.reward2
                         )
                         if (reward.reward3 != null) ReadReward(
-                            reward.reward3!!,
-                            binding!!.reward3
+                            reward.reward3!!, binding!!.reward3
                         )
                         if (reward.reward4 != null) ReadReward(
-                            reward.reward4!!,
-                            binding!!.reward4
+                            reward.reward4!!, binding!!.reward4
                         )
                         if (reward.reward5 != null) ReadReward(
-                            reward.reward5!!,
-                            binding!!.reward5
+                            reward.reward5!!, binding!!.reward5
                         )
                         if (reward.reward6 != null) ReadReward(
-                            reward.reward6!!,
-                            binding!!.reward6
+                            reward.reward6!!, binding!!.reward6
                         )
                     }
                 }
@@ -127,12 +126,7 @@ class LeaderboardActivity : AppCompatActivity() {
                     if (post.postid == R) {
                         VOID.Glide(false, context, post.postimage, Reward)
                         Reward.setOnClickListener {
-                            VOID.IntentExtra(
-                                context,
-                                CLASS.POST_DETAILS,
-                                DATA.POST_ID,
-                                R
-                            )
+                            VOID.IntentExtra(context, CLASS.POST_DETAILS, DATA.POST_ID, R)
                         }
                     }
                 }

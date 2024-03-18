@@ -23,17 +23,17 @@ class ForgetPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityForgetPasswordBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityForgetPasswordBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
 
         VOID.Intro(baseContext, binding!!.background, binding!!.backWhite, binding!!.backBlack)
         auth = FirebaseAuth.getInstance()
+
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.login.setOnClickListener {
             VOID.Intent1(context, CLASS.LOGIN)
             finish()
@@ -64,9 +64,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 recoverPassword()
             } else {
                 Toast.makeText(
-                    context,
-                    "Please enter a valid phone number and password!",
-                    Toast.LENGTH_SHORT
+                    context, "Please enter a valid phone number and password!", Toast.LENGTH_SHORT
                 ).show()
             }
         }

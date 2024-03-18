@@ -3,15 +3,13 @@ package com.flatcode.beautytouchadmin.Filter
 import android.widget.Filter
 import com.flatcode.beautytouchadmin.Adapter.LeaderboardOldAdapter
 import com.flatcode.beautytouchadmin.Model.User
-import java.util.*
+import java.util.Locale
 
 class LeaderboardOldFilter(var list: ArrayList<User?>, var adapter: LeaderboardOldAdapter) :
     Filter() {
-
     override fun performFiltering(constraint: CharSequence): FilterResults {
         var constraint: CharSequence? = constraint
         val results = FilterResults()
-
         if (constraint != null && constraint.length > 0) {
             constraint = constraint.toString().uppercase(Locale.getDefault())
             val filter = ArrayList<User?>()

@@ -29,16 +29,12 @@ class HomeFragment : Fragment() {
     var aname = "Beauty Touch"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(
-            LayoutInflater.from(
-                context
-            ), container, false
-        )
-        binding!!.recyclerView.setHasFixedSize(true)
+        binding = FragmentHomeBinding.inflate(LayoutInflater.from(context), container, false)
+
+        //binding!!.recyclerView.setHasFixedSize(true)
         hotpostLists = ArrayList()
         hotpostAdapter = PostHotAdapter(context, hotpostLists as ArrayList<Post?>)
         binding!!.recyclerView.adapter = hotpostAdapter
@@ -47,8 +43,9 @@ class HomeFragment : Fragment() {
         allpostLists = ArrayList()
         allpostAdapter = PostLinearAdapter(context, allpostLists as ArrayList<Post?>)
         binding!!.recyclerView2.adapter = allpostAdapter
+
         FirebaseDatabase.getInstance().getReference("ImageLinks")
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val counts = snapshot.childrenCount
                     TotalCounts = counts.toInt()
@@ -63,7 +60,7 @@ class HomeFragment : Fragment() {
     private fun checkHotProduct() {
         hotProductList = ArrayList()
         val reference = FirebaseDatabase.getInstance().getReference(DATA.HOT_PRODUCT)
-        reference.addValueEventListener(object : ValueEventListener {
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 (hotProductList as ArrayList<String?>).clear()
                 for (snapshot in dataSnapshot.children) {
@@ -78,15 +75,14 @@ class HomeFragment : Fragment() {
 
     private fun readPosts() {
         val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-        reference.addValueEventListener(object : ValueEventListener {
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 hotpostLists!!.clear()
                 for (snapshot in dataSnapshot.children) {
                     val post = snapshot.getValue(Post::class.java)
                     for (id in hotProductList!!) {
                         assert(post != null)
-                        if (post!!.publisher == publisher) if (post.aname == aname) if
-                                                                                            (post.postid == id) hotpostLists!!.add(
+                        if (post!!.publisher == publisher) if (post.aname == aname) if (post.postid == id) hotpostLists!!.add(
                             post
                         )
                     }
@@ -101,9 +97,9 @@ class HomeFragment : Fragment() {
     }
 
     private val showMoreProduct: Unit
-        private get() {
+        get() {
             val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-            reference.addValueEventListener(object : ValueEventListener {
+            reference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     allpostLists!!.clear()
                     for (snapshot in dataSnapshot.children) {

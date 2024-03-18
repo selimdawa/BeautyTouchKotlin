@@ -9,26 +9,24 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.ShoppingCenter
-import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemShoppingCenterBinding
 import java.text.MessageFormat
 
 class ShoppingCentersAdapter(
-    private val mContext: Context,
-    private val mShoppingCenters: List<ShoppingCenter?>
+    private val mContext: Context, private val mShoppingCenters: List<ShoppingCenter?>
 ) : RecyclerView.Adapter<ShoppingCentersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = ItemShoppingCenterBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(
-            binding!!.root
-        )
+        return ViewHolder(binding!!.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val shoppingCenter = mShoppingCenters[position]
         val id = shoppingCenter!!.id
+
         VOID.Glide(false, mContext, shoppingCenter.imageurl, holder.image_product)
         VOID.Glide(false, mContext, shoppingCenter.imageurl2, holder.image_product2)
         if (shoppingCenter.name == DATA.EMPTY) {
@@ -45,9 +43,7 @@ class ShoppingCentersAdapter(
             holder.view.visibility = View.VISIBLE
             holder.location.text = MessageFormat.format(
                 "{0} - {1} - {2}",
-                shoppingCenter.location,
-                shoppingCenter.location2,
-                shoppingCenter.location3
+                shoppingCenter.location, shoppingCenter.location2, shoppingCenter.location3
             )
         }
         if (shoppingCenter.numberPhone == DATA.EMPTY) {
@@ -58,12 +54,7 @@ class ShoppingCentersAdapter(
             holder.view2.visibility = View.VISIBLE
             holder.numberPhone.text = shoppingCenter.numberPhone
         }
-        holder.more.setOnClickListener {
-            VOID.moreShoppingCenters(
-                mContext,
-                shoppingCenter
-            )
-        }
+        holder.more.setOnClickListener { VOID.moreShoppingCenters(mContext, shoppingCenter) }
     }
 
     override fun getItemCount(): Int {

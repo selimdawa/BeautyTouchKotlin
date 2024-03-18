@@ -25,11 +25,10 @@ class ShoppingCentersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityShoppingCentersBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityShoppingCentersBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         binding!!.toolbar.nameSpace.setText(R.string.shopping_centers)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
@@ -40,15 +39,13 @@ class ShoppingCentersActivity : AppCompatActivity() {
     }
 
     private val allPosts: Unit
-        private get() {
+        get() {
             val reference = FirebaseDatabase.getInstance().getReference(DATA.SHOPPING_CENTERS)
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     list!!.clear()
                     for (snapshot in dataSnapshot.children) {
-                        val shoppingCenter = snapshot.getValue(
-                            ShoppingCenter::class.java
-                        )!!
+                        val shoppingCenter = snapshot.getValue(ShoppingCenter::class.java)!!
                         if (shoppingCenter.publisher == DATA.PUBLICHER) {
                             if (shoppingCenter.aname == DATA.APP_NAME) {
                                 list!!.add(shoppingCenter)
@@ -57,7 +54,7 @@ class ShoppingCentersActivity : AppCompatActivity() {
                     }
                     list!!.reverse()
                     binding!!.bar.visibility = View.GONE
-                    if (!list!!.isEmpty()) {
+                    if (list!!.isNotEmpty()) {
                         binding!!.recyclerView.visibility = View.VISIBLE
                         binding!!.emptyText.visibility = View.GONE
                     } else {

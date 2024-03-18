@@ -11,7 +11,6 @@ import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityForgetPasswordBinding
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgetPasswordActivity : AppCompatActivity() {
@@ -29,10 +28,12 @@ class ForgetPasswordActivity : AppCompatActivity() {
         setContentView(view)
 
         VOID.Intro(baseContext, binding!!.background, binding!!.backWhite, binding!!.backBlack)
+
         auth = FirebaseAuth.getInstance()
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.noAccount.setOnClickListener {
             VOID.Intent1(context, CLASS.REGISTER)
             finish()
@@ -69,9 +70,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 recoverPassword()
             } else {
                 Toast.makeText(
-                    context,
-                    "Please enter a valid phone number and password! ",
-                    Toast.LENGTH_SHORT
+                    context, "Please enter a valid phone number and password! ", Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -80,7 +79,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
     private fun recoverPassword() {
         dialog!!.setMessage("Password recovery is sent to $email")
         dialog!!.show()
-        auth!!.sendPasswordResetEmail(email).addOnCompleteListener { task: Task<Void?>? ->
+        auth!!.sendPasswordResetEmail(email).addOnCompleteListener {
             dialog!!.dismiss()
             Toast.makeText(context, "Password reset has been sent to $email", Toast.LENGTH_SHORT)
                 .show()

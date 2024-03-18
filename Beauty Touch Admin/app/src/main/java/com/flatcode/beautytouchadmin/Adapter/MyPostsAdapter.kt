@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemMyPostBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +30,7 @@ class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = mPost[position]
+
         VOID.Glide(false, mContext, post!!.postimage, holder.image_product)
         if (post.name == DATA.EMPTY) {
             holder.name.visibility = View.GONE
@@ -43,6 +44,7 @@ class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post
             holder.price.visibility = View.VISIBLE
             holder.price.text = MessageFormat.format("{0} $", post.price)
         }
+
         nrLikes(holder.likes, post.postid)
         isLiked(post.postid, holder.like)
         holder.like.setOnClickListener {
@@ -54,14 +56,10 @@ class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post
                     .child(DATA.FirebaseUserUid).removeValue()
             }
         }
+
         holder.more.setOnClickListener { VOID.moreOptionDialog(mContext, post) }
         holder.card.setOnClickListener {
-            VOID.IntentExtra(
-                mContext,
-                CLASS.POST_DETAILS,
-                DATA.POST_ID,
-                post.postid
-            )
+            VOID.IntentExtra(mContext, CLASS.POST_DETAILS, DATA.POST_ID, post.postid)
         }
     }
 
@@ -90,9 +88,7 @@ class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post
     }
 
     private fun nrLikes(likes: TextView, postId: String?) {
-        val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(
-            postId!!
-        )
+        val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(postId!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 likes.text = MessageFormat.format("{0}", dataSnapshot.childrenCount)
@@ -103,8 +99,7 @@ class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post
     }
 
     private fun isLiked(postId: String?, imageView: ImageView) {
-        val reference = FirebaseDatabase.getInstance().reference
-            .child(DATA.LIKES).child(postId!!)
+        val reference = FirebaseDatabase.getInstance().getReference(DATA.LIKES).child(postId!!)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.child(DATA.FirebaseUserUid).exists()) {

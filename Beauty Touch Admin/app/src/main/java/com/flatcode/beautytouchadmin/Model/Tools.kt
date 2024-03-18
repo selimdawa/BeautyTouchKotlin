@@ -14,7 +14,7 @@ class Tools {
     var aboutMe: String? = null
     var imageMe: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(
         imageLogo: String?, oldImageLogo: String?, imageSession: String?, oldImageSession: String?,

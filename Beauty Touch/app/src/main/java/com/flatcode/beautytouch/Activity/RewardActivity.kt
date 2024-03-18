@@ -15,7 +15,11 @@ import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unit.VOID.AdRewardCount
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRewardBinding
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
@@ -53,9 +57,7 @@ class RewardActivity : AppCompatActivity() {
 
     private fun loadRewardedAd() {
         RewardedAd.load(
-            context,
-            resources.getString(R.string.admob_reward),
-            AdRequest.Builder().build(),
+            context, resources.getString(R.string.admob_reward), AdRequest.Builder().build(),
             object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     super.onAdFailedToLoad(loadAdError)
@@ -108,9 +110,7 @@ class RewardActivity : AppCompatActivity() {
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
         RewardedAd.load(
-            context,
-            resources.getString(R.string.admob_reward),
-            AdRequest.Builder().build(),
+            context, resources.getString(R.string.admob_reward), AdRequest.Builder().build(),
             object : RewardedAdLoadCallback() {
                 override fun onAdLoaded(rewardedAd: RewardedAd) {
                     super.onAdLoaded(rewardedAd)
@@ -158,11 +158,10 @@ class RewardActivity : AppCompatActivity() {
                 binding!!.sessionInfoOld.text =
                     MessageFormat.format("{0} | {1}", oldYear, oldSession)
                 getNrPoints(year, session)
-                binding!!.rewardCard.setOnClickListener { v ->
+                binding!!.rewardCard.setOnClickListener {
                     loadAndShowRewardedAd()
                     Toast.makeText(
-                        context,
-                        "The ad is loaded, click again if it does not appear",
+                        context, "The ad is loaded, click again if it does not appear",
                         Toast.LENGTH_SHORT
                     ).show()
                     getNrPoints(year, session)

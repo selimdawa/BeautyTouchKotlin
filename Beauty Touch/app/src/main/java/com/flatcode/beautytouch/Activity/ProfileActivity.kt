@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
-import java.util.*
+import java.util.Objects
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -46,7 +46,8 @@ class ProfileActivity : AppCompatActivity() {
         dialog!!.setCanceledOnTouchOutside(false)
         binding!!.back.setOnClickListener { onBackPressed() }
         binding!!.editImageIcon.setOnClickListener { VOID.CropImageSquare(activity) }
-        binding!!.imageEdit.setOnClickListener { v ->
+
+        binding!!.imageEdit.setOnClickListener {
             binding!!.imageEdit.visibility = View.GONE
             binding!!.imageClose.visibility = View.VISIBLE
             binding!!.imageTrue.visibility = View.VISIBLE
@@ -118,7 +119,7 @@ class ProfileActivity : AppCompatActivity() {
         }
         val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS)
         reference.child(Objects.requireNonNull(DATA.FirebaseUserUid)).updateChildren(hashMap)
-            .addOnSuccessListener { unused: Void? ->
+            .addOnSuccessListener {
                 dialog!!.dismiss()
                 Toast.makeText(context, "Error loading image...", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener { e: Exception ->
@@ -133,9 +134,7 @@ class ProfileActivity : AppCompatActivity() {
         reference.child(Objects.requireNonNull(DATA.FirebaseUserUid))
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(
-                        User::class.java
-                    )!!
+                    val user = snapshot.getValue(User::class.java)!!
                     Glide.with(this@ProfileActivity).load(user.imageurl).into(binding!!.image)
                     binding!!.name.text = user.username
                     binding!!.nameEdit.setText(user.username)

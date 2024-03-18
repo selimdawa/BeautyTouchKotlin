@@ -20,9 +20,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Model.Tools
 import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ActivityAboutMeBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -43,14 +43,14 @@ class AboutMeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityAboutMeBinding.inflate(
-            layoutInflater
-        )
+        binding = ActivityAboutMeBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.toolbar.nameSpace.text = "About Me"
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
         binding!!.go.setOnClickListener { validateData() }
@@ -103,7 +103,7 @@ class AboutMeActivity : AppCompatActivity() {
             hashMap["imageMe"] = DATA.EMPTY + imageUrl
         }
         val reference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.updateChildren(hashMap).addOnSuccessListener { unused: Void? ->
+        reference.updateChildren(hashMap).addOnSuccessListener {
             dialog!!.dismiss()
             Toast.makeText(context, "Modified", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener { e: Exception ->
@@ -136,6 +136,7 @@ class AboutMeActivity : AppCompatActivity() {
                 val tools = dataSnapshot.getValue(Tools::class.java)!!
                 val aboutMe = tools.aboutMe
                 val imageMe = tools.imageMe
+
                 VOID.Glide(true, context, imageMe, image)
                 if (text != null) text.text = aboutMe
                 editText?.setText(aboutMe)

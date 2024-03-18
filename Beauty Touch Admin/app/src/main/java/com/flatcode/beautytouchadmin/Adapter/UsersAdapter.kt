@@ -10,8 +10,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.User
 import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemUserBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +30,7 @@ class UsersAdapter(private val mContext: Context, private val mUser: List<User?>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = mUser[position]
         val id = DATA.EMPTY + user!!.id
+
         VOID.Glide(true, mContext, user.imageurl, holder.image)
         if (user.username == DATA.EMPTY) {
             holder.name.visibility = View.GONE
@@ -37,14 +38,10 @@ class UsersAdapter(private val mContext: Context, private val mUser: List<User?>
             holder.name.visibility = View.VISIBLE
             holder.name.text = user.username
         }
+
         nrFavorites(holder.favorites, id)
         holder.card.setOnClickListener {
-            VOID.IntentExtra(
-                mContext,
-                CLASS.USER_DETAILS,
-                DATA.PROFILE_ID,
-                id
-            )
+            VOID.IntentExtra(mContext, CLASS.USER_DETAILS, DATA.PROFILE_ID, id)
         }
     }
 

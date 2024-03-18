@@ -12,7 +12,7 @@ class ShoppingCenter {
     var publisher: String? = null
     var aname: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(
         id: String?, name: String?, imageurl: String?, imageurl2: String?, location: String?,

@@ -12,7 +12,6 @@ import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRegisterBinding
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -31,20 +30,17 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(view)
 
         VOID.Intro(baseContext, binding!!.background, binding!!.backWhite, binding!!.backBlack)
+
         auth = FirebaseAuth.getInstance()
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
+
         binding!!.login.setOnClickListener {
             VOID.Intent1(context, CLASS.LOGIN)
             finish()
         }
-        binding!!.forget.setOnClickListener {
-            VOID.Intent1(
-                context,
-                CLASS.FORGET_PASSWORD
-            )
-        }
+        binding!!.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
         binding!!.go.setOnClickListener { validateData() }
     }
 
@@ -97,7 +93,7 @@ class RegisterActivity : AppCompatActivity() {
 
         //create user in firebase auth
         auth!!.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { authResult: AuthResult? -> updateUserinfo() }
+            .addOnSuccessListener { updateUserinfo() }
             .addOnFailureListener { e: Exception ->
                 dialog!!.dismiss()
                 Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()

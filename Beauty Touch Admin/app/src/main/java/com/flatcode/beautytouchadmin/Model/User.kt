@@ -11,18 +11,11 @@ class User {
     var started: String? = null
     var username: String? = null
 
-    constructor() {}
+    constructor()
 
     constructor(
-        adLoad: Int,
-        adClick: Int,
-        id: String?,
-        imageurl: String?,
-        mversion: String?,
-        password: String?,
-        phonenumber: String?,
-        started: String?,
-        username: String?
+        adLoad: Int, adClick: Int, id: String?, imageurl: String?, mversion: String?,
+        password: String?, phonenumber: String?, started: String?, username: String?
     ) {
         this.adLoad = adLoad
         this.adClick = adClick
