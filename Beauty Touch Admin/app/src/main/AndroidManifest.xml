@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".Unit.MyApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@drawable/icon"
+        android:supportsRtl="false"
+        android:theme="@style/OneTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:supportsRtl"
+        tools:targetApi="31">
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Activity.ToolsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.AboutMeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ShoppingCentresEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ShoppingCentersAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.PostEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ADsInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ADsMeterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Auth.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SessionOldInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SessionNowInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.PostDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.PostAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SliderShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ShoppingCentersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.HotProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.UserDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.PostsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.UsersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Auth.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+    </application>
+
+</manifest>

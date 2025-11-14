@@ -1,0 +1,8 @@
+<resources>
+
+    <!--genaral spacing-->
+    <dimen name="spacing_medium">5dp</dimen>
+    <dimen name="spacing_xmlarge">40dp</dimen>
+    <dimen name="spacing_xxlarge">50dp</dimen>
+
+</resources>
