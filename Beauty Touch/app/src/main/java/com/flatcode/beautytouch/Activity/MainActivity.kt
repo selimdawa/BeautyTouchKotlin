@@ -23,7 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.flatcode.beautytouch.BuildConfig
 import com.flatcode.beautytouch.Fragment.HairProductsFragment
 import com.flatcode.beautytouch.Fragment.HomeFragment
@@ -47,6 +46,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.nafis.bottomnavigation.NafisBottomNavigation
 import java.text.MessageFormat
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var hair_product = "Hair Products"
     var shopping_center = "Shopping Centers"
     var number_product = DATA.EMPTY
-    var meowBottomNavigation: MeowBottomNavigation? = null
+    var bottomNavigation: NafisBottomNavigation? = null
     var publisher: String = DATA.PUBLISHER_NAME
     var aname: String = DATA.APP_NAME
 
@@ -108,13 +108,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding!!.aboutMy.setOnClickListener { showDialogAboutMy() }
         binding!!.logout.setOnClickListener { showDialogLogout() }
 
-        meowBottomNavigation = binding!!.bottomNavigation
-        meowBottomNavigation!!.add(MeowBottomNavigation.Model(1, R.drawable.ic_skin))
-        meowBottomNavigation!!.add(MeowBottomNavigation.Model(2, R.drawable.ic_home))
-        meowBottomNavigation!!.add(MeowBottomNavigation.Model(3, R.drawable.ic_hair))
-        meowBottomNavigation!!.add(MeowBottomNavigation.Model(4, R.drawable.ic_shopping_centers))
+        bottomNavigation = binding!!.bottomNavigation
+        bottomNavigation!!.add(NafisBottomNavigation.Model(1, R.drawable.ic_skin))
+        bottomNavigation!!.add(NafisBottomNavigation.Model(2, R.drawable.ic_home))
+        bottomNavigation!!.add(NafisBottomNavigation.Model(3, R.drawable.ic_hair))
+        bottomNavigation!!.add(NafisBottomNavigation.Model(4, R.drawable.ic_shopping_centers))
 
-        meowBottomNavigation!!.setOnShowListener { item: MeowBottomNavigation.Model ->
+        bottomNavigation!!.setOnShowListener { item: NafisBottomNavigation.Model ->
             var fragment: Fragment? = null
             when (item.id) {
                 1 -> fragment = SkinProductsFragment()
@@ -125,12 +125,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             loadFragment(fragment)
         }
 
-        meowBottomNavigation!!.setCount(1, number_product)
-        meowBottomNavigation!!.setCount(3, number_product)
-        meowBottomNavigation!!.setCount(4, number_product)
-        meowBottomNavigation!!.show(2, true)
+        bottomNavigation!!.setCount(1, number_product)
+        bottomNavigation!!.setCount(3, number_product)
+        bottomNavigation!!.setCount(4, number_product)
+        bottomNavigation!!.show(2, true)
 
-        meowBottomNavigation!!.setOnClickMenuListener { item: MeowBottomNavigation.Model ->
+        bottomNavigation!!.setOnClickMenuListener { item: NafisBottomNavigation.Model ->
             when (item.id) {
                 1 -> Toast.makeText(applicationContext, skin_product, Toast.LENGTH_SHORT)
                     .show()
@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
-        meowBottomNavigation!!.setOnReselectListener { item: MeowBottomNavigation.Model ->
+        bottomNavigation!!.setOnReselectListener { item: NafisBottomNavigation.Model ->
             when (item.id) {
                 1 -> Toast.makeText(applicationContext, skin_product, Toast.LENGTH_SHORT)
                     .show()
@@ -212,7 +212,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         if (post.category == DATA.SKIN_PRODUCTS) if (post.publisher == publisher)
                             if (post.aname == aname) i++
                         binding!!.numberProductSkin.text = MessageFormat.format("{0}", i)
-                        meowBottomNavigation!!.setCount(
+                        bottomNavigation!!.setCount(
                             1, binding!!.numberProductSkin.text as String
                         )
                     }
@@ -234,7 +234,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         if (post.category == DATA.HAIR_PRODUCTS) if (post.publisher == publisher)
                             if (post.aname == aname) i++
                         binding!!.numberProductHair.text = MessageFormat.format("{0}", i)
-                        meowBottomNavigation!!.setCount(
+                        bottomNavigation!!.setCount(
                             3, binding!!.numberProductHair.text as String
                         )
                     }
@@ -252,7 +252,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     binding!!.numberShoppingCenters.text =
                         MessageFormat.format("{0}", dataSnapshot.childrenCount)
-                    meowBottomNavigation!!.setCount(
+                    bottomNavigation!!.setCount(
                         4, binding!!.numberShoppingCenters.text as String
                     )
                 }
