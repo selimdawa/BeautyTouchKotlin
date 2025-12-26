@@ -56,4 +56,3 @@ play-services-ads = { module = "com.google.android.gms:play-services-ads", versi
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-kotlin-kapt = { id = "kotlin-kapt", version.ref = "kotlin" }

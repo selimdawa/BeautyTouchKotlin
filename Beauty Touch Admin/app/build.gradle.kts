@@ -65,7 +65,7 @@ dependencies {
     implementation(libs.circleimageview)                //Circle Image
     implementation(libs.glide)                          //Glide Image
     //noinspection KaptUsageInsteadOfKsp
-    kapt(libs.compiler)                                  //Glide Compiler
+    kapt(libs.compiler)                                 //Glide Compiler
     implementation(libs.material.ripple)                //Ripple Effect
     api(libs.android.image.cropper)                     //Image Crop
 }
