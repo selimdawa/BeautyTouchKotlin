@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/background_day" />
+                android:src="@drawable/background" />
 
             <ImageView
                 android:id="@+id/backWhite"
@@ -159,7 +159,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/button"
-                                android:hint="@string/email_phone"
+                                android:hint="@string/my_number"
                                 android:inputType="numberSigned"
                                 android:maxLength="10"
                                 android:padding="15sp"

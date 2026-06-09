@@ -29,8 +29,6 @@ class RegisterActivity : AppCompatActivity() {
         val view = binding!!.root
         setContentView(view)
 
-        VOID.Intro(baseContext, binding!!.background, binding!!.backWhite, binding!!.backBlack)
-
         auth = FirebaseAuth.getInstance()
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")

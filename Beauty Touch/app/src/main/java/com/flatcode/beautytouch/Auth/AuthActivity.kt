@@ -20,8 +20,6 @@ class AuthActivity : AppCompatActivity() {
         val view = binding!!.root
         setContentView(view)
 
-        VOID.Intro(baseContext, binding!!.background, binding!!.backWhite, binding!!.backBlack)
-
         binding!!.loginBtn.setOnClickListener { VOID.Intent1(context, CLASS.LOGIN) }
         binding!!.skipBtn.setOnClickListener { VOID.Intent1(context, CLASS.REGISTER) }
     }

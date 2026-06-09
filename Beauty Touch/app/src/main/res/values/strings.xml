@@ -7,7 +7,7 @@
     <string name="login">Login</string>
     <string name="forget_password">Forget Password?</string>
     <string name="register">Register</string>
-    <string name="email_phone">01********</string>
+    <string name="my_number">01********</string>
     <string name="none_display">There are no items to display</string>
 
     //Post detail

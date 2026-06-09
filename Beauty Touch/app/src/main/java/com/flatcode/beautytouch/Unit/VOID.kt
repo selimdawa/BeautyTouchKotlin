@@ -5,10 +5,8 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
-import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.flatcode.beautytouch.Activity.MainActivity.Companion.mInterstitialAd
 import com.flatcode.beautytouch.Model.ADs
@@ -92,38 +90,6 @@ object VOID {
             .setAspectRatio(1, 1)
             .setCropShape(CropImageView.CropShape.OVAL)
             .start(activity!!)
-    }
-
-    fun Intro(context: Context?, background: ImageView, backWhite: ImageView, backDark: ImageView) {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(
-            context!!
-        )
-        if (sharedPreferences.getString("color_option", "ONE") == "ONE" ||
-            sharedPreferences.getString("color_option", "TWO") == "TWO" ||
-            sharedPreferences.getString("color_option", "THREE") == "THREE" ||
-            sharedPreferences.getString("color_option", "FOUR") == "FOUR" ||
-            sharedPreferences.getString("color_option", "FIVE") == "FIVE" ||
-            sharedPreferences.getString("color_option", "SIX") == "SIX" ||
-            sharedPreferences.getString("color_option", "SEVEN") == "SEVEN" ||
-            sharedPreferences.getString("color_option", "EIGHT") == "EIGHT" ||
-            sharedPreferences.getString("color_option", "NINE") == "NINE" ||
-            sharedPreferences.getString("color_option", "TEEN") == "TEEN"
-        ) {
-            background.setImageResource(R.drawable.background_day)
-            backWhite.visibility = View.VISIBLE
-            backDark.visibility = View.GONE
-        } else if (sharedPreferences.getString("color_option", "NIGHT_ONE") == "NIGHT_ONE" ||
-            sharedPreferences.getString("color_option", "NIGHT_TWO") == "NIGHT_TWO" ||
-            sharedPreferences.getString("color_option", "NIGHT_THREE") == "NIGHT_THREE" ||
-            sharedPreferences.getString("color_option", "NIGHT_FOUR") == "NIGHT_FOUR" ||
-            sharedPreferences.getString("color_option", "NIGHT_FIVE") == "NIGHT_FIVE" ||
-            sharedPreferences.getString("color_option", "NIGHT_SIX") == "NIGHT_SIX" ||
-            sharedPreferences.getString("color_option", "NIGHT_SEVEN") == "NIGHT_SEVEN"
-        ) {
-            background.setImageResource(R.drawable.background_night)
-            backWhite.visibility = View.GONE
-            backDark.visibility = View.VISIBLE
-        }
     }
 
     fun BannerAd(context: Context?, adView: AdView, bannerName: String?) {
