@@ -1,15 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
     alias(libs.plugins.google.ksp)
 }
 
 android {
     namespace = "com.flatcode.beautytouchadmin"
-    compileSdk {
-        version = release(37)
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.flatcode.beautytouchadmin"
@@ -54,8 +51,12 @@ dependencies {
     //Layout
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
-    implementation(libs.androidx.legacy.support.v4)
-    implementation(libs.androidx.cardview)
+    //Image
+    implementation(libs.circleimageview)                //Circle Image
+    implementation(libs.glide)                          //Glide Image
+    ksp(libs.glide.ksp)                                 //Glide Compiler
+    implementation(libs.material.ripple)                //Ripple Effect
+    api(libs.android.image.cropper)                     //Image Crop
     //Firebase
     implementation(platform(libs.firebase.bom)) //Firebase BOM
     implementation(libs.firebase.auth)
@@ -63,10 +64,6 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.firebase.analytics)
     //implementation(libs.firebase.crashlytics)
-    //Image
-    implementation(libs.circleimageview)                //Circle Image
-    implementation(libs.glide)                          //Glide Image
-    ksp(libs.glide.ksp)                                 //Glide Compiler
-    implementation(libs.material.ripple)                //Ripple Effect
-    api(libs.android.image.cropper)                     //Image Crop
+    //Other's
+    ksp(libs.kotlin.metadata.jvm)                       //Kotlin
 }
