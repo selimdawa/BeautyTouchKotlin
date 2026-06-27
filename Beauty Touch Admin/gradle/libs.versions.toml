@@ -4,8 +4,6 @@ androidImageCropper = "2.8.0"
 circleimageview = "3.1.0"
 firebaseBom = "34.15.0"
 glide = "5.0.7"
-glideKsp = "5.0.7"
-kotlinMetadataJvm = "2.4.0"
 coreKtx = "1.19.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -17,7 +15,6 @@ constraintlayout = "2.2.1"
 materialRipple = "1.0.2"
 preferenceKtx = "1.2.1"
 googleServices = "4.5.0"
-ksp = "2.3.8"
 
 [libraries]
 android-image-cropper = { module = "com.theartofdev.edmodo:android-image-cropper", version.ref = "androidImageCropper" }
@@ -39,10 +36,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 material-ripple = { module = "com.balysv:material-ripple", version.ref = "materialRipple" }
-glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glideKsp" }
-kotlin-metadata-jvm = { module = "org.jetbrains.kotlin:kotlin-metadata-jvm", version.ref = "kotlinMetadataJvm" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
-google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
