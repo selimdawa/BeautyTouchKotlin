@@ -7,7 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
-import com.bumptech.glide.Glide
+import coil.load
 import com.flatcode.beautytouch.Activity.MainActivity.Companion.mInterstitialAd
 import com.flatcode.beautytouch.Model.ADs
 import com.flatcode.beautytouch.R
@@ -74,8 +74,29 @@ object VOID {
                     Image.setImageResource(R.drawable.basic_user)
                 }
             } else {
-                Glide.with(context!!).load(Url).centerCrop().placeholder(R.color.image_profile)
-                    .into(Image)
+                Image.load(Url) {
+                    placeholder(R.color.image_profile)
+                    crossfade(true)
+                }
+            }
+        } catch (e: Exception) {
+            Image.setImageResource(R.drawable.basic_user)
+        }
+    }
+
+    fun GlideBlur(isUser: Boolean, context: Context?, Url: String?, Image: ImageView, level: Int) {
+        try {
+            if (Url == DATA.BASIC) {
+                if (isUser) {
+                    Image.setImageResource(R.drawable.basic_user)
+                } else {
+                    Image.setImageResource(R.drawable.basic_user)
+                }
+            } else {
+                Image.load(Url) {
+                    placeholder(R.color.image_profile)
+                    transformations(SimpleBlurTransformation(level.toFloat()))
+                }
             }
         } catch (e: Exception) {
             Image.setImageResource(R.drawable.basic_user)
