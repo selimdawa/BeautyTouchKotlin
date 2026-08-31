@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Model.Tools
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ActivityAboutMeBinding
 import com.google.firebase.database.DataSnapshot
@@ -41,7 +40,6 @@ class AboutMeActivity : AppCompatActivity() {
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityAboutMeBinding.inflate(layoutInflater)
         val view = binding!!.root

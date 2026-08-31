@@ -6,7 +6,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="?background">
+        android:background="?mc_bg">
 
         <TextView
             android:id="@+id/nameSpace"

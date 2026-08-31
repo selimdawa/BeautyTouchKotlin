@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouch.Model.Tools
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.THEME.setThemeOfApp
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unit.VOID.AdRewardCount
 import com.flatcode.beautytouch.Unitimport.CLASS
@@ -38,7 +37,6 @@ class RewardActivity : AppCompatActivity() {
     var mRewardedAd: RewardedAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityRewardBinding.inflate(layoutInflater)
         val view = binding!!.root

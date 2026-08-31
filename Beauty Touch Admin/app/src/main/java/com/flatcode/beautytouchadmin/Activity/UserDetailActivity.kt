@@ -8,7 +8,6 @@ import com.flatcode.beautytouchadmin.Adapter.FavoritesAdapter
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.Model.User
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ActivityUserDetailBinding
 import com.google.firebase.database.DataSnapshot
@@ -26,7 +25,6 @@ class UserDetailActivity : AppCompatActivity() {
     var profileId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         val view = binding!!.root

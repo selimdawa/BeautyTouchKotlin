@@ -7,7 +7,6 @@ import com.flatcode.beautytouch.Adapter.PostDetailAdapter
 import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.databinding.ActivityPostDetailBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +24,6 @@ class PostDetailsActivity : AppCompatActivity() {
     var postId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityPostDetailBinding.inflate(layoutInflater)
         val view = binding!!.root

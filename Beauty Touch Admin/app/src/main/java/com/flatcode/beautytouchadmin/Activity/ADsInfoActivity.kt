@@ -8,7 +8,6 @@ import com.flatcode.beautytouchadmin.Adapter.ADsInfoAdapter
 import com.flatcode.beautytouchadmin.Model.ADs
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ActivityAdsInfoBinding
 import com.google.firebase.database.DataSnapshot
@@ -26,7 +25,6 @@ class ADsInfoActivity : AppCompatActivity() {
     private var profileId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityAdsInfoBinding.inflate(layoutInflater)
         val view = binding!!.root

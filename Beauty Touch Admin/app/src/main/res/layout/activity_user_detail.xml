@@ -41,7 +41,7 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:src="?background"
+                                    android:src="?mc_bg"
                                     app:layout_constraintDimensionRatio="1:1"
                                     tools:ignore="MissingConstraints" />
 
@@ -110,7 +110,7 @@
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
                         android:text="@string/favorites"
-                        android:textColor="?tickColor"
+                        android:textColor="?mc_tick"
                         android:textSize="21sp" />
 
                     <LinearLayout

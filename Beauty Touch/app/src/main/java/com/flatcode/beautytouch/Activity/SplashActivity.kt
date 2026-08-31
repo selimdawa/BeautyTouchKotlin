@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivitySplashBinding
@@ -19,7 +18,6 @@ class SplashActivity : AppCompatActivity() {
     var time_final = time_per_millis * time_per_second
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         val view = binding!!.root

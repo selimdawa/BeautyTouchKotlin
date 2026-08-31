@@ -8,7 +8,6 @@ import com.flatcode.beautytouchadmin.Adapter.LeaderboardAdapter
 import com.flatcode.beautytouchadmin.Model.Tools
 import com.flatcode.beautytouchadmin.Model.User
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivitySessionNowInfoBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,7 +23,6 @@ class SessionNowInfoActivity : AppCompatActivity() {
     private var adapter: LeaderboardAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivitySessionNowInfoBinding.inflate(layoutInflater)
         val view = binding!!.root

@@ -65,12 +65,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?colorOnBackground"
-                app:mbn_backgroundBottomColor="?tickColor"
+                app:mbn_backgroundBottomColor="?mc_tick"
                 app:mbn_circleColor="@color/white"
                 app:mbn_countBackgroundColor="@color/white"
                 app:mbn_countTextColor="@color/dark"
                 app:mbn_defaultIconColor="@color/white"
-                app:mbn_selectedIconColor="?trackColor"
+                app:mbn_selectedIconColor="?mc_track"
                 app:mbn_shadowColor="?colorOnBackground" />
 
         </LinearLayout>
@@ -81,7 +81,7 @@
             android:layout_width="230dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="?background"
+            android:background="?mc_bg"
             android:fitsSystemWindows="false">
 
             <androidx.core.widget.NestedScrollView
@@ -227,121 +227,6 @@
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/spacing_medium" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_xmlarge"
-                        android:background="?attr/selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="30dp"
-                            android:layout_height="0dp" />
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginEnd="20dp"
-                            android:src="@drawable/ic_color"
-                            app:tint="?color" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/kufi"
-                            android:text="@string/default_color"
-                            android:textColor="?color" />
-
-                        <LinearLayout
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="35sp"
-                            android:background="@drawable/b"
-                            android:gravity="center">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="26dp"
-                                android:layout_height="26dp"
-                                android:backgroundTint="?trackColor"
-                                app:cardCornerRadius="12dp"
-                                app:cardElevation="0dp">
-
-                                <LinearLayout
-                                    android:id="@+id/image_light"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <FrameLayout
-                                        android:id="@+id/settings"
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        android:padding="-10dp" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/spacing_medium" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_xmlarge"
-                        android:background="?attr/selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="30dp"
-                            android:layout_height="0dp" />
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginEnd="20dp"
-                            android:src="@drawable/ic_night"
-                            app:tint="?color" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/kufi"
-                            android:text="@string/dark_mode"
-                            android:textColor="?color" />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="40dp"
-                            android:backgroundTint="?colorOnBackground"
-                            app:cardCornerRadius="15dp"
-                            app:cardElevation="0dp">
-
-                            <LinearLayout
-                                android:id="@+id/image_night"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <FrameLayout
-                                    android:id="@+id/settings_night"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:padding="-10dp" />
-
-                            </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/reward"

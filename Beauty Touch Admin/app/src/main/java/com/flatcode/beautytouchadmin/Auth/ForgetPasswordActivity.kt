@@ -8,7 +8,6 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ActivityForgetPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +20,6 @@ class ForgetPasswordActivity : AppCompatActivity() {
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityForgetPasswordBinding.inflate(layoutInflater)
         val view = binding!!.root

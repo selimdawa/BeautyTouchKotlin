@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Adapter.MyPostsAdapter
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivityPostsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,7 +22,6 @@ class PostsActivity : AppCompatActivity() {
     var type = DATA.ALL
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityPostsBinding.inflate(layoutInflater)
         val view = binding!!.root

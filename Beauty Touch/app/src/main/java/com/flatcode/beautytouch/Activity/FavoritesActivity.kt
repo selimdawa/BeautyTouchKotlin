@@ -8,7 +8,6 @@ import com.flatcode.beautytouch.Adapter.ProductsStaggeredAdapter
 import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID.BannerAd
 import com.flatcode.beautytouch.databinding.ActivityFavoritesBinding
 import com.google.firebase.database.DataSnapshot
@@ -27,7 +26,6 @@ class FavoritesActivity : AppCompatActivity() {
     var aname = "Beauty Touch"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityFavoritesBinding.inflate(layoutInflater)
         val view = binding!!.root

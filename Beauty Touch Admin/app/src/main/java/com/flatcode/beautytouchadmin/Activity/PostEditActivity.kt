@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ActivityPostAddBinding
 import com.google.firebase.database.DataSnapshot
@@ -35,7 +34,6 @@ class PostEditActivity : AppCompatActivity() {
     var typePost: String? = DATA.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityPostAddBinding.inflate(layoutInflater)
         val view = binding!!.root

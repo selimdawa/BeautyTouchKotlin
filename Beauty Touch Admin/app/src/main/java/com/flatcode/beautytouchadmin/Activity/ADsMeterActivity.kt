@@ -8,7 +8,6 @@ import com.flatcode.beautytouchadmin.Adapter.ADsUserAdapter
 import com.flatcode.beautytouchadmin.Model.User
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivityAdsMeterBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,7 +24,6 @@ class ADsMeterActivity : AppCompatActivity() {
     var type: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityAdsMeterBinding.inflate(layoutInflater)
         val view = binding!!.root

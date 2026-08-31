@@ -7,6 +7,19 @@
         android:layout_height="60dp"
         android:background="?colorOnBackground">
 
+        <LinearLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:layout_marginRight="10dp"
+            android:gravity="left">
+
+            <io.selimdawa.multicolors.MultiColorButton
+                android:layout_width="@dimen/spacing_30"
+                android:layout_height="@dimen/spacing_30" />
+
+        </LinearLayout>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
             android:layout_width="40dp"
@@ -22,7 +35,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/bad_script"
             android:text="@string/app_name"
-            android:textColor="?tickColor"
+            android:textColor="?mc_tick"
             android:textSize="21sp"
             android:textStyle="bold" />
 
@@ -32,7 +45,7 @@
             android:layout_height="30dp"
             android:layout_gravity="left"
             android:src="@drawable/ic_drawer"
-            app:tint="?tickColor" />
+            app:tint="?mc_tick" />
 
     </androidx.appcompat.widget.Toolbar>
 

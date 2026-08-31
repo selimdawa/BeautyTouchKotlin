@@ -9,7 +9,6 @@ import com.flatcode.beautytouchadmin.Adapter.HotProductRemoveAdapter
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.THEME
 import com.flatcode.beautytouchadmin.databinding.ActivityHotProductBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -27,7 +26,6 @@ class HotProductActivity : AppCompatActivity() {
     var allpostLists: MutableList<Post?>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityHotProductBinding.inflate(layoutInflater)
         val view = binding!!.root

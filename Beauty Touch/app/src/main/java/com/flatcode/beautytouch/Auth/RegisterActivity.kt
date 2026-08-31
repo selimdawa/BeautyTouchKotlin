@@ -8,7 +8,6 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRegisterBinding
@@ -23,7 +22,6 @@ class RegisterActivity : AppCompatActivity() {
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding!!.root

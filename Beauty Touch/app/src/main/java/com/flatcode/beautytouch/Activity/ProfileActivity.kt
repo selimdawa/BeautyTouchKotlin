@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.flatcode.beautytouch.Model.User
 import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.THEME
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.databinding.ActivityProfileBinding
 import com.google.firebase.database.DataSnapshot
@@ -35,7 +34,6 @@ class ProfileActivity : AppCompatActivity() {
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         val view = binding!!.root
