@@ -95,7 +95,7 @@
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/editImageSessionNow"
                                 android:layout_width="30sp"
                                 android:layout_height="30sp"
@@ -106,7 +106,8 @@
                                 android:padding="2sp"
                                 android:src="@drawable/ic_adds"
                                 app:layout_constraintDimensionRatio="1:1"
-                                app:tint="@color/white" />
+                                app:tint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                         </FrameLayout>
 
@@ -139,7 +140,7 @@
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/editImageSessionOld"
                                 android:layout_width="30sp"
                                 android:layout_height="30sp"
@@ -150,7 +151,8 @@
                                 android:padding="2sp"
                                 android:src="@drawable/ic_adds"
                                 app:layout_constraintDimensionRatio="1:1"
-                                app:tint="@color/white" />
+                                app:tint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                         </FrameLayout>
 
@@ -212,17 +214,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/logoSessionNow"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:src="@color/image_profile"
                                 app:layout_constraintDimensionRatio="1:1"
-                                tools:ignore="MissingConstraints" />
+                                tools:ignore="MissingConstraints"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/editLogoSessionNow"
                             android:layout_width="30sp"
                             android:layout_height="30sp"
@@ -233,7 +236,8 @@
                             android:padding="2sp"
                             android:src="@drawable/ic_adds"
                             app:layout_constraintDimensionRatio="1:1"
-                            app:tint="@color/white" />
+                            app:tint="@color/white"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                     </FrameLayout>
 
@@ -247,17 +251,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/logoSessionOld"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:src="@color/image_profile"
                                 app:layout_constraintDimensionRatio="1:1"
-                                tools:ignore="MissingConstraints" />
+                                tools:ignore="MissingConstraints"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/editLogoSessionOld"
                             android:layout_width="30sp"
                             android:layout_height="30sp"
@@ -268,7 +273,8 @@
                             android:padding="2sp"
                             android:src="@drawable/ic_adds"
                             app:layout_constraintDimensionRatio="1:1"
-                            app:tint="@color/white" />
+                            app:tint="@color/white"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                     </FrameLayout>
 

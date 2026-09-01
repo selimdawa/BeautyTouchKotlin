@@ -62,7 +62,7 @@
 
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                <de.hdodenhof.circleimageview.CircleImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/addImage"
                                     android:layout_width="30sp"
                                     android:layout_height="30sp"
@@ -73,7 +73,8 @@
                                     android:padding="2sp"
                                     android:src="@drawable/ic_adds"
                                     app:layout_constraintDimensionRatio="1:1"
-                                    app:tint="@color/white" />
+                                    app:tint="@color/white"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             </FrameLayout>
 
@@ -105,7 +106,7 @@
 
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                <de.hdodenhof.circleimageview.CircleImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/addImageTwo"
                                     android:layout_width="30sp"
                                     android:layout_height="30sp"
@@ -116,7 +117,8 @@
                                     android:padding="2sp"
                                     android:src="@drawable/ic_adds"
                                     app:layout_constraintDimensionRatio="1:1"
-                                    app:tint="@color/white" />
+                                    app:tint="@color/white"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             </FrameLayout>
 

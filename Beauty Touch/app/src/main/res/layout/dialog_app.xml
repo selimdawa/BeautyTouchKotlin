@@ -134,13 +134,14 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/facebook_design"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:src="@drawable/ic_facebook" />
+                        android:src="@drawable/ic_facebook"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                 </LinearLayout>
 
@@ -189,13 +190,14 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/facebook_programmer"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:src="@drawable/ic_facebook" />
+                        android:src="@drawable/ic_facebook"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                 </LinearLayout>
 

@@ -106,16 +106,16 @@
                             android:background="?color"
                             android:scaleType="centerCrop" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageDrawer"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:layout_marginTop="-36dp"
                             android:scaleType="centerCrop"
                             android:src="@color/image_profile"
-                            app:civ_border_color="@color/white"
-                            app:civ_border_overlay="true"
-                            app:civ_border_width="3sp" />
+                            app:strokeColor="@color/white"
+                            app:strokeWidth="3sp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"

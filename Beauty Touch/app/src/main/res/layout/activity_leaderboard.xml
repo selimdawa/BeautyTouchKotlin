@@ -56,20 +56,22 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center">
 
-                                <de.hdodenhof.circleimageview.CircleImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/image_one"
                                     android:layout_width="150dp"
                                     android:layout_height="150dp"
                                     android:layout_gravity="center"
-                                    android:src="?mc_tick" />
+                                    android:src="?mc_tick"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                                <de.hdodenhof.circleimageview.CircleImageView
+                                <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/image_logo"
                                     android:layout_width="140dp"
                                     android:layout_height="140dp"
                                     android:layout_gravity="center"
                                     android:src="@color/image_profile"
-                                    android:visibility="visible" />
+                                    android:visibility="visible"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             </FrameLayout>
 
@@ -150,13 +152,14 @@
                             android:gravity="center"
                             android:orientation="horizontal">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/reward3"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/ic_info" />
+                                android:src="@drawable/ic_info"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -170,13 +173,14 @@
                                 android:textColor="?color"
                                 android:textSize="30sp" />
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/reward2"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/ic_info" />
+                                android:src="@drawable/ic_info"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -190,13 +194,14 @@
                                 android:textColor="?color"
                                 android:textSize="30sp" />
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/reward"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/ic_info" />
+                                android:src="@drawable/ic_info"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -219,13 +224,14 @@
                             android:gravity="center"
                             android:orientation="horizontal">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/reward5"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/ic_info" />
+                                android:src="@drawable/ic_info"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -239,13 +245,14 @@
                                 android:textColor="?color"
                                 android:textSize="30sp" />
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/reward4"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/ic_info" />
+                                android:src="@drawable/ic_info"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -268,13 +275,14 @@
                             android:gravity="center"
                             android:orientation="horizontal">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/reward6"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/ic_info" />
+                                android:src="@drawable/ic_info"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                             <TextView
                                 android:layout_width="wrap_content"

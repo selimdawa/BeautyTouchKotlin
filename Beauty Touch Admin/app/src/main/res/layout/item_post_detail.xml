@@ -49,75 +49,85 @@
                     android:layout_marginEnd="5dp"
                     android:orientation="horizontal">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_1"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_2"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_3"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_4"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_5"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_6"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_7"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_8"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_9"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/image_product_10"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_margin="5dp"
-                        android:src="@color/image_profile" />
+                        android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                 </LinearLayout>
 

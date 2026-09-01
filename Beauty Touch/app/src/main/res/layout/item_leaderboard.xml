@@ -57,14 +57,15 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image_profile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:src="@color/image_profile" />
+                    android:src="@color/image_profile"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
             </LinearLayout>
 
