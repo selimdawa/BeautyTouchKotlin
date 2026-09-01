@@ -372,15 +372,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dialog.window!!.attributes = lp
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SETTINGS_CODE) {
-            this.recreate()
-        }
-    }
-
     companion object {
-        private const val SETTINGS_CODE = 234
         var mInterstitialAd: InterstitialAd? = null
     }
 }

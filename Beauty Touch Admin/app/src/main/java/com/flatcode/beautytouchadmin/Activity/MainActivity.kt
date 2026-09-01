@@ -169,20 +169,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SETTINGS_CODE) {
-            recreate()
-        }
-    }
-
     override fun onResume() {
         userInfo()
         nrItems()
         super.onResume()
-    }
-
-    companion object {
-        private const val SETTINGS_CODE = 234
     }
 }

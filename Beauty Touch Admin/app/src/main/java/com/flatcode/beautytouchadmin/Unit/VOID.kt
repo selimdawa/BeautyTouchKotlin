@@ -17,7 +17,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.preference.PreferenceManager
 import coil.load
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.Model.ShoppingCenter
