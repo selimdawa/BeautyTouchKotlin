@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.multicolors)
     //Image
     implementation(libs.coil)                           //Coil Image
+    implementation(libs.coil.network)
     api(libs.android.image.cropper)                     //Image Crop
     implementation(libs.autoimageslider)                //Slider Show
     //Firebase

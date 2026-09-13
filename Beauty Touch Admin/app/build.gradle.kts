@@ -46,7 +46,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.multicolors)
     //Image
-    implementation(libs.coil)                           //Coil Image
+    implementation(libs.coil3)                          //Coil Image
+    implementation(libs.coil3.network.okhttp)
     api(libs.android.image.cropper)                     //Image Crop
     //Firebase
     implementation(platform(libs.firebase.bom)) //Firebase BOM

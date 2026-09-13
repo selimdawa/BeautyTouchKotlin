@@ -7,7 +7,10 @@ import android.content.Intent
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
-import coil.load
+import coil3.load
+import coil3.request.crossfade
+import coil3.request.placeholder
+import coil3.request.transformations
 import com.flatcode.beautytouch.Activity.MainActivity.Companion.mInterstitialAd
 import com.flatcode.beautytouch.Model.ADs
 import com.flatcode.beautytouch.R

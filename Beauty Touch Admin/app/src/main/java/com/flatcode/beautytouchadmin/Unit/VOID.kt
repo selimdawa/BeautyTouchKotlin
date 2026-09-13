@@ -17,7 +17,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import coil.load
+import coil3.load
+import coil3.request.crossfade
+import coil3.request.placeholder
+import coil3.request.transformations
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.Model.ShoppingCenter
 import com.flatcode.beautytouchadmin.Model.Tools
