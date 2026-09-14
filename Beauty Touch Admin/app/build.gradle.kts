@@ -33,6 +33,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 }
 
@@ -44,8 +45,6 @@ dependencies {
 
     // MVVM & Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Hilt
     implementation(libs.hilt.android)

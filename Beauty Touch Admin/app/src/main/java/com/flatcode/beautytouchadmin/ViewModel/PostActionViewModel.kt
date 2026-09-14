@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -66,8 +67,10 @@ class PostActionViewModel @Inject constructor(private val repository: PostReposi
                     "use" to howToUse
                 )
                 repository.addPost(hashMap)
+                Timber.i("Post added successfully with ID: $id")
                 _actionStatus.emit(Result.success("Post added successfully"))
             } catch (e: Exception) {
+                Timber.e(e, "Failed to add post")
                 _actionStatus.emit(Result.failure(e))
             } finally {
                 _isLoading.value = false
@@ -96,8 +99,10 @@ class PostActionViewModel @Inject constructor(private val repository: PostReposi
                 }
 
                 repository.updatePost(postId, hashMap)
+                Timber.i("Post updated successfully: $postId")
                 _actionStatus.emit(Result.success("Post updated successfully"))
             } catch (e: Exception) {
+                Timber.e(e, "Failed to update post: $postId")
                 _actionStatus.emit(Result.failure(e))
             } finally {
                 _isLoading.value = false

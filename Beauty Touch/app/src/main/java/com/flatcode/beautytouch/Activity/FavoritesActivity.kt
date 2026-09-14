@@ -15,6 +15,7 @@ import com.flatcode.beautytouch.Unit.VOID.BannerAd
 import com.flatcode.beautytouch.databinding.ActivityFavoritesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class FavoritesActivity : AppCompatActivity() {
@@ -47,6 +48,7 @@ class FavoritesActivity : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.favoritePosts.collect { resource ->
+                Timber.d("Favorite posts collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         binding!!.bar.visibility = View.VISIBLE
@@ -69,6 +71,7 @@ class FavoritesActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         binding!!.bar.visibility = View.GONE
+                        Timber.e("Favorite posts error: ${resource.message}")
                     }
                     else -> {}
                 }

@@ -39,6 +39,7 @@ import com.google.android.material.navigation.NavigationView
 import com.nafis.bottomnavigation.NafisBottomNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.MessageFormat
 
 @AndroidEntryPoint
@@ -159,6 +160,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun observeViewModels() {
         lifecycleScope.launch {
             postViewModel.skinCount.collect { resource ->
+                Timber.d("Skin count collected: $resource")
                 if (resource is Resource.Success) {
                     binding!!.numberProductSkin.text = MessageFormat.format("{0}", resource.data)
                     bottomNavigation!!.setCount(1, resource.data.toString())
@@ -167,6 +169,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         lifecycleScope.launch {
             postViewModel.hairCount.collect { resource ->
+                Timber.d("Hair count collected: $resource")
                 if (resource is Resource.Success) {
                     binding!!.numberProductHair.text = MessageFormat.format("{0}", resource.data)
                     bottomNavigation!!.setCount(3, resource.data.toString())
@@ -175,6 +178,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         lifecycleScope.launch {
             postViewModel.shoppingCount.collect { resource ->
+                Timber.d("Shopping count collected: $resource")
                 if (resource is Resource.Success) {
                     binding!!.numberShoppingCenters.text = MessageFormat.format("{0}", resource.data)
                     bottomNavigation!!.setCount(4, resource.data.toString())
@@ -183,6 +187,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         lifecycleScope.launch {
             userViewModel.userInfo.collect { resource ->
+                Timber.d("User info collected: $resource")
                 if (resource is Resource.Success) {
                     val user = resource.data
                     Glide.with(context).load(user.imageurl).into(binding!!.imageDrawer)

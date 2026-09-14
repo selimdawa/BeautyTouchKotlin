@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LeaderboardActivity : AppCompatActivity() {
@@ -47,6 +48,7 @@ class LeaderboardActivity : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.appTools.collect { resource ->
+                Timber.d("App tools collected: $resource")
                 if (resource is Resource.Success) {
                     val tools = resource.data
                     VOID.Glide(false, context, tools.imageSession, binding!!.imageSession)
@@ -60,6 +62,7 @@ class LeaderboardActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             viewModel.leaderboard.collect { resource ->
+                Timber.d("Leaderboard collected: $resource")
                 if (resource is Resource.Success) {
                     list!!.clear()
                     list!!.addAll(resource.data)
@@ -69,6 +72,7 @@ class LeaderboardActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             viewModel.rewards.collect { resource ->
+                Timber.d("Rewards collected: $resource")
                 if (resource is Resource.Success) {
                     val reward = resource.data
                     reward.reward?.let { ReadReward(it, binding!!.reward) }

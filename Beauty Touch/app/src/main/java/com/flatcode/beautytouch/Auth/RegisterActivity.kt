@@ -15,6 +15,7 @@ import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
@@ -47,6 +48,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.registerState.collect { resource ->
+                Timber.d("Register state collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         dialog!!.setMessage("The account is created")
@@ -62,6 +64,7 @@ class RegisterActivity : AppCompatActivity() {
 
                     is Resource.Error -> {
                         dialog!!.dismiss()
+                        Timber.e("Register error: ${resource.message}")
                         Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
                     }
 

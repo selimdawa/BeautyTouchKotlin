@@ -15,6 +15,7 @@ import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityForgetPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ForgetPasswordActivity : AppCompatActivity() {
@@ -50,6 +51,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.forgetPasswordState.collect { resource ->
+                Timber.d("Forget password state collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         dialog!!.setMessage("Password recovery is sent...")
@@ -63,6 +65,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
                     is Resource.Error -> {
                         dialog!!.dismiss()
+                        Timber.e("Forget password error: ${resource.message}")
                         Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
                     }
 

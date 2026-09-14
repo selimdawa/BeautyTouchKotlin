@@ -21,6 +21,7 @@ import com.flatcode.beautytouch.databinding.ActivityProfileBinding
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
@@ -79,6 +80,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.userInfo.collect { resource ->
+                Timber.d("User info collected: $resource")
                 if (resource is Resource.Success) {
                     val user = resource.data
                     Glide.with(this@ProfileActivity).load(user.imageurl).into(binding!!.image)
@@ -89,6 +91,7 @@ class ProfileActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             viewModel.uploadImageState.collect { resource ->
+                Timber.d("Upload image state collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         dialog!!.setMessage("The image is loading...")
@@ -99,6 +102,7 @@ class ProfileActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         dialog!!.dismiss()
+                        Timber.e("Upload image error: ${resource.message}")
                         Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> {}
@@ -107,6 +111,7 @@ class ProfileActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             viewModel.updateProfileState.collect { resource ->
+                Timber.d("Update profile state collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         dialog!!.setMessage("Modifications are loaded...")
@@ -119,6 +124,7 @@ class ProfileActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         dialog!!.dismiss()
+                        Timber.e("Update profile error: ${resource.message}")
                         Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> {}

@@ -16,6 +16,7 @@ import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -50,6 +51,7 @@ class HomeFragment : Fragment() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.sliderCount.collect { resource ->
+                Timber.d("Slider count collected: $resource")
                 if (resource is Resource.Success) {
                     binding!!.imageSlider.sliderAdapter = ImageSliderAdapter(context, resource.data)
                 }
@@ -57,6 +59,7 @@ class HomeFragment : Fragment() {
         }
         lifecycleScope.launch {
             viewModel.hotProducts.collect { resource ->
+                Timber.d("Hot products collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         binding!!.progressCircular.visibility = View.VISIBLE
@@ -73,6 +76,7 @@ class HomeFragment : Fragment() {
 
                     is Resource.Error -> {
                         binding!!.progressCircular.visibility = View.GONE
+                        Timber.e("Hot products error: ${resource.message}")
                     }
 
                     else -> {}
@@ -81,6 +85,7 @@ class HomeFragment : Fragment() {
         }
         lifecycleScope.launch {
             viewModel.allPosts.collect { resource ->
+                Timber.d("All posts collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         binding!!.progressCircular2.visibility = View.VISIBLE
@@ -97,6 +102,7 @@ class HomeFragment : Fragment() {
 
                     is Resource.Error -> {
                         binding!!.progressCircular2.visibility = View.GONE
+                        Timber.e("All posts error: ${resource.message}")
                     }
 
                     else -> {}

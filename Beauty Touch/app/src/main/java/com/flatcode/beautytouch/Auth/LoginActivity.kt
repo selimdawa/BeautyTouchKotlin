@@ -15,6 +15,7 @@ import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -44,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.loginState.collect { resource ->
+                Timber.d("Login state collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
                         dialog!!.setMessage("Signed in...")
@@ -57,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
 
                     is Resource.Error -> {
                         dialog!!.dismiss()
+                        Timber.e("Login error: ${resource.message}")
                         Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
                     }
 

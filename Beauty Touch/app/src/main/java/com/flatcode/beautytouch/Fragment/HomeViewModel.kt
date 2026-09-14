@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,19 +27,23 @@ class HomeViewModel @Inject constructor(
     val sliderCount: StateFlow<Resource<Int>?> = _sliderCount
 
     fun loadHomeData(publisher: String, aname: String) {
+        Timber.d("Loading home data for publisher: $publisher, aname: $aname")
         viewModelScope.launch {
             repository.getHotProducts(publisher, aname).collect {
                 _hotProducts.value = it
+                Timber.d("Hot products state updated: $it")
             }
         }
         viewModelScope.launch {
             repository.getAllPosts(publisher, aname).collect {
                 _allPosts.value = it
+                Timber.d("All posts state updated: $it")
             }
         }
         viewModelScope.launch {
             repository.getImageSliderCount().collect {
                 _sliderCount.value = it
+                Timber.d("Slider count state updated: $it")
             }
         }
     }

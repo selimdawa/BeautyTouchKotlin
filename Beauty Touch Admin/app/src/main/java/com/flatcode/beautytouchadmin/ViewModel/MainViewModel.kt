@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 data class MainState(
@@ -53,6 +54,7 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
                     isLoading = false
                 )
             }.collect { newState ->
+                Timber.d("Main data fetched successfully: $newState")
                 _state.value = newState
             }
         }
