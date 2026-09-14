@@ -2,11 +2,14 @@ package com.flatcode.beautytouchadmin.Unit
 
 import android.app.Application
 import android.text.format.DateFormat
+import dagger.hilt.android.HiltAndroidApp
 import io.selimdawa.multicolors.MultiColorManager
 import java.util.Calendar
 import java.util.Locale
 
-class Application : Application() {
+@HiltAndroidApp
+class MyApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
         MultiColorManager.init(this)

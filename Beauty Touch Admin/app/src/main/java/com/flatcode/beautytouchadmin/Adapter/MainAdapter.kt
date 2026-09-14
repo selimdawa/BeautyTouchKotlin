@@ -15,14 +15,12 @@ import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemMainBinding
 import java.text.MessageFormat
 
-class MainAdapter(private val context: Context, var list: List<Main>) :
+class MainAdapter(private val context: Context, var list: MutableList<Main>) :
     RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    private var binding: ItemMainBinding? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemMainBinding.inflate(LayoutInflater.from(context), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemMainBinding.inflate(LayoutInflater.from(context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -30,7 +28,6 @@ class MainAdapter(private val context: Context, var list: List<Main>) :
         val image = model.image
         val number = model.number
         val name = model.title
-        //String id = list.getId();
         val c = model.c
 
         if (image != 0) holder.image.setImageResource(image) else holder.image.setImageResource(R.drawable.ic_load)
@@ -48,17 +45,10 @@ class MainAdapter(private val context: Context, var list: List<Main>) :
         return list.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var name: TextView
-        var number: TextView
-        var image: ImageView
-        var item: LinearLayout
-
-        init {
-            image = binding!!.image
-            name = binding!!.name
-            number = binding!!.number
-            item = binding!!.item
-        }
+    class ViewHolder(binding: ItemMainBinding) : RecyclerView.ViewHolder(binding.root) {
+        val name: TextView = binding.name
+        val number: TextView = binding.number
+        val image: ImageView = binding.image
+        val item: LinearLayout = binding.item
     }
 }

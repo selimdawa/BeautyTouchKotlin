@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.Post
+import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.CLASS
 import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.VOID
@@ -20,17 +21,24 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.MessageFormat
 
-class HotProductAddAdapter(private val mContext: Context, private val mPost: List<Post?>) :
-    RecyclerView.Adapter<HotProductAddAdapter.ViewHolder>() {
+class HotProductAddAdapter(
+    private val mContext: Context, 
+    var list: MutableList<Post?>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<HotProductAddAdapter.ViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onAddClick(post: Post)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemProductAddBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemProductAddBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val post = mPost[position]
-        val id = post!!.postid
+        val post = list[position] ?: return
+        val id = post.postid
 
         VOID.Glide(false, mContext, post.postimage, holder.image_product)
         if (post.name == DATA.EMPTY) {
@@ -47,34 +55,23 @@ class HotProductAddAdapter(private val mContext: Context, private val mPost: Lis
         }
 
         nrLikes(holder.likes, id)
-        holder.add.setOnClickListener {
-            FirebaseDatabase.getInstance().getReference(DATA.HOT_PRODUCT).child(id!!).setValue(true)
-        }
+        holder.add.setOnClickListener { listener.onAddClick(post) }
         holder.card.setOnClickListener {
             VOID.IntentExtra(mContext, CLASS.POST_DETAILS, DATA.POST_ID, id)
         }
     }
 
     override fun getItemCount(): Int {
-        return mPost.size
+        return list.size
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        var card: CardView
-        var image_product: ImageView
-        var likes: TextView
-        var name: TextView
-        var price: TextView
-        var add: ImageButton
-
-        init {
-            card = binding!!.card
-            image_product = binding!!.imageProduct
-            likes = binding!!.likes
-            name = binding!!.name
-            price = binding!!.price
-            add = binding!!.add
-        }
+    class ViewHolder(binding: ItemProductAddBinding) : RecyclerView.ViewHolder(binding.root) {
+        val card: CardView = binding.card
+        val image_product: ImageView = binding.imageProduct
+        val likes: TextView = binding.likes
+        val name: TextView = binding.name
+        val price: TextView = binding.price
+        val add: ImageButton = binding.add
     }
 
     private fun nrLikes(likes: TextView, postId: String?) {
@@ -86,9 +83,5 @@ class HotProductAddAdapter(private val mContext: Context, private val mPost: Lis
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-    }
-
-    companion object {
-        private var binding: ItemProductAddBinding? = null
     }
 }

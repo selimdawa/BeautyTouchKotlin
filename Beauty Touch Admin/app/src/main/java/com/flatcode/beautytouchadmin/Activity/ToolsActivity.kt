@@ -9,25 +9,25 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.beautytouchadmin.Model.Tools
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.ViewModel.ToolsViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityToolsBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ToolsActivity : AppCompatActivity() {
 
     private var binding: ActivityToolsBinding? = null
-    var activity: Activity? = null
-    var context: Context = also { activity = it }
+    private var activity: Activity? = null
+    private var context: Context = also { activity = it }
     private var imageUri: Uri? = null
     private var imageUri2: Uri? = null
     private var imageUri3: Uri? = null
@@ -38,12 +38,12 @@ class ToolsActivity : AppCompatActivity() {
     private val LOGO_NOW = 3
     private val LOGO_OLD = 4
     private var IMAGE_NUMBER = 0
+    private val viewModel: ToolsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityToolsBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding!!.root)
 
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
@@ -68,24 +68,52 @@ class ToolsActivity : AppCompatActivity() {
         binding!!.toolbar.nameSpace.setText(R.string.tools)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
         binding!!.go.setOnClickListener { validateData() }
+
+        observeViewModel()
     }
 
-    private var sessionNow = DATA.EMPTY
-    private var sessionOld = DATA.EMPTY
-    private var sessionNumberNow = DATA.EMPTY
-    private var sessionNumberOld = DATA.EMPTY
-    private var yearNow = DATA.EMPTY
-    private var yearOld = DATA.EMPTY
-    private fun validateData() {
-        //get data
-        sessionNow = binding!!.sessionNow.text.toString().trim { it <= ' ' }
-        sessionOld = binding!!.sessionOld.text.toString().trim { it <= ' ' }
-        sessionNumberNow = binding!!.sessionNumberNow.text.toString().trim { it <= ' ' }
-        sessionNumberOld = binding!!.sessionNumberOld.text.toString().trim { it <= ' ' }
-        yearNow = binding!!.yearNow.text.toString().trim { it <= ' ' }
-        yearOld = binding!!.yearOld.text.toString().trim { it <= ' ' }
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.tools.collect { tools ->
+                    tools?.let {
+                        VOID.Glide(false, context, it.imageSession, binding!!.imageSessionNow)
+                        VOID.Glide(false, context, it.oldImageSession, binding!!.imageSessionOld)
+                        VOID.Glide(false, context, it.imageLogo, binding!!.logoSessionNow)
+                        VOID.Glide(false, context, it.oldImageLogo, binding!!.logoSessionOld)
+                        binding!!.sessionNow.setText(it.session)
+                        binding!!.sessionOld.setText(it.oldSession)
+                        binding!!.sessionNumberNow.setText(it.sessionNumber)
+                        binding!!.sessionNumberOld.setText(it.oldSessionNumber)
+                        binding!!.yearNow.setText(it.year)
+                        binding!!.yearOld.setText(it.oldYear)
+                    }
+                }
+            }
+        }
 
-        //validate data
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    dialog!!.dismiss()
+                    result.onSuccess {
+                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    }.onFailure {
+                        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun validateData() {
+        val sessionNow = binding!!.sessionNow.text.toString().trim()
+        val sessionOld = binding!!.sessionOld.text.toString().trim()
+        val sessionNumberNow = binding!!.sessionNumberNow.text.toString().trim()
+        val sessionNumberOld = binding!!.sessionNumberOld.text.toString().trim()
+        val yearNow = binding!!.yearNow.text.toString().trim()
+        val yearOld = binding!!.yearOld.text.toString().trim()
+
         if (TextUtils.isEmpty(sessionNow)) {
             Toast.makeText(context, "Enter the Session number", Toast.LENGTH_SHORT).show()
         } else if (TextUtils.isEmpty(sessionNumberNow)) {
@@ -93,164 +121,17 @@ class ToolsActivity : AppCompatActivity() {
         } else if (TextUtils.isEmpty(yearNow)) {
             Toast.makeText(context, "Enter the year", Toast.LENGTH_SHORT).show()
         } else {
-            if (imageUri == null && imageUri2 == null && imageUri3 == null && imageUri4 == null) {
-                updatePost(DATA.EMPTY, DATA.EMPTY, DATA.EMPTY, DATA.EMPTY)
-            } else {
-                if (imageUri != null) uploadImage() else if (imageUri2 != null) uploadImage2(null) else if (imageUri3 != null) uploadImage3(
-                    null, null
-                ) else if (imageUri4 != null) uploadImage4(null, null, null)
-            }
+            dialog!!.setMessage("Editing....")
+            dialog!!.show()
+            viewModel.updateTools(
+                sessionNow, sessionOld, sessionNumberNow, sessionNumberOld, yearNow, yearOld,
+                imageUri, imageUri2, imageUri3, imageUri4,
+                imageUri?.let { VOID.getFileExtension(it, context) },
+                imageUri2?.let { VOID.getFileExtension(it, context) },
+                imageUri3?.let { VOID.getFileExtension(it, context) },
+                imageUri4?.let { VOID.getFileExtension(it, context) }
+            )
         }
-    }
-
-    private fun uploadImage() {
-        dialog!!.setMessage("The current session image is being updated...")
-        dialog!!.show()
-        val filePathAndName = "Images/Session/sessionNow"
-        val reference = FirebaseStorage.getInstance()
-            .getReference(filePathAndName + DATA.DOT + VOID.getFileExtension(imageUri, context))
-        reference.putFile(imageUri!!)
-            .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val uriTask = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val image = DATA.EMPTY + uriTask.result
-                if (imageUri2 != null) {
-                    uploadImage2(image)
-                } else if (imageUri3 != null) {
-                    uploadImage3(image, null)
-                } else if (imageUri4 != null) {
-                    uploadImage4(image, null, null)
-                } else {
-                    updatePost(image, null, null, null)
-                }
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun uploadImage2(image: String?) {
-        dialog!!.setMessage("The previous session image is being updated...")
-        dialog!!.show()
-        val filePathAndName = "Images/Session/sessionOld"
-        val reference = FirebaseStorage.getInstance()
-            .getReference(filePathAndName + DATA.DOT + VOID.getFileExtension(imageUri, context))
-        reference.putFile(imageUri2!!)
-            .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val uriTask = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val image2 = DATA.EMPTY + uriTask.result
-                if (imageUri3 != null) {
-                    uploadImage3(image, image2)
-                } else if (imageUri4 != null) {
-                    uploadImage4(image, image2, null)
-                } else {
-                    updatePost(image, image2, null, null)
-                }
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun uploadImage3(image: String?, image2: String?) {
-        dialog!!.setMessage("The current session logo is being updated...")
-        dialog!!.show()
-        val filePathAndName = "Images/Logo/logoNow"
-        val reference = FirebaseStorage.getInstance()
-            .getReference(filePathAndName + DATA.DOT + VOID.getFileExtension(imageUri, context))
-        reference.putFile(imageUri3!!)
-            .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val uriTask = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val image3 = DATA.EMPTY + uriTask.result
-                if (imageUri4 != null) {
-                    uploadImage4(image, image2, image3)
-                } else {
-                    updatePost(image, image2, image3, null)
-                }
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun uploadImage4(image: String?, image2: String?, image3: String?) {
-        dialog!!.setMessage("The logo of the previous session is being updated...")
-        dialog!!.show()
-        val filePathAndName = "Images/Logo/logoOld"
-        val reference = FirebaseStorage.getInstance()
-            .getReference(filePathAndName + DATA.DOT + VOID.getFileExtension(imageUri, context))
-        reference.putFile(imageUri4!!)
-            .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val uriTask = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val image4 = DATA.EMPTY + uriTask.result
-                updatePost(image, image2, image3, image4)
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun updatePost(image: String?, image2: String?, image3: String?, image4: String?) {
-        dialog!!.setMessage("Editing....")
-        dialog!!.show()
-        val hashMap = HashMap<String, Any>()
-        hashMap["session"] = DATA.EMPTY + sessionNow
-        hashMap["sessionNumber"] = DATA.EMPTY + sessionNumberNow
-        hashMap["year"] = DATA.EMPTY + yearNow
-        hashMap["oldSession"] = DATA.EMPTY + sessionOld
-        hashMap["oldSessionNumber"] = DATA.EMPTY + sessionNumberOld
-        hashMap["oldYear"] = DATA.EMPTY + yearOld
-        if (imageUri != null) hashMap["imageSession"] = DATA.EMPTY + image
-        if (imageUri2 != null) hashMap["oldImageSession"] = DATA.EMPTY + image2
-        if (imageUri3 != null) hashMap["imageLogo"] = DATA.EMPTY + image3
-        if (imageUri4 != null) hashMap["oldImageLogo"] = DATA.EMPTY + image4
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.updateChildren(hashMap).addOnSuccessListener {
-            dialog!!.dismiss()
-            Toast.makeText(context, "Modified", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener { e: Exception ->
-            dialog!!.dismiss()
-            Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun Data() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val tools = dataSnapshot.getValue(Tools::class.java)!!
-                val sessionNow = tools.session
-                val sessionOld = tools.oldSession
-                val sessionNumberNow = tools.sessionNumber
-                val sessionNumberOld = tools.oldSessionNumber
-                val yearNow = tools.year
-                val yearOld = tools.oldYear
-                val ImageNow = tools.imageSession
-                val ImageOld = tools.oldImageSession
-                val logoNow = tools.imageLogo
-                val logoOld = tools.oldImageLogo
-
-                VOID.Glide(false, context, ImageNow, binding!!.imageSessionNow)
-                VOID.Glide(false, context, ImageOld, binding!!.imageSessionOld)
-                VOID.Glide(false, context, logoNow, binding!!.logoSessionNow)
-                VOID.Glide(false, context, logoOld, binding!!.logoSessionOld)
-                binding!!.sessionNow.setText(sessionNow)
-                binding!!.sessionOld.setText(sessionOld)
-                binding!!.sessionNumberNow.setText(sessionNumberNow)
-                binding!!.sessionNumberOld.setText(sessionNumberOld)
-                binding!!.yearNow.setText(yearNow)
-                binding!!.yearOld.setText(yearOld)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -259,21 +140,10 @@ class ToolsActivity : AppCompatActivity() {
             val uri = CropImage.getPickImageResultUri(context, data)
             if (CropImage.isReadExternalStoragePermissionsRequired(context, uri)) {
                 when (IMAGE_NUMBER) {
-                    IMAGE_NOW -> {
-                        imageUri = uri
-                    }
-
-                    IMAGE_OLD -> {
-                        imageUri2 = uri
-                    }
-
-                    LOGO_NOW -> {
-                        imageUri3 = uri
-                    }
-
-                    LOGO_OLD -> {
-                        imageUri4 = uri
-                    }
+                    IMAGE_NOW -> imageUri = uri
+                    IMAGE_OLD -> imageUri2 = uri
+                    LOGO_NOW -> imageUri3 = uri
+                    LOGO_OLD -> imageUri4 = uri
                 }
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
             } else {
@@ -288,17 +158,14 @@ class ToolsActivity : AppCompatActivity() {
                         imageUri = result.uri
                         binding!!.imageSessionNow.setImageURI(imageUri)
                     }
-
                     IMAGE_OLD -> {
                         imageUri2 = result.uri
                         binding!!.imageSessionOld.setImageURI(imageUri2)
                     }
-
                     LOGO_NOW -> {
                         imageUri3 = result.uri
                         binding!!.logoSessionNow.setImageURI(imageUri3)
                     }
-
                     LOGO_OLD -> {
                         imageUri4 = result.uri
                         binding!!.logoSessionOld.setImageURI(imageUri4)
@@ -309,15 +176,5 @@ class ToolsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Something went wrong! $error", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onRestart() {
-        Data()
-        super.onRestart()
-    }
-
-    override fun onResume() {
-        Data()
-        super.onResume()
     }
 }

@@ -9,31 +9,35 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.ViewModel.PostActionViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityPostAddBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class PostAddActivity : AppCompatActivity() {
 
     private var binding: ActivityPostAddBinding? = null
-    var activity: Activity? = null
-    var context: Context = also { activity = it }
+    private var activity: Activity? = null
+    private var context: Context = also { activity = it }
     private var imageUri: Uri? = null
     private var dialog: ProgressDialog? = null
-    var typePost = DATA.EMPTY
+    private var typePost = DATA.EMPTY
+    private val viewModel: PostActionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostAddBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding!!.root)
 
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
@@ -54,20 +58,32 @@ class PostAddActivity : AppCompatActivity() {
         }
         binding!!.go.setOnClickListener { validateData() }
         binding!!.layoutImageProfile.setOnClickListener { VOID.CropImageSquare(activity) }
+
+        observeViewModel()
     }
 
-    private var name = DATA.EMPTY
-    private var indications = DATA.EMPTY
-    private var howToUse = DATA.EMPTY
-    private var price = DATA.EMPTY
-    private fun validateData() {
-        //get data
-        name = binding!!.name.text.toString().trim { it <= ' ' }
-        indications = binding!!.indications.text.toString().trim { it <= ' ' }
-        howToUse = binding!!.howToUse.text.toString().trim { it <= ' ' }
-        price = binding!!.price.text.toString().trim { it <= ' ' }
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    dialog!!.dismiss()
+                    result.onSuccess {
+                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }.onFailure {
+                        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
 
-        //validate data
+    private fun validateData() {
+        val name = binding!!.name.text.toString().trim()
+        val indications = binding!!.indications.text.toString().trim()
+        val howToUse = binding!!.howToUse.text.toString().trim()
+        val price = binding!!.price.text.toString().trim()
+
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(context, "Enter a name", Toast.LENGTH_SHORT).show()
         } else if (TextUtils.isEmpty(indications)) {
@@ -81,61 +97,12 @@ class PostAddActivity : AppCompatActivity() {
         } else if (imageUri == null) {
             Toast.makeText(context, "There's no picture!", Toast.LENGTH_SHORT).show()
         } else {
-            uploadToStorage()
-        }
-    }
-
-    private fun uploadToStorage() {
-        dialog!!.setMessage("Post being created...")
-        dialog!!.show()
-        val ref = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-        val id = ref.push().key
-        val filePathAndName = "Images/Posts/$id"
-        val reference = FirebaseStorage.getInstance()
-            .getReference(filePathAndName + DATA.DOT + VOID.getFileExtension(imageUri, context))
-        reference.putFile(imageUri!!)
-            .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val uriTask = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val uploadedImageUrl = DATA.EMPTY + uriTask.result
-                uploadInfoDB(uploadedImageUrl, id, ref)
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun uploadInfoDB(uploadedImageUrl: String, id: String?, ref: DatabaseReference) {
-        dialog!!.setMessage("Publishing...")
-        dialog!!.show()
-        val hashMap = HashMap<String, Any?>()
-        hashMap["aname"] = DATA.APP_NAME
-        hashMap["category"] = DATA.EMPTY + typePost
-        hashMap["indications"] = binding!!.indications.text.toString().trim { it <= ' ' }
-        hashMap["name"] = binding!!.name.text.toString().trim { it <= ' ' }
-        hashMap["postid"] = id
-        hashMap["postimage"] = uploadedImageUrl
-        hashMap["postimage2"] = DATA.EMPTY
-        hashMap["postimage3"] = DATA.EMPTY
-        hashMap["postimage4"] = DATA.EMPTY
-        hashMap["postimage5"] = DATA.EMPTY
-        hashMap["postimage6"] = DATA.EMPTY
-        hashMap["postimage7"] = DATA.EMPTY
-        hashMap["postimage8"] = DATA.EMPTY
-        hashMap["postimage9"] = DATA.EMPTY
-        hashMap["postimage10"] = DATA.EMPTY
-        hashMap["timeStamp"] = DATA.EMPTY + System.currentTimeMillis()
-        hashMap["price"] = binding!!.price.text.toString().trim { it <= ' ' }
-        hashMap["publisher"] = DATA.EMPTY + DATA.FirebaseUserUid
-        hashMap["use"] = binding!!.howToUse.text.toString().trim { it <= ' ' }
-        assert(id != null)
-        ref.child(id!!).setValue(hashMap).addOnSuccessListener {
-            dialog!!.dismiss()
-            Toast.makeText(context, "uploaded", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener { e: Exception ->
-            dialog!!.dismiss()
-            Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT).show()
+            dialog!!.setMessage("Post being created...")
+            dialog!!.show()
+            viewModel.addPost(
+                name, indications, howToUse, price, typePost, imageUri!!,
+                VOID.getFileExtension(imageUri, context)!!
+            )
         }
     }
 

@@ -2,70 +2,97 @@ package com.flatcode.beautytouchadmin.Activity
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.Adapter.PostDetailAdapter
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.ViewModel.PostDetailsViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityPostDetailsBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class PostDetailsActivity : AppCompatActivity() {
 
-    var context: Context = this@PostDetailsActivity
+    private val context: Context = this@PostDetailsActivity
     private var binding: ActivityPostDetailsBinding? = null
     private var adapter: PostDetailAdapter? = null
-    private var list: MutableList<Post?>? = null
-    var postId: String? = null
+    private val list = mutableListOf<Post?>()
+    private var postId: String? = null
+    private val viewModel: PostDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostDetailsBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding!!.root)
 
-        val intent = intent
         postId = intent.getStringExtra(DATA.POST_ID)
 
         binding!!.toolbar.nameSpace.setText(R.string.post_detail)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
-        //binding.recyclerView.setHasFixedSize(true);
-        list = ArrayList()
-        adapter = PostDetailAdapter(context, list as ArrayList<Post?>)
-        binding!!.recyclerView.adapter = adapter
-    }
-
-    private fun readPost() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(postId!!)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                list!!.clear()
-                val post = dataSnapshot.getValue(Post::class.java)
-                list!!.add(post)
-                adapter!!.notifyDataSetChanged()
+        adapter = PostDetailAdapter(context, list, object : PostDetailAdapter.OnItemClickListener {
+            override fun onLikeClick(post: Post) {
+                viewModel.toggleLike(post.postid!!)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {}
+            override fun onSaveClick(post: Post) {
+                viewModel.toggleSave(post.postid!!)
+            }
         })
+        binding!!.recyclerView.adapter = adapter
+
+        postId?.let { viewModel.loadPost(it) }
+        observeViewModel()
     }
 
-    //private void addView() {
-    //    FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(postId).child("views")
-    //            .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(true);
-    //}
-    override fun onRestart() {
-        readPost()
-        //addView();
-        super.onRestart()
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.post.collect { post ->
+                    post?.let {
+                        list.clear()
+                        list.add(it)
+                        adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                combine(
+                    viewModel.isLiked,
+                    viewModel.isSaved,
+                    viewModel.likesCount
+                ) { isLiked, isSaved, likesCount ->
+                    Triple(isLiked, isSaved, likesCount)
+                }.collect { (isLiked, isSaved, likesCount) ->
+                    adapter?.updateStates(isLiked, isSaved, likesCount)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    result.onFailure {
+                        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     override fun onResume() {
-        readPost()
-        //addView();
         super.onResume()
+        postId?.let { viewModel.loadPost(it) }
     }
 }

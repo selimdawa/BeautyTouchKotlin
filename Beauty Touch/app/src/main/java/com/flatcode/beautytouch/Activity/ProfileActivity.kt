@@ -10,21 +10,19 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.flatcode.beautytouch.Model.User
 import com.flatcode.beautytouch.Unit.DATA
+import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.databinding.ActivityProfileBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
-import java.util.Objects
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
 
     private var binding: ActivityProfileBinding? = null
@@ -32,6 +30,8 @@ class ProfileActivity : AppCompatActivity() {
     var context: Context = also { activity = it }
     private var imageUri: Uri? = null
     private var dialog: ProgressDialog? = null
+
+    private val viewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +72,59 @@ class ProfileActivity : AppCompatActivity() {
             binding!!.nameEdit.visibility = View.GONE
             validateData()
         }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.userInfo.collect { resource ->
+                if (resource is Resource.Success) {
+                    val user = resource.data
+                    Glide.with(this@ProfileActivity).load(user.imageurl).into(binding!!.image)
+                    binding!!.name.text = user.username
+                    binding!!.nameEdit.setText(user.username)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.uploadImageState.collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        dialog!!.setMessage("The image is loading...")
+                        dialog!!.show()
+                    }
+                    is Resource.Success -> {
+                        viewModel.updateProfile(username, resource.data)
+                    }
+                    is Resource.Error -> {
+                        dialog!!.dismiss()
+                        Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.updateProfileState.collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        dialog!!.setMessage("Modifications are loaded...")
+                        dialog!!.show()
+                    }
+                    is Resource.Success -> {
+                        dialog!!.dismiss()
+                        Toast.makeText(context, "Profile Updated", Toast.LENGTH_SHORT).show()
+                        imageUri = null
+                    }
+                    is Resource.Error -> {
+                        dialog!!.dismiss()
+                        Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
+                }
+            }
+        }
     }
 
     private var username = DATA.EMPTY
@@ -81,65 +134,11 @@ class ProfileActivity : AppCompatActivity() {
             Toast.makeText(context, "Please enter the name", Toast.LENGTH_SHORT).show()
         } else {
             if (imageUri == null) {
-                updateProfile(DATA.EMPTY)
+                viewModel.updateProfile(username)
             } else {
-                uploadImage()
+                viewModel.uploadProfileImage(imageUri!!, VOID.getFileExtension(imageUri, context)!!)
             }
         }
-    }
-
-    private fun uploadImage() {
-        dialog!!.setMessage("The image is loading...")
-        dialog!!.show()
-        val filePathAndName = "Images/Profile/" + DATA.FirebaseUserUid
-        val reference = FirebaseStorage.getInstance()
-            .getReference(filePathAndName + DATA.DOT + VOID.getFileExtension(imageUri, context))
-        reference.putFile(imageUri!!)
-            .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val uriTask = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val uploadedImageUrl = DATA.EMPTY + uriTask.result
-                updateProfile(uploadedImageUrl)
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun updateProfile(imageUrl: String?) {
-        dialog!!.setMessage("Modifications are loaded...")
-        dialog!!.show()
-        val hashMap = HashMap<String?, Any>()
-        hashMap[DATA.USER_NAME] = DATA.EMPTY + username
-        if (imageUri != null) {
-            hashMap[DATA.IMAGE_URL] = DATA.EMPTY + imageUrl
-        }
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS)
-        reference.child(Objects.requireNonNull(DATA.FirebaseUserUid)).updateChildren(hashMap)
-            .addOnSuccessListener {
-                dialog!!.dismiss()
-                Toast.makeText(context, "Error loading image...", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun loadUserInfo() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS)
-        reference.child(Objects.requireNonNull(DATA.FirebaseUserUid))
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)!!
-                    Glide.with(this@ProfileActivity).load(user.imageurl).into(binding!!.image)
-                    binding!!.name.text = user.username
-                    binding!!.nameEdit.setText(user.username)
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -168,12 +167,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        loadUserInfo()
+        viewModel.loadUserInfo()
         super.onResume()
-    }
-
-    override fun onRestart() {
-        loadUserInfo()
-        super.onRestart()
     }
 }

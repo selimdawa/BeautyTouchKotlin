@@ -15,36 +15,33 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.flatcode.beautytouch.BuildConfig
 import com.flatcode.beautytouch.Fragment.HairProductsFragment
 import com.flatcode.beautytouch.Fragment.HomeFragment
 import com.flatcode.beautytouch.Fragment.ShoppingCentersFragment
 import com.flatcode.beautytouch.Fragment.SkinProductsFragment
-import com.flatcode.beautytouch.Model.Post
-import com.flatcode.beautytouch.Model.Tools
-import com.flatcode.beautytouch.Model.User
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
+import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityMainBinding
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.nafis.bottomnavigation.NafisBottomNavigation
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.MessageFormat
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var binding: ActivityMainBinding? = null
@@ -58,6 +55,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var bottomNavigation: NafisBottomNavigation? = null
     var publisher: String = DATA.PUBLISHER_NAME
     var aname: String = DATA.APP_NAME
+
+    private val userViewModel: UserViewModel by viewModels()
+    private val postViewModel: PostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,72 +151,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
         binding!!.imageDrawer.setOnClickListener { VOID.Intent1(context, CLASS.PROFILE) }
 
-        nrSkin
-        nrHair
-        nrShoppingCenters
-        userInfo()
+        observeViewModels()
+        postViewModel.loadCategoryCounts(publisher, aname, DATA.SKIN_PRODUCTS, DATA.HAIR_PRODUCTS, DATA.SHOPPING_CENTERS)
+        userViewModel.loadUserInfo()
     }
 
-    private val nrSkin: Unit
-        get() {
-            val reference: DatabaseReference =
-                FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-            reference.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var i = 0
-                    for (snapshot in dataSnapshot.children) {
-                        val post: Post = snapshot.getValue(Post::class.java)!!
-                        if (post.category == DATA.SKIN_PRODUCTS) if (post.publisher == publisher)
-                            if (post.aname == aname) i++
-                        binding!!.numberProductSkin.text = MessageFormat.format("{0}", i)
-                        bottomNavigation!!.setCount(
-                            1, binding!!.numberProductSkin.text as String
-                        )
-                    }
+    private fun observeViewModels() {
+        lifecycleScope.launch {
+            postViewModel.skinCount.collect { resource ->
+                if (resource is Resource.Success) {
+                    binding!!.numberProductSkin.text = MessageFormat.format("{0}", resource.data)
+                    bottomNavigation!!.setCount(1, resource.data.toString())
                 }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
+            }
         }
-
-    private val nrHair: Unit
-        get() {
-            val reference: DatabaseReference =
-                FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-            reference.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var i = 0
-                    for (snapshot in dataSnapshot.children) {
-                        val post: Post = snapshot.getValue(Post::class.java)!!
-                        if (post.category == DATA.HAIR_PRODUCTS) if (post.publisher == publisher)
-                            if (post.aname == aname) i++
-                        binding!!.numberProductHair.text = MessageFormat.format("{0}", i)
-                        bottomNavigation!!.setCount(
-                            3, binding!!.numberProductHair.text as String
-                        )
-                    }
+        lifecycleScope.launch {
+            postViewModel.hairCount.collect { resource ->
+                if (resource is Resource.Success) {
+                    binding!!.numberProductHair.text = MessageFormat.format("{0}", resource.data)
+                    bottomNavigation!!.setCount(3, resource.data.toString())
                 }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
+            }
         }
-
-    private val nrShoppingCenters: Unit
-        get() {
-            val reference: DatabaseReference =
-                FirebaseDatabase.getInstance().getReference(DATA.SHOPPING_CENTERS)
-            reference.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    binding!!.numberShoppingCenters.text =
-                        MessageFormat.format("{0}", dataSnapshot.childrenCount)
-                    bottomNavigation!!.setCount(
-                        4, binding!!.numberShoppingCenters.text as String
-                    )
+        lifecycleScope.launch {
+            postViewModel.shoppingCount.collect { resource ->
+                if (resource is Resource.Success) {
+                    binding!!.numberShoppingCenters.text = MessageFormat.format("{0}", resource.data)
+                    bottomNavigation!!.setCount(4, resource.data.toString())
                 }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
+            }
         }
+        lifecycleScope.launch {
+            userViewModel.userInfo.collect { resource ->
+                if (resource is Resource.Success) {
+                    val user = resource.data
+                    Glide.with(context).load(user.imageurl).into(binding!!.imageDrawer)
+                    Glide.with(context).load(user.imageurl).into(binding!!.toolbar.image)
+                    binding!!.name.text = user.username
+                }
+            }
+        }
+    }
 
     private fun loadFragment(fragment: Fragment?) {
         supportFragmentManager.beginTransaction()
@@ -260,22 +235,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(Intent.createChooser(shareIntent, "Choose how to share"))
     }
 
-    private fun userInfo() {
-        val reference: DatabaseReference =
-            FirebaseDatabase.getInstance().getReference(DATA.USERS).child(DATA.FirebaseUserUid)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user: User = dataSnapshot.getValue(User::class.java)!!
-
-                Glide.with(context).load(user.imageurl).into(binding!!.imageDrawer)
-                Glide.with(context).load(user.imageurl).into(binding!!.toolbar.image)
-                binding!!.name.text = user.username
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
     private fun showDialogAboutMy() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -288,25 +247,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
         val image = dialog.findViewById<ImageView>(R.id.image)
         val text: TextView = dialog.findViewById(R.id.text)
-        AboutMe(image, text)
+
+        lifecycleScope.launch {
+            userViewModel.appTools.collect { resource ->
+                if (resource is Resource.Success) {
+                    val tools = resource.data
+                    VOID.Glide(true, context, tools.imageMe, image)
+                    text.text = tools.aboutMe
+                }
+            }
+        }
+        userViewModel.loadAppTools()
+
         dialog.show()
         dialog.window!!.attributes = lp
-    }
-
-    private fun AboutMe(image: ImageView, text: TextView) {
-        val reference: DatabaseReference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val tools: Tools = dataSnapshot.getValue(Tools::class.java)!!
-                val aboutMe: String = tools.aboutMe!!
-                val imageMe: String = tools.imageMe!!
-
-                VOID.Glide(true, context, imageMe, image)
-                text.text = aboutMe
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
     }
 
     private fun showDialogAboutApp() {
@@ -363,7 +317,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
         dialog.findViewById<View>(R.id.yes).setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
+            userViewModel.logout()
             VOID.IntentClear(context, CLASS.LOGIN)
             finish()
         }

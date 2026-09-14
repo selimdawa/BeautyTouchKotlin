@@ -3,23 +3,25 @@ package com.flatcode.beautytouch.Activity
 import android.content.Context
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.flatcode.beautytouch.Adapter.LeaderboardOldAdapter
 import com.flatcode.beautytouch.Model.Post
-import com.flatcode.beautytouch.Model.Tools
 import com.flatcode.beautytouch.Model.User
-import com.flatcode.beautytouch.Modelimport.Reward
 import com.flatcode.beautytouch.Unit.DATA
+import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityLeaderboardBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LeaderboardOldActivity : AppCompatActivity() {
 
     private var binding: ActivityLeaderboardBinding? = null
@@ -27,101 +29,66 @@ class LeaderboardOldActivity : AppCompatActivity() {
     private var list: ArrayList<User?>? = null
     private var adapter: LeaderboardOldAdapter? = null
 
+    private val viewModel: UserViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLeaderboardBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
 
-        //binding.recyclerView.setHasFixedSize(true);
         list = ArrayList()
         adapter = LeaderboardOldAdapter(context, list!!)
         binding!!.recyclerView.adapter = adapter
+
+        observeViewModel()
     }
 
-    private fun SessionInfo() {
-        val reference: DatabaseReference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val tools: Tools = dataSnapshot.getValue(Tools::class.java)!!
-                val year: String = tools.oldYear!!
-                val session: String = tools.oldSession!!
-                val sessionNumber: String = tools.oldSessionNumber!!
-
-                VOID.Glide(false, context, tools.oldImageSession, binding!!.imageSession)
-                VOID.Glide(false, context, tools.oldImageLogo, binding!!.imageLogo)
-                binding!!.sessionNumber.text = session
-                val key = year + "_" + sessionNumber
-
-                getData(key)
-                Reward(key)
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.appTools.collect { resource ->
+                if (resource is Resource.Success) {
+                    val tools = resource.data
+                    VOID.Glide(false, context, tools.oldImageSession, binding!!.imageSession)
+                    VOID.Glide(false, context, tools.oldImageLogo, binding!!.imageLogo)
+                    binding!!.sessionNumber.text = tools.oldSession
+                    val key = tools.oldYear + "_" + tools.oldSessionNumber
+                    viewModel.loadLeaderboard(key)
+                    viewModel.loadRewards()
+                }
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    private fun getData(orderBy: String) {
-        val ref: Query = FirebaseDatabase.getInstance().getReference(DATA.USERS)
-        ref.orderByChild(orderBy).limitToLast(3)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
+        }
+        lifecycleScope.launch {
+            viewModel.leaderboard.collect { resource ->
+                if (resource is Resource.Success) {
                     list!!.clear()
-                    for (data in dataSnapshot.children) {
-                        if (data.child(orderBy).exists()) {
-                            val item: User = data.getValue(User::class.java)!!
-                            list!!.add(item)
-                        }
-                    }
+                    list!!.addAll(resource.data)
                     adapter!!.notifyDataSetChanged()
                 }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
-    }
-
-    private fun Reward(key: String) {
-        val reference: DatabaseReference =
-            FirebaseDatabase.getInstance().getReference(DATA.M_REWARD)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val reward: Reward = dataSnapshot.getValue(Reward::class.java)!!
-                if (dataSnapshot.child(key).exists()) {
-                    if (dataSnapshot.exists()) {
-                        if (reward.reward != null) ReadReward(
-                            reward.reward!!, binding!!.reward
-                        )
-                        if (reward.reward2 != null) ReadReward(
-                            reward.reward2!!, binding!!.reward2
-                        )
-                        if (reward.reward3 != null) ReadReward(
-                            reward.reward3!!, binding!!.reward3
-                        )
-                        if (reward.reward4 != null) ReadReward(
-                            reward.reward4!!, binding!!.reward4
-                        )
-                        if (reward.reward5 != null) ReadReward(
-                            reward.reward5!!, binding!!.reward5
-                        )
-                        if (reward.reward6 != null) ReadReward(
-                            reward.reward6!!, binding!!.reward6
-                        )
-                    }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.rewards.collect { resource ->
+                if (resource is Resource.Success) {
+                    val reward = resource.data
+                    reward.reward?.let { ReadReward(it, binding!!.reward) }
+                    reward.reward2?.let { ReadReward(it, binding!!.reward2) }
+                    reward.reward3?.let { ReadReward(it, binding!!.reward3) }
+                    reward.reward4?.let { ReadReward(it, binding!!.reward4) }
+                    reward.reward5?.let { ReadReward(it, binding!!.reward5) }
+                    reward.reward6?.let { ReadReward(it, binding!!.reward6) }
                 }
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
+        }
     }
 
     private fun ReadReward(R: String, Reward: ImageView) {
         if (R != DATA.EMPTY) {
-            val reference: DatabaseReference =
-                FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(R)
+            val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS).child(R)
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val post: Post = dataSnapshot.getValue(Post::class.java)!!
-                    if (post.postid == R) {
+                    val post = dataSnapshot.getValue(Post::class.java)
+                    if (post?.postid == R) {
                         VOID.Glide(false, context, post.postimage, Reward)
                         Reward.setOnClickListener {
                             VOID.IntentExtra(context, CLASS.POST_DETAILS, DATA.POST_ID, R)
@@ -135,12 +102,7 @@ class LeaderboardOldActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        SessionInfo()
+        viewModel.loadAppTools()
         super.onResume()
-    }
-
-    override fun onRestart() {
-        SessionInfo()
-        super.onRestart()
     }
 }

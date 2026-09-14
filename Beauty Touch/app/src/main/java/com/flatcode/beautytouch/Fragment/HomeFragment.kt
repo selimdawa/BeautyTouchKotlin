@@ -5,121 +5,108 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.flatcode.beautytouch.Adapter.ImageSliderAdapter
 import com.flatcode.beautytouch.Adapter.PostHotAdapter
 import com.flatcode.beautytouch.Adapter.PostLinearAdapter
 import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.Unit.DATA
+import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.databinding.FragmentHomeBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var binding: FragmentHomeBinding? = null
-    var hotProductList: MutableList<String?>? = null
     var hotpostAdapter: PostHotAdapter? = null
     var hotpostLists: MutableList<Post?>? = null
     var allpostAdapter: PostLinearAdapter? = null
     var allpostLists: MutableList<Post?>? = null
-    var TotalCounts = 0
-    var publisher = "KTWe3PaSUSbv3xulRKSwUgConC92"
-    var aname = "Beauty Touch"
+    var publisher = DATA.PUBLISHER_NAME
+    var aname = DATA.APP_NAME
+
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(LayoutInflater.from(context), container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        //binding!!.recyclerView.setHasFixedSize(true)
         hotpostLists = ArrayList()
         hotpostAdapter = PostHotAdapter(context, hotpostLists as ArrayList<Post?>)
         binding!!.recyclerView.adapter = hotpostAdapter
 
-        //binding.recyclerView.setHasFixedSize(true);
         allpostLists = ArrayList()
         allpostAdapter = PostLinearAdapter(context, allpostLists as ArrayList<Post?>)
         binding!!.recyclerView2.adapter = allpostAdapter
 
-        FirebaseDatabase.getInstance().getReference("ImageLinks")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val counts = snapshot.childrenCount
-                    TotalCounts = counts.toInt()
-                    binding!!.imageSlider.sliderAdapter = ImageSliderAdapter(context, TotalCounts)
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+        observeViewModel()
         return binding!!.root
     }
 
-    private fun checkHotProduct() {
-        hotProductList = ArrayList()
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.HOT_PRODUCT)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                (hotProductList as ArrayList<String?>).clear()
-                for (snapshot in dataSnapshot.children) {
-                    (hotProductList as ArrayList<String?>).add(snapshot.key)
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.sliderCount.collect { resource ->
+                if (resource is Resource.Success) {
+                    binding!!.imageSlider.sliderAdapter = ImageSliderAdapter(context, resource.data)
                 }
-                readPosts()
             }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    private fun readPosts() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                hotpostLists!!.clear()
-                for (snapshot in dataSnapshot.children) {
-                    val post = snapshot.getValue(Post::class.java)
-                    for (id in hotProductList!!) {
-                        assert(post != null)
-                        if (post!!.publisher == publisher) if (post.aname == aname) if (post.postid == id) hotpostLists!!.add(
-                            post
-                        )
-                    }
-                }
-                hotpostAdapter!!.notifyDataSetChanged()
-                binding!!.progressCircular.visibility = View.GONE
-                binding!!.recyclerView.visibility = View.VISIBLE
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    private val showMoreProduct: Unit
-        get() {
-            val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-            reference.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    allpostLists!!.clear()
-                    for (snapshot in dataSnapshot.children) {
-                        val post = snapshot.getValue(Post::class.java)!!
-                        if (post.publisher == publisher) if (post.aname == aname) allpostLists!!.add(
-                            post
-                        )
-                    }
-                    allpostAdapter!!.notifyDataSetChanged()
-                    binding!!.progressCircular2.visibility = View.GONE
-                    binding!!.recyclerView2.visibility = View.VISIBLE
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
         }
+        lifecycleScope.launch {
+            viewModel.hotProducts.collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        binding!!.progressCircular.visibility = View.VISIBLE
+                        binding!!.recyclerView.visibility = View.GONE
+                    }
+
+                    is Resource.Success -> {
+                        hotpostLists!!.clear()
+                        hotpostLists!!.addAll(resource.data)
+                        hotpostAdapter!!.notifyDataSetChanged()
+                        binding!!.progressCircular.visibility = View.GONE
+                        binding!!.recyclerView.visibility = View.VISIBLE
+                    }
+
+                    is Resource.Error -> {
+                        binding!!.progressCircular.visibility = View.GONE
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.allPosts.collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        binding!!.progressCircular2.visibility = View.VISIBLE
+                        binding!!.recyclerView2.visibility = View.GONE
+                    }
+
+                    is Resource.Success -> {
+                        allpostLists!!.clear()
+                        allpostLists!!.addAll(resource.data)
+                        allpostAdapter!!.notifyDataSetChanged()
+                        binding!!.progressCircular2.visibility = View.GONE
+                        binding!!.recyclerView2.visibility = View.VISIBLE
+                    }
+
+                    is Resource.Error -> {
+                        binding!!.progressCircular2.visibility = View.GONE
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
 
     override fun onResume() {
-        checkHotProduct()
-        showMoreProduct
+        viewModel.loadHomeData(publisher, aname)
         super.onResume()
     }
 }

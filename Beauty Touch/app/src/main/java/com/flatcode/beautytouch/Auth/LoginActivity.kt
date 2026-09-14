@@ -5,18 +5,23 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.flatcode.beautytouch.Unit.DATA
+import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityLoginBinding
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private var binding: ActivityLoginBinding? = null
     var context: Context = this@LoginActivity
-    private var auth: FirebaseAuth? = null
+    private val viewModel: AuthViewModel by viewModels()
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
         val view = binding!!.root
         setContentView(view)
 
-        auth = FirebaseAuth.getInstance()
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
@@ -33,6 +37,33 @@ class LoginActivity : AppCompatActivity() {
         binding!!.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
         binding!!.noAccount.setOnClickListener { VOID.Intent1(context, CLASS.REGISTER) }
         binding!!.loginBtn.setOnClickListener { validateDate() }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.loginState.collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        dialog!!.setMessage("Signed in...")
+                        dialog!!.show()
+                    }
+
+                    is Resource.Success -> {
+                        dialog!!.dismiss()
+                        VOID.IntentClear(context, CLASS.MAIN)
+                    }
+
+                    is Resource.Error -> {
+                        dialog!!.dismiss()
+                        Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> {}
+                }
+            }
+        }
     }
 
     private var number = "0111111111"
@@ -59,31 +90,12 @@ class LoginActivity : AppCompatActivity() {
             val digit2 = number[1].toString().toInt()
             val digit3 = number[2].toString().toInt()
             if (digit == 0 && digit2 == 9 && (digit3 == 3 || digit3 == 4 || digit3 == 5 || digit3 == 6 || digit3 == 8 || digit3 == 9)) {
-                loginUser()
+                viewModel.login(email, password)
             } else {
                 Toast.makeText(
                     context, "Please enter a valid phone number and password! ", Toast.LENGTH_SHORT
                 ).show()
             }
-        }
-    }
-
-    private fun loginUser() {
-        dialog!!.setMessage("Signed in...")
-        dialog!!.show()
-        try {
-            auth!!.signInWithEmailAndPassword(email, password).addOnCanceledListener {
-                dialog!!.dismiss()
-                Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
-            }.addOnSuccessListener {
-                VOID.IntentClear(context, CLASS.MAIN)
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()
-            }.addOnCompleteListener { dialog!!.show() }
-        } catch (e: Exception) {
-            dialog!!.dismiss()
-            Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()
         }
     }
 }

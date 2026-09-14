@@ -3,34 +3,34 @@ package com.flatcode.beautytouchadmin.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouchadmin.Unit.CLASS
 import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.ViewModel.SplashViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivitySplashBinding
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     private var binding: ActivitySplashBinding? = null
-    var context: Context = this@SplashActivity
-    var auth: FirebaseAuth? = null
-    var time_per_second = 2
-    var time_final = time_per_millis * time_per_second
+    private val context: Context = this@SplashActivity
+    private val time_per_second = 2
+    private val time_final = time_per_millis * time_per_second
+    private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding!!.root)
 
-        auth = FirebaseAuth.getInstance()
-        Handler().postDelayed({ checkUser() }, time_final.toLong())
+        Handler(Looper.getMainLooper()).postDelayed({ checkUser() }, time_final.toLong())
     }
 
     private fun checkUser() {
-        //get current user, if logged in
-        val firebaseUser = auth!!.currentUser
-        if (firebaseUser == null) {
+        if (!viewModel.isUserLoggedIn()) {
             VOID.Intent1(context, CLASS.LOGIN)
         } else {
             VOID.Intent1(context, CLASS.MAIN)

@@ -15,17 +15,15 @@ import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ItemInfoAdsBinding
 import java.text.MessageFormat
 
-class ADsInfoAdapter(private val context: Context, var list: ArrayList<ADs?>, isUser: Boolean) :
+class ADsInfoAdapter(private val context: Context, var list: MutableList<ADs?>, var isUser: Boolean) :
     RecyclerView.Adapter<ADsInfoAdapter.ViewHolder>(), Filterable {
 
-    private var binding: ItemInfoAdsBinding? = null
-    var filterList: ArrayList<ADs?>
+    var filterList: MutableList<ADs?> = list
     private var filter: ADsInfoFilter? = null
-    var isUser: Boolean
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemInfoAdsBinding.inflate(LayoutInflater.from(context), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemInfoAdsBinding.inflate(LayoutInflater.from(context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -47,27 +45,15 @@ class ADsInfoAdapter(private val context: Context, var list: ArrayList<ADs?>, is
 
     override fun getFilter(): Filter {
         if (filter == null) {
-            filter = ADsInfoFilter(filterList, this)
+            filter = ADsInfoFilter(filterList as ArrayList<ADs?>, this)
         }
         return filter!!
     }
 
-    inner class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-        var numberADsClick: TextView
-        var numberADsLoad: TextView
-        var name: TextView
-        var item: LinearLayout
-
-        init {
-            numberADsClick = binding!!.numberADsClick
-            numberADsLoad = binding!!.numberADsLoad
-            name = binding!!.name
-            item = binding!!.item
-        }
-    }
-
-    init {
-        filterList = list
-        this.isUser = isUser
+    class ViewHolder(binding: ItemInfoAdsBinding) : RecyclerView.ViewHolder(binding.root) {
+        val numberADsClick: TextView = binding.numberADsClick
+        val numberADsLoad: TextView = binding.numberADsLoad
+        val name: TextView = binding.name
+        val item: LinearLayout = binding.item
     }
 }

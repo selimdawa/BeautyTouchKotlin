@@ -19,16 +19,16 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.MessageFormat
 
-class UsersAdapter(private val mContext: Context, private val mUser: List<User?>) :
+class UsersAdapter(private val mContext: Context, var list: MutableList<User?>) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemUserBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemUserBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = mUser[position]
+        val user = list[position]
         val id = DATA.EMPTY + user!!.id
 
         VOID.Glide(true, mContext, user.imageurl, holder.image)
@@ -46,21 +46,14 @@ class UsersAdapter(private val mContext: Context, private val mUser: List<User?>
     }
 
     override fun getItemCount(): Int {
-        return mUser.size
+        return list.size
     }
 
-    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-        var image: ImageView
-        var name: TextView
-        var favorites: TextView
-        var card: CardView
-
-        init {
-            image = binding!!.image
-            name = binding!!.name
-            favorites = binding!!.favorites
-            card = binding!!.card
-        }
+    class ViewHolder(binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
+        var image: ImageView = binding.image
+        var name: TextView = binding.name
+        var favorites: TextView = binding.favorites
+        var card: CardView = binding.card
     }
 
     private fun nrFavorites(favorites: TextView, userid: String) {
@@ -72,9 +65,5 @@ class UsersAdapter(private val mContext: Context, private val mUser: List<User?>
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-    }
-
-    companion object {
-        private var binding: ItemUserBinding? = null
     }
 }

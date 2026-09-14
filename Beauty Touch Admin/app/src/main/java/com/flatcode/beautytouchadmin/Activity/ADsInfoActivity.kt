@@ -3,93 +3,86 @@ package com.flatcode.beautytouchadmin.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.Adapter.ADsInfoAdapter
 import com.flatcode.beautytouchadmin.Model.ADs
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.ViewModel.ADsViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityAdsInfoBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.Query
-import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ADsInfoActivity : AppCompatActivity() {
 
     private var binding: ActivityAdsInfoBinding? = null
-    var context: Context = this@ADsInfoActivity
-    var list: ArrayList<ADs?>? = null
-    var adapter: ADsInfoAdapter? = null
+    private val context: Context = this@ADsInfoActivity
+    private val list = mutableListOf<ADs?>()
+    private var adapter: ADsInfoAdapter? = null
     private var profileId: String? = null
+    private val viewModel: ADsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdsInfoBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding!!.root)
 
-        val intent = intent
         profileId = intent.getStringExtra(DATA.PROFILE_ID)
 
         binding!!.toolbar.nameSpace.setText(R.string.info_ads)
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
-        //binding.recyclerView.setHasFixedSize(true);
-        list = ArrayList()
-        adapter = ADsInfoAdapter(context, list!!, true)
+        adapter = ADsInfoAdapter(context, list, true)
         binding!!.recyclerView.adapter = adapter
+
+        profileId?.let {
+            viewModel.fetchUserInfo(it)
+            viewModel.fetchAds(it, DATA.NAME)
+        }
+
+        observeViewModel()
     }
 
-    private fun loadUserInfo() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS)
-        reference.child(profileId!!).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val username = DATA.EMPTY + snapshot.child(DATA.USER_NAME).value
-                val profileImage = DATA.EMPTY + snapshot.child(DATA.IMAGE_URL).value
-
-                binding!!.username.text = username
-                VOID.Glide(true, context, profileImage, binding!!.profileImage)
-            }
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
-    }
-
-    private fun loadAds(orderBy: String) {
-        val ref: Query = FirebaseDatabase.getInstance().getReference(DATA.M_AD).child(profileId!!)
-        ref.orderByChild(orderBy).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                list!!.clear()
-                for (data in dataSnapshot.children) {
-                    val item = data.getValue(ADs::class.java)!!
-                    list!!.add(item)
-                }
-                adapter!!.notifyDataSetChanged()
-                binding!!.progress.visibility = View.GONE
-                if (list!!.isNotEmpty()) {
-                    binding!!.recyclerView.visibility = View.VISIBLE
-                    binding!!.emptyText.visibility = View.GONE
-                } else {
-                    binding!!.recyclerView.visibility = View.GONE
-                    binding!!.emptyText.visibility = View.VISIBLE
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.user.collect { user ->
+                    user?.let {
+                        binding!!.username.text = it.username
+                        VOID.Glide(true, context, it.imageurl, binding!!.profileImage)
+                    }
                 }
             }
+        }
 
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.ads.collect { ads ->
+                    list.clear()
+                    list.addAll(ads)
+                    adapter?.notifyDataSetChanged()
 
-    override fun onRestart() {
-        loadUserInfo()
-        loadAds(DATA.NAME)
-        super.onRestart()
+                    binding!!.progress.visibility = View.GONE
+                    if (list.isNotEmpty()) {
+                        binding!!.recyclerView.visibility = View.VISIBLE
+                        binding!!.emptyText.visibility = View.GONE
+                    } else {
+                        binding!!.recyclerView.visibility = View.GONE
+                        binding!!.emptyText.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 
     override fun onResume() {
-        loadUserInfo()
-        loadAds(DATA.NAME)
         super.onResume()
+        profileId?.let { viewModel.fetchAds(it, DATA.NAME) }
     }
 }

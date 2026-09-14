@@ -1,91 +1,149 @@
 package com.flatcode.beautytouchadmin.Activity
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.Adapter.MyPostsAdapter
 import com.flatcode.beautytouchadmin.Model.Post
+import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.Unit.CLASS
 import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.ViewModel.PostsViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityPostsBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class PostsActivity : AppCompatActivity() {
 
     private var binding: ActivityPostsBinding? = null
     private val context: Context = this@PostsActivity
-    var adapter: MyPostsAdapter? = null
-    var list: MutableList<Post?>? = null
-    var type = DATA.ALL
+    private var adapter: MyPostsAdapter? = null
+    private val list = mutableListOf<Post?>()
+    private var type = DATA.ALL
+    private val viewModel: PostsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostsBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding!!.root)
 
         binding!!.toolbar.nameSpace.text = "My Posts"
         binding!!.toolbar.back.setOnClickListener { onBackPressed() }
 
-        //binding.recyclerView.setHasFixedSize(true);
-        list = ArrayList()
-        adapter = MyPostsAdapter(context, list as ArrayList<Post?>)
+        adapter = MyPostsAdapter(context, list, object : MyPostsAdapter.OnItemClickListener {
+            override fun onMoreClick(post: Post) {
+                showMoreOptions(post)
+            }
+
+            override fun onLikeClick(post: Post, isLiked: Boolean) {
+                viewModel.toggleLike(post.postid!!, isLiked)
+            }
+        })
         binding!!.recyclerView.adapter = adapter
 
         binding!!.all.setOnClickListener {
             type = DATA.ALL
-            getData(type)
+            viewModel.fetchPosts(type)
         }
         binding!!.hair.setOnClickListener {
             type = DATA.HAIR
-            getData(type)
+            viewModel.fetchPosts(type)
         }
         binding!!.skin.setOnClickListener {
             type = DATA.SKIN
-            getData(type)
+            viewModel.fetchPosts(type)
+        }
+
+        observeViewModel()
+    }
+
+    private fun showMoreOptions(post: Post) {
+        val options = arrayOf("Edit", "Delete")
+        AlertDialog.Builder(context)
+            .setTitle("Choose...")
+            .setItems(options) { _: DialogInterface?, which: Int ->
+                if (which == 0) {
+                    VOID.IntentExtra(context, CLASS.POST_EDIT, DATA.POST_ID, post.postid)
+                } else if (which == 1) {
+                    showDeleteDialog(post)
+                }
+            }.show()
+    }
+
+    private fun showDeleteDialog(post: Post) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_logout)
+        dialog.setCancelable(true)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(dialog.window?.attributes)
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        
+        val title = dialog.findViewById<TextView>(R.id.title)
+        title.setText(R.string.do_you_want_to_delete_the_post)
+        
+        dialog.findViewById<View>(R.id.yes).setOnClickListener {
+            viewModel.deletePost(post.postid!!)
+            dialog.dismiss()
+        }
+        dialog.findViewById<View>(R.id.no).setOnClickListener { dialog.dismiss() }
+        dialog.show()
+        dialog.window?.attributes = lp
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.posts.collect { posts ->
+                    list.clear()
+                    list.addAll(posts)
+                    adapter?.notifyDataSetChanged()
+
+                    binding!!.progress.visibility = View.GONE
+                    if (list.isNotEmpty()) {
+                        binding!!.recyclerView.visibility = View.VISIBLE
+                        binding!!.emptyText.visibility = View.GONE
+                    } else {
+                        binding!!.recyclerView.visibility = View.GONE
+                        binding!!.emptyText.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    result.onSuccess {
+                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    }.onFailure {
+                        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 
-    private fun getData(type: String) {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.POSTS)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                list!!.clear()
-                for (snapshot in dataSnapshot.children) {
-                    val post = snapshot.getValue(Post::class.java)!!
-                    if (post.aname == DATA.BEAUTY_TOUCH) {
-                        when (type) {
-                            DATA.ALL -> list!!.add(post)
-                            DATA.SKIN -> if (post.category == DATA.SKIN_PRODUCTS) list!!.add(post)
-                            DATA.HAIR -> if (post.category == DATA.HAIR_PRODUCTS) list!!.add(post)
-                        }
-                    }
-                }
-                adapter!!.notifyDataSetChanged()
-                binding!!.progress.visibility = View.GONE
-                if (list!!.isNotEmpty()) {
-                    binding!!.recyclerView.visibility = View.VISIBLE
-                    binding!!.emptyText.visibility = View.GONE
-                } else {
-                    binding!!.recyclerView.visibility = View.GONE
-                    binding!!.emptyText.visibility = View.VISIBLE
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    override fun onRestart() {
-        getData(type)
-        super.onRestart()
-    }
-
     override fun onResume() {
-        getData(type)
         super.onResume()
+        viewModel.fetchPosts(type)
     }
 }

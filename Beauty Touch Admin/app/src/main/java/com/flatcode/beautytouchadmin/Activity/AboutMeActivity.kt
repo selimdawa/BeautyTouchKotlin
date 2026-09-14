@@ -17,33 +17,33 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.beautytouchadmin.Model.Tools
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.ViewModel.ToolsViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityAboutMeBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AboutMeActivity : AppCompatActivity() {
 
     private var binding: ActivityAboutMeBinding? = null
-    var activity: Activity? = null
+    private var activity: Activity? = null
     private val context: Context = also { activity = it }
     private var imageUri: Uri? = null
     private var dialog: ProgressDialog? = null
+    private val viewModel: ToolsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutMeBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding!!.root)
 
         dialog = ProgressDialog(context)
         dialog!!.setTitle("Please wait...")
@@ -54,59 +54,45 @@ class AboutMeActivity : AppCompatActivity() {
         binding!!.go.setOnClickListener { validateData() }
         binding!!.show.setOnClickListener { showDialogAboutMy() }
         binding!!.editImageIcon.setOnClickListener { VOID.CropImageSquare(activity) }
+
+        observeViewModel()
     }
 
-    private var name = DATA.EMPTY
-    private fun validateData() {
-        //get data
-        name = binding!!.name.text.toString().trim { it <= ' ' }
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.tools.collect { tools ->
+                    tools?.let {
+                        VOID.Glide(true, context, it.imageMe, binding!!.image)
+                        binding!!.name.setText(it.aboutMe)
+                    }
+                }
+            }
+        }
 
-        //validate data
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    dialog!!.dismiss()
+                    result.onSuccess {
+                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    }.onFailure {
+                        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun validateData() {
+        val name = binding!!.name.text.toString().trim()
+
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(context, "Enter a name", Toast.LENGTH_SHORT).show()
         } else {
-            if (imageUri == null) {
-                updatePost(DATA.EMPTY)
-            } else {
-                uploadImage()
-            }
-        }
-    }
-
-    private fun uploadImage() {
-        dialog!!.setMessage("Image is being updated...")
-        dialog!!.show()
-        val filePathAndName = "Images/AboutMe/" + DATA.FirebaseUserUid
-        val reference = FirebaseStorage.getInstance()
-            .getReference(filePathAndName + DATA.DOT + VOID.getFileExtension(imageUri, context))
-        reference.putFile(imageUri!!)
-            .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val uriTask = taskSnapshot.storage.downloadUrl
-                while (!uriTask.isSuccessful);
-                val uploadedImageUrl = DATA.EMPTY + uriTask.result
-                updatePost(uploadedImageUrl)
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    }
-
-    private fun updatePost(imageUrl: String) {
-        dialog!!.setMessage("Editing....")
-        dialog!!.show()
-        val hashMap = HashMap<String, Any>()
-        hashMap["aboutMe"] = DATA.EMPTY + name
-        if (imageUri != null) {
-            hashMap["imageMe"] = DATA.EMPTY + imageUrl
-        }
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.updateChildren(hashMap).addOnSuccessListener {
-            dialog!!.dismiss()
-            Toast.makeText(context, "Modified", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener { e: Exception ->
-            dialog!!.dismiss()
-            Toast.makeText(context, "Something went wrong! " + e.message, Toast.LENGTH_SHORT).show()
+            dialog!!.setMessage("Image is being updated...")
+            dialog!!.show()
+            viewModel.updateAboutMe(name, imageUri, imageUri?.let { VOID.getFileExtension(it, context) })
         }
     }
 
@@ -122,26 +108,14 @@ class AboutMeActivity : AppCompatActivity() {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
         val image = dialog.findViewById<ImageView>(R.id.image)
         val text = dialog.findViewById<TextView>(R.id.text)
-        AboutMe(image, text, null)
+        
+        viewModel.tools.value?.let {
+            VOID.Glide(true, context, it.imageMe, image)
+            text.text = it.aboutMe
+        }
+        
         dialog.show()
         dialog.window!!.attributes = lp
-    }
-
-    private fun AboutMe(image: ImageView, text: TextView?, editText: EditText?) {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val tools = dataSnapshot.getValue(Tools::class.java)!!
-                val aboutMe = tools.aboutMe
-                val imageMe = tools.imageMe
-
-                VOID.Glide(true, context, imageMe, image)
-                if (text != null) text.text = aboutMe
-                editText?.setText(aboutMe)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -165,15 +139,5 @@ class AboutMeActivity : AppCompatActivity() {
                 Toast.makeText(this, "Something went wrong! $error", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onRestart() {
-        AboutMe(binding!!.image, null, binding!!.name)
-        super.onRestart()
-    }
-
-    override fun onResume() {
-        AboutMe(binding!!.image, null, binding!!.name)
-        super.onResume()
     }
 }

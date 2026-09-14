@@ -19,17 +19,15 @@ import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemAdsUserBinding
 import java.text.MessageFormat
 
-class ADsUserAdapter(private val context: Context, var list: ArrayList<User?>, isUser: Boolean) :
+class ADsUserAdapter(private val context: Context, var list: MutableList<User?>, var isUser: Boolean) :
     RecyclerView.Adapter<ADsUserAdapter.ViewHolder>(), Filterable {
 
-    private var binding: ItemAdsUserBinding? = null
-    var filterList: ArrayList<User?>
+    var filterList: MutableList<User?> = list
     private var filter: ADsUserFilter? = null
-    var isUser: Boolean
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemAdsUserBinding.inflate(LayoutInflater.from(context), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemAdsUserBinding.inflate(LayoutInflater.from(context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -50,10 +48,9 @@ class ADsUserAdapter(private val context: Context, var list: ArrayList<User?>, i
             holder.username.text = username
         }
 
-        val First = holder.position
-        val Final = list.size - First
+        val rankValue = list.size - position
         holder.time.text = formattedDate
-        holder.rank.text = MessageFormat.format("{0}", Final)
+        holder.rank.text = MessageFormat.format("{0}", rankValue)
         holder.numberADsLoad.text = MessageFormat.format("{0}{1}", DATA.EMPTY, adLoaded)
         holder.numberADsClick.text = MessageFormat.format("{0}{1}", DATA.EMPTY, adClicked)
 
@@ -68,33 +65,18 @@ class ADsUserAdapter(private val context: Context, var list: ArrayList<User?>, i
 
     override fun getFilter(): Filter {
         if (filter == null) {
-            filter = ADsUserFilter(filterList, this)
+            filter = ADsUserFilter(filterList as ArrayList<User?>, this)
         }
         return filter!!
     }
 
-    inner class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-        var profileImage: ImageView
-        var username: TextView
-        var rank: TextView
-        var numberADsLoad: TextView
-        var numberADsClick: TextView
-        var time: TextView
-        var item: LinearLayout
-
-        init {
-            profileImage = binding!!.profileImage
-            username = binding!!.username
-            rank = binding!!.rank
-            numberADsLoad = binding!!.numberADsLoad
-            numberADsClick = binding!!.numberADsClick
-            time = binding!!.time
-            item = binding!!.item
-        }
-    }
-
-    init {
-        filterList = list
-        this.isUser = isUser
+    class ViewHolder(binding: ItemAdsUserBinding) : RecyclerView.ViewHolder(binding.root) {
+        val profileImage: ImageView = binding.profileImage
+        val username: TextView = binding.username
+        val rank: TextView = binding.rank
+        val numberADsLoad: TextView = binding.numberADsLoad
+        val numberADsClick: TextView = binding.numberADsClick
+        val time: TextView = binding.time
+        val item: LinearLayout = binding.item
     }
 }

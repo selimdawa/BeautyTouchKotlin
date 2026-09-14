@@ -6,12 +6,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.beautytouch.Model.Tools
+import androidx.lifecycle.lifecycleScope
 import com.flatcode.beautytouch.R
-import com.flatcode.beautytouch.Unit.DATA
+import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unit.VOID.AdRewardCount
 import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRewardBinding
 import com.google.android.gms.ads.AdError
@@ -22,19 +22,22 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.MessageFormat
 
+@AndroidEntryPoint
 class RewardActivity : AppCompatActivity() {
 
     private var activity: Activity? = null
     private val context: Context = also { activity = it }
     private var binding: ActivityRewardBinding? = null
 
+    private val viewModel: UserViewModel by viewModels()
+
     var mRewardedAd: RewardedAd? = null
+    private var currentYear = ""
+    private var currentSession = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,42 @@ class RewardActivity : AppCompatActivity() {
         }
         MobileAds.initialize(context) { }
         loadRewardedAd()
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.appTools.collect { resource ->
+                if (resource is Resource.Success) {
+                    val tools = resource.data
+                    currentYear = tools.year!!
+                    currentSession = tools.sessionNumber!!
+                    val oldYear = tools.oldYear
+                    val oldSession = tools.oldSessionNumber
+                    if (currentSession != oldSession || currentYear != oldYear) binding!!.leaderboardCardOld.visibility =
+                        View.VISIBLE else binding!!.leaderboardCardOld.visibility = View.GONE
+                    binding!!.sessionInfo.text = MessageFormat.format("{0} | {1}", currentYear, currentSession)
+                    binding!!.sessionInfoOld.text =
+                        MessageFormat.format("{0} | {1}", oldYear, oldSession)
+                    viewModel.loadPoints(currentYear, currentSession)
+                    binding!!.rewardCard.setOnClickListener {
+                        loadAndShowRewardedAd()
+                        Toast.makeText(
+                            context, "The ad is loaded, click again if it does not appear",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.points.collect { resource ->
+                if (resource is Resource.Success) {
+                    binding!!.myPoints.text = MessageFormat.format("My Points : {0}", resource.data)
+                }
+            }
+        }
     }
 
     private fun loadRewardedAd() {
@@ -72,14 +111,10 @@ class RewardActivity : AppCompatActivity() {
     private fun showRewardedAd() {
         if (mRewardedAd != null) {
             mRewardedAd!!.fullScreenContentCallback = object : FullScreenContentCallback() {
-                override fun onAdClicked() {
-                    super.onAdClicked()
-                }
-
                 override fun onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent()
                     mRewardedAd = null
-                    Reward()
+                    viewModel.addRewardPoint(currentYear, currentSession)
                     loadRewardedAd()
                 }
 
@@ -87,17 +122,8 @@ class RewardActivity : AppCompatActivity() {
                     super.onAdFailedToShowFullScreenContent(adError)
                     mRewardedAd = null
                 }
-
-                override fun onAdImpression() {
-                    super.onAdImpression()
-                }
-
-                override fun onAdShowedFullScreenContent() {
-                    super.onAdShowedFullScreenContent()
-                }
             }
             mRewardedAd!!.show(activity!!) { rewardItem: RewardItem? -> }
-        } else {
         }
     }
 
@@ -125,72 +151,8 @@ class RewardActivity : AppCompatActivity() {
             })
     }
 
-    private fun getNrPoints(year: String?, session: String?) {
-        val reference =
-            FirebaseDatabase.getInstance().getReference(DATA.USERS).child(DATA.FirebaseUserUid)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val key = year + "_" + session
-                val value = DATA.EMPTY + dataSnapshot.child(key).value
-                if (dataSnapshot.child(key).exists()) binding!!.myPoints.text =
-                    MessageFormat.format("My Points : {0}", value) else binding!!.myPoints.text =
-                    "My Points : 0"
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    private fun SessionInfo() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val tools = dataSnapshot.getValue(Tools::class.java)!!
-                val year = tools.year
-                val session = tools.sessionNumber
-                val oldYear = tools.oldYear
-                val oldSession = tools.oldSessionNumber
-                if (session != oldSession || year != oldYear) binding!!.leaderboardCardOld.visibility =
-                    View.VISIBLE else binding!!.leaderboardCardOld.visibility = View.GONE
-                binding!!.sessionInfo.text = MessageFormat.format("{0} | {1}", year, session)
-                binding!!.sessionInfoOld.text =
-                    MessageFormat.format("{0} | {1}", oldYear, oldSession)
-                getNrPoints(year, session)
-                binding!!.rewardCard.setOnClickListener {
-                    loadAndShowRewardedAd()
-                    Toast.makeText(
-                        context, "The ad is loaded, click again if it does not appear",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    getNrPoints(year, session)
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    private fun Reward() {
-        val reference = FirebaseDatabase.getInstance().getReference(DATA.M_TOOLS)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val tools = dataSnapshot.getValue(Tools::class.java)!!
-                val year = tools.year
-                val session = tools.sessionNumber
-                AdRewardCount(DATA.FirebaseUserUid, DATA.EMPTY + year + "_" + DATA.EMPTY + session)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
     override fun onResume() {
-        SessionInfo()
+        viewModel.loadAppTools()
         super.onResume()
-    }
-
-    override fun onRestart() {
-        SessionInfo()
-        super.onRestart()
     }
 }

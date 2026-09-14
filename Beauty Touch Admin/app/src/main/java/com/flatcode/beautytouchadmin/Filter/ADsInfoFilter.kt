@@ -5,15 +5,15 @@ import com.flatcode.beautytouchadmin.Adapter.ADsInfoAdapter
 import com.flatcode.beautytouchadmin.Model.ADs
 import java.util.*
 
-class ADsInfoFilter(var list: ArrayList<ADs?>, var adapter: ADsInfoAdapter) : Filter() {
+class ADsInfoFilter(var list: MutableList<ADs?>, var adapter: ADsInfoAdapter) : Filter() {
     override fun performFiltering(constraint: CharSequence): FilterResults {
-        var constraint: CharSequence? = constraint
+        var constraintStr: CharSequence? = constraint
         val results = FilterResults()
-        if (constraint != null && constraint.length > 0) {
-            constraint = constraint.toString().uppercase(Locale.getDefault())
-            val filter = ArrayList<ADs?>()
+        if (constraintStr != null && constraintStr.isNotEmpty()) {
+            constraintStr = constraintStr.toString().uppercase(Locale.getDefault())
+            val filter = mutableListOf<ADs?>()
             for (i in list.indices) {
-                if (list[i]!!.name!!.uppercase(Locale.getDefault()).contains(constraint)) {
+                if (list[i]!!.name!!.uppercase(Locale.getDefault()).contains(constraintStr)) {
                     filter.add(list[i])
                 }
             }
@@ -27,7 +27,7 @@ class ADsInfoFilter(var list: ArrayList<ADs?>, var adapter: ADsInfoAdapter) : Fi
     }
 
     override fun publishResults(constraint: CharSequence, results: FilterResults) {
-        adapter.list = (results.values as ArrayList<ADs?>)
+        adapter.list = (results.values as MutableList<ADs?>)
         adapter.notifyDataSetChanged()
     }
 }

@@ -25,6 +25,7 @@ object DATA {
     var AD_LOAD = "adLoad"
     var M_AD = "Mad"
     var NULL = "null"
+    var VIEWS_COUNT = "viewsCount"
     var SAVES = "Saves"
     var LIKES = "Likes"
     var POST_ID = "postId"

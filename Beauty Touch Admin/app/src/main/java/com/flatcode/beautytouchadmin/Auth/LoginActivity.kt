@@ -5,27 +5,31 @@ import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.Unit.CLASS
 import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.ViewModel.AuthViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityLoginBinding
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private var binding: ActivityLoginBinding? = null
-    var context: Context = this@LoginActivity
-    private var auth: FirebaseAuth? = null
+    private val context: Context = this@LoginActivity
     private var dialog: ProgressDialog? = null
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
-
-        auth = FirebaseAuth.getInstance()
+        setContentView(binding!!.root)
 
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")
@@ -33,19 +37,29 @@ class LoginActivity : AppCompatActivity() {
 
         binding!!.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
         binding!!.loginBtn.setOnClickListener { validateDate() }
+
+        observeViewModel()
     }
 
-    private var number = "0111111111"
-    private var email = ""
-    private var password = ""
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    dialog!!.dismiss()
+                    result.onSuccess {
+                        VOID.IntentClear(context, CLASS.MAIN)
+                    }.onFailure {
+                        Toast.makeText(context, DATA.EMPTY + it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
     private fun validateDate() {
+        val number = binding!!.emailEt.text.toString().trim()
+        val password = binding!!.passwordEt.text.toString().trim()
 
-        //get data
-        email = binding!!.emailEt.text.toString().trim { it <= ' ' } + "@flatcodetest.com"
-        number = binding!!.emailEt.text.toString().trim { it <= ' ' }
-        password = binding!!.passwordEt.text.toString().trim { it <= ' ' }
-
-        //validate data
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(context, "Password entry error!", Toast.LENGTH_SHORT).show()
         } else if (TextUtils.isEmpty(number)) {
@@ -57,31 +71,14 @@ class LoginActivity : AppCompatActivity() {
             val digit2 = number[1].toString().toInt()
             val digit3 = number[2].toString().toInt()
             if (digit == 0 && digit2 == 9 && (digit3 == 3 || digit3 == 4 || digit3 == 5 || digit3 == 6 || digit3 == 8 || digit3 == 9)) {
-                loginUser()
+                dialog!!.setMessage("Signed in...")
+                dialog!!.show()
+                viewModel.login(number, password)
             } else {
                 Toast.makeText(
                     context, "Please enter a valid phone number and password!", Toast.LENGTH_SHORT
                 ).show()
             }
-        }
-    }
-
-    private fun loginUser() {
-        dialog!!.setMessage("Signed in...")
-        dialog!!.show()
-        try {
-            auth!!.signInWithEmailAndPassword(email, password).addOnCanceledListener {
-                dialog!!.dismiss()
-                Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show()
-            }.addOnSuccessListener {
-                VOID.IntentClear(context, CLASS.MAIN)
-            }.addOnFailureListener { e: Exception ->
-                dialog!!.dismiss()
-                Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()
-            }.addOnCompleteListener { dialog!!.show() }
-        } catch (e: Exception) {
-            dialog!!.dismiss()
-            Toast.makeText(context, DATA.EMPTY + e.message, Toast.LENGTH_SHORT).show()
         }
     }
 }

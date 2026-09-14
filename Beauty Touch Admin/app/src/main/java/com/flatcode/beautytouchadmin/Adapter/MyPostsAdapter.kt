@@ -20,18 +20,26 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.MessageFormat
 
-class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post?>) :
-    RecyclerView.Adapter<MyPostsAdapter.ViewHolder>() {
+class MyPostsAdapter(
+    private val mContext: Context, 
+    var list: MutableList<Post?>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<MyPostsAdapter.ViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onMoreClick(post: Post)
+        fun onLikeClick(post: Post, isLiked: Boolean)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemMyPostBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemMyPostBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val post = mPost[position]
+        val post = list[position] ?: return
 
-        VOID.Glide(false, mContext, post!!.postimage, holder.image_product)
+        VOID.Glide(false, mContext, post.postimage, holder.image_product)
         if (post.name == DATA.EMPTY) {
             holder.name.visibility = View.GONE
         } else {
@@ -47,44 +55,30 @@ class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post
 
         nrLikes(holder.likes, post.postid)
         isLiked(post.postid, holder.like)
+        
         holder.like.setOnClickListener {
-            if (holder.like.tag == "like") {
-                FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(post.postid!!)
-                    .child(DATA.FirebaseUserUid).setValue(true)
-            } else {
-                FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(post.postid!!)
-                    .child(DATA.FirebaseUserUid).removeValue()
-            }
+            val isCurrentlyLiked = holder.like.tag == "liked"
+            listener.onLikeClick(post, isCurrentlyLiked)
         }
 
-        holder.more.setOnClickListener { VOID.moreOptionDialog(mContext, post) }
+        holder.more.setOnClickListener { listener.onMoreClick(post) }
         holder.card.setOnClickListener {
             VOID.IntentExtra(mContext, CLASS.POST_DETAILS, DATA.POST_ID, post.postid)
         }
     }
 
     override fun getItemCount(): Int {
-        return mPost.size
+        return list.size
     }
 
-    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-        var image_product: ImageView
-        var more: ImageView
-        var like: ImageView
-        var likes: TextView
-        var name: TextView
-        var price: TextView
-        var card: CardView
-
-        init {
-            image_product = binding!!.imageProduct
-            more = binding!!.more
-            like = binding!!.like
-            name = binding!!.name
-            price = binding!!.price
-            likes = binding!!.likes
-            card = binding!!.card
-        }
+    class ViewHolder(binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
+        var image_product: ImageView = binding.imageProduct
+        var more: ImageView = binding.more
+        var like: ImageView = binding.like
+        var likes: TextView = binding.likes
+        var name: TextView = binding.name
+        var price: TextView = binding.price
+        var card: CardView = binding.card
     }
 
     private fun nrLikes(likes: TextView, postId: String?) {
@@ -113,9 +107,5 @@ class MyPostsAdapter(private val mContext: Context, private val mPost: List<Post
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-    }
-
-    companion object {
-        private var binding: ItemMyPostBinding? = null
     }
 }

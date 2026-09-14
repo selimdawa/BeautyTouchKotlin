@@ -3,18 +3,17 @@ package com.flatcode.beautytouchadmin.Filter
 import android.widget.Filter
 import com.flatcode.beautytouchadmin.Adapter.LeaderboardOldAdapter
 import com.flatcode.beautytouchadmin.Model.User
-import java.util.Locale
+import java.util.*
 
-class LeaderboardOldFilter(var list: ArrayList<User?>, var adapter: LeaderboardOldAdapter) :
-    Filter() {
+class LeaderboardOldFilter(var list: MutableList<User?>, var adapter: LeaderboardOldAdapter) : Filter() {
     override fun performFiltering(constraint: CharSequence): FilterResults {
-        var constraint: CharSequence? = constraint
+        var constraintStr: CharSequence? = constraint
         val results = FilterResults()
-        if (constraint != null && constraint.length > 0) {
-            constraint = constraint.toString().uppercase(Locale.getDefault())
-            val filter = ArrayList<User?>()
+        if (constraintStr != null && constraintStr.isNotEmpty()) {
+            constraintStr = constraintStr.toString().uppercase(Locale.getDefault())
+            val filter = mutableListOf<User?>()
             for (i in list.indices) {
-                if (list[i]!!.username!!.contains(constraint)) {
+                if (list[i]!!.username!!.uppercase(Locale.getDefault()).contains(constraintStr)) {
                     filter.add(list[i])
                 }
             }
@@ -28,7 +27,7 @@ class LeaderboardOldFilter(var list: ArrayList<User?>, var adapter: LeaderboardO
     }
 
     override fun publishResults(constraint: CharSequence, results: FilterResults) {
-        adapter.list = (results.values as ArrayList<User?>)
+        adapter.list = (results.values as MutableList<User?>)
         adapter.notifyDataSetChanged()
     }
 }

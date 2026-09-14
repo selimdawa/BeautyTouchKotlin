@@ -5,15 +5,15 @@ import com.flatcode.beautytouchadmin.Adapter.LeaderboardAdapter
 import com.flatcode.beautytouchadmin.Model.User
 import java.util.*
 
-class LeaderboardFilter(var list: ArrayList<User?>, var adapter: LeaderboardAdapter) : Filter() {
+class LeaderboardFilter(var list: MutableList<User?>, var adapter: LeaderboardAdapter) : Filter() {
     override fun performFiltering(constraint: CharSequence): FilterResults {
-        var constraint: CharSequence? = constraint
+        var constraintStr: CharSequence? = constraint
         val results = FilterResults()
-        if (constraint != null && constraint.length > 0) {
-            constraint = constraint.toString().uppercase(Locale.getDefault())
-            val filter = ArrayList<User?>()
+        if (constraintStr != null && constraintStr.isNotEmpty()) {
+            constraintStr = constraintStr.toString().uppercase(Locale.getDefault())
+            val filter = mutableListOf<User?>()
             for (i in list.indices) {
-                if (list[i]!!.username!!.contains(constraint)) {
+                if (list[i]!!.username!!.uppercase(Locale.getDefault()).contains(constraintStr)) {
                     filter.add(list[i])
                 }
             }
@@ -27,7 +27,7 @@ class LeaderboardFilter(var list: ArrayList<User?>, var adapter: LeaderboardAdap
     }
 
     override fun publishResults(constraint: CharSequence, results: FilterResults) {
-        adapter.list = (results.values as ArrayList<User?>)
+        adapter.list = (results.values as MutableList<User?>)
         adapter.notifyDataSetChanged()
     }
 }

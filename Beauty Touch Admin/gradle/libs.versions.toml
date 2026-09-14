@@ -21,7 +21,7 @@ lifecycle = "2.11.0"
 coroutines = "1.11.0"
 timber = "5.0.1"
 ksp = "2.3.11"
-kotlin = "2.3.11"
+kotlin = "2.4.20"
 
 [libraries]
 android-image-cropper = { module = "com.theartofdev.edmodo:android-image-cropper", version.ref = "androidImageCropper" }

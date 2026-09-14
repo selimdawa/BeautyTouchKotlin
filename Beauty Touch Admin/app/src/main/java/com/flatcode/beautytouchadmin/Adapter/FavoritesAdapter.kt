@@ -19,16 +19,16 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.MessageFormat
 
-class FavoritesAdapter(private val mContext: Context, private val mPost: List<Post?>) :
+class FavoritesAdapter(private val mContext: Context, var list: MutableList<Post?>) :
     RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemProductLinearBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemProductLinearBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val post = mPost[position]
+        val post = list[position]
         val id = DATA.EMPTY + post!!.postid
 
         VOID.Glide(true, mContext, post.postimage, holder.image_product)
@@ -52,27 +52,17 @@ class FavoritesAdapter(private val mContext: Context, private val mPost: List<Po
     }
 
     override fun getItemCount(): Int {
-        return mPost.size
+        return list.size
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        var card: CardView
-        var image_product: ImageView
-        var like: ImageView
-        var likes: TextView
-        var name: TextView
-        var price: TextView
-        var save: ImageView
-
-        init {
-            card = binding!!.card
-            image_product = binding!!.imageProduct
-            like = binding!!.like
-            likes = binding!!.likes
-            save = binding!!.save
-            name = binding!!.name
-            price = binding!!.price
-        }
+    class ViewHolder(binding: ItemProductLinearBinding) : RecyclerView.ViewHolder(binding.root) {
+        val card: CardView = binding.card
+        val image_product: ImageView = binding.imageProduct
+        val like: ImageView = binding.like
+        val likes: TextView = binding.likes
+        val name: TextView = binding.name
+        val price: TextView = binding.price
+        val save: ImageView = binding.save
     }
 
     private fun nrLikes(likes: TextView, postId: String?) {
@@ -84,9 +74,5 @@ class FavoritesAdapter(private val mContext: Context, private val mPost: List<Po
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-    }
-
-    companion object {
-        private var binding: ItemProductLinearBinding? = null
     }
 }

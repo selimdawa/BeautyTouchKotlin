@@ -1,34 +1,16 @@
 package com.flatcode.beautytouchadmin.Unit
 
 import android.app.Activity
-import android.app.Dialog
-import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import coil3.load
 import coil3.request.crossfade
 import coil3.request.placeholder
 import coil3.request.transformations
-import com.flatcode.beautytouchadmin.Model.Post
-import com.flatcode.beautytouchadmin.Model.ShoppingCenter
-import com.flatcode.beautytouchadmin.Model.Tools
 import com.flatcode.beautytouchadmin.R
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
@@ -116,121 +98,6 @@ object VOID {
             .setAspectRatio(1, 1)
             .setCropShape(CropImageView.CropShape.OVAL)
             .start(activity!!)
-    }
-
-    fun getNrFromServer(server: String, name: TextView) {
-        val reference = FirebaseDatabase.getInstance().getReference(server)
-        reference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val i: Int
-                val Name = name.text.toString()
-                if (server == DATA.USERS) {
-                    i = (dataSnapshot.childrenCount - 1).toInt()
-                    name.text = "$Name ( $i )"
-                } else if (server == DATA.M_TOOLS) {
-                    val tools = dataSnapshot.getValue(Tools::class.java)
-                    if (Name.contains("Old")) {
-                        name.text = Name + " " + tools!!.oldYear + " | " + tools.oldSession
-                    } else {
-                        name.text = Name + " " + tools!!.year + " | " + tools.session
-                    }
-                } else {
-                    i = dataSnapshot.childrenCount.toInt()
-                    name.text = "$Name ( $i )"
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    fun moreOptionDialog(context: Context, item: Post?) {
-        val id = item!!.postid
-        val name = item.name
-
-        //options to show in dialog
-        val options = arrayOf("Edit", "Delete")
-
-        //alert dialog
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Choose...").setItems(options) { dialog: DialogInterface?, which: Int ->
-            //handle dialog option click
-            if (which == 0) {
-                //Edit clicked ,Open new activity to edit the book info
-                IntentExtra(context, CLASS.POST_EDIT, DATA.POST_ID, id)
-            } else if (which == 1) {
-                //Delete Clicked
-                dialogOptionDelete(context, DATA.EMPTY + id, DATA.EMPTY + name, false)
-            }
-        }.show()
-    }
-
-    fun moreShoppingCenters(context: Context, item: ShoppingCenter?) {
-        val id = item!!.id
-        val name = item.name
-
-        //options to show in dialog
-        val options = arrayOf("Edit", "Delete")
-
-        //alert dialog
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Choose...").setItems(options) { dialog: DialogInterface?, which: Int ->
-            //handle dialog option click
-            if (which == 0) {
-                //Edit clicked ,Open new activity to edit the book info
-                IntentExtra(context, CLASS.SHOPPING_CENTRES_EDIT, DATA.SHOPPING_CENTER_ID, id)
-            } else if (which == 1) {
-                //Delete Clicked
-                dialogOptionDelete(context, DATA.EMPTY + id, DATA.EMPTY + name, true)
-            }
-        }.show()
-    }
-
-    fun dialogOptionDelete(context: Context?, id: String?, name: String, isPharmacy: Boolean) {
-        val dialog = Dialog(context!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_logout)
-        dialog.setCancelable(true)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val lp = WindowManager.LayoutParams()
-        lp.copyFrom(dialog.window!!.attributes)
-        lp.width = WindowManager.LayoutParams.WRAP_CONTENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        val title = dialog.findViewById<TextView>(R.id.title)
-        if (isPharmacy) {
-            title.setText(R.string.do_you_want_to_delete_the_pharmacy)
-        } else {
-            title.setText(R.string.do_you_want_to_delete_the_post)
-        }
-        dialog.findViewById<View>(R.id.yes).setOnClickListener {
-            if (isPharmacy) {
-                delete(dialog, context, DATA.SHOPPING_CENTERS, id, name)
-            } else {
-                delete(dialog, context, DATA.POSTS, id, name)
-            }
-        }
-        dialog.findViewById<View>(R.id.no).setOnClickListener { dialog.dismiss() }
-        dialog.show()
-        dialog.window!!.attributes = lp
-    }
-
-    fun delete(
-        dialogDelete: Dialog, context: Context?, database: String?, id: String?, name: String
-    ) {
-        val dialog = ProgressDialog(context)
-        dialog.setTitle("Please wait")
-        dialog.setMessage("is deleted  $name ...")
-        dialog.show()
-        val reference = FirebaseDatabase.getInstance().getReference(database!!)
-        reference.child(id!!).removeValue().addOnSuccessListener {
-            dialog.dismiss()
-            Toast.makeText(context, "Post deleted successfully...", Toast.LENGTH_SHORT).show()
-            dialogDelete.dismiss()
-        }.addOnFailureListener { e: Exception ->
-            dialog.dismiss()
-            dialogDelete.dismiss()
-            Toast.makeText(context, "" + e.message, Toast.LENGTH_SHORT).show()
-        }
     }
 
     fun CropImageSlider(activity: Activity?) {

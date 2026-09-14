@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -44,9 +43,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)   //DataStore
 
     // MVVM & Lifecycle
-    implementation(libs.androidx.lifecycle.viewmodel-ktx)
-    implementation(libs.androidx.lifecycle.livedata-ktx)
-    implementation(libs.androidx.lifecycle.runtime-ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -59,8 +58,8 @@ dependencies {
     implementation(libs.timber)
 
     // Navigation
-    implementation(libs.androidx.navigation.fragment-ktx)
-    implementation(libs.androidx.navigation.ui-ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Room
     implementation(libs.androidx.room.runtime)
