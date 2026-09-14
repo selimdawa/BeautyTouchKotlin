@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -81,4 +83,17 @@ dependencies {
     implementation(libs.material.ripple)                //Ripple Effect
     implementation(libs.nafisbottomnav)                 //Nafis Bottom Navigation
     implementation(libs.play.services.ads)              //ADs Google AdMob
+
+    // Architecture, MVVM, DI, Room, Navigation, Timber, Coroutines
+    implementation(libs.timber)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 }
