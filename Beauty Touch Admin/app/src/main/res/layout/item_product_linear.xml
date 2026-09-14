@@ -8,13 +8,14 @@
         android:layout_marginHorizontal="5sp"
         android:layout_marginBottom="10sp">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:elevation="6dp"
-            app:cardCornerRadius="6dp">
+            app:cardCornerRadius="6dp"
+            app:strokeWidth="0dp">
 
             <LinearLayout
                 android:id="@+id/color"
@@ -33,12 +34,13 @@
                         android:src="@color/image_profile"
                         app:layout_constraintDimensionRatio="1:1" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="10dp"
+                        app:strokeWidth="0dp">
 
                         <ImageView
                             android:id="@+id/save"
@@ -49,7 +51,7 @@
                             android:padding="2dp"
                             android:src="@drawable/ic_favorite" />
 
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                 </FrameLayout>
 
@@ -147,7 +149,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 
