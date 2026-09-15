@@ -1,4 +1,4 @@
-package com.flatcode.beautytouch.Unitimport
+package com.flatcode.beautytouch.Unit
 
 import com.flatcode.beautytouch.Activity.*
 import com.flatcode.beautytouch.Activity.SplashActivity

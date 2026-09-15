@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unitimport.CLASS
+import com.flatcode.beautytouch.Unit.CLASS
 import com.flatcode.beautytouch.databinding.ActivityAuthBinding
 
 class AuthActivity : AppCompatActivity() {

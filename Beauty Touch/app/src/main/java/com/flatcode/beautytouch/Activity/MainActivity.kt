@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
+import coil3.load
 import com.flatcode.beautytouch.BuildConfig
 import com.flatcode.beautytouch.Fragment.HairProductsFragment
 import com.flatcode.beautytouch.Fragment.HomeFragment
@@ -31,7 +31,6 @@ import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityMainBinding
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val view = binding!!.root
         setContentView(view)
 
-        binding!!.toolbar.image.setOnClickListener { VOID.Intent1(context, CLASS.PROFILE) }
+        binding!!.toolbar.image.setOnClickListener { VOID.Intent1(context, ProfileActivity::class.java) }
         binding!!.toolbar.drawer.setOnClickListener {
             binding!!.drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -75,16 +74,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         VOID.InterstitialAd(activity!!)
 
         binding!!.myProfile.setOnClickListener {
-            VOID.Intent1(context, CLASS.PROFILE)
+            VOID.Intent1(context, ProfileActivity::class.java)
             binding!!.drawerLayout.closeDrawer(GravityCompat.START)
         }
-        binding!!.favorites.setOnClickListener { VOID.Intent1(context, CLASS.FAVORITES) }
+        binding!!.favorites.setOnClickListener { VOID.Intent1(context, FavoritesActivity::class.java) }
         binding!!.messenger.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse("https://wa.me/message/E2YOU4NVTIEAD1")
             startActivity(i)
         }
-        binding!!.reward.setOnClickListener { VOID.Intent1(context, CLASS.REWARD) }
+        binding!!.reward.setOnClickListener { VOID.Intent1(context, RewardActivity::class.java) }
         binding!!.aboutApp.setOnClickListener { showDialogAboutApp() }
         binding!!.shareApp.setOnClickListener { ShareApp() }
         binding!!.aboutMy.setOnClickListener { showDialogAboutMy() }
@@ -150,7 +149,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         binding!!.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        binding!!.imageDrawer.setOnClickListener { VOID.Intent1(context, CLASS.PROFILE) }
+        binding!!.imageDrawer.setOnClickListener { VOID.Intent1(context, ProfileActivity::class.java) }
 
         observeViewModels()
         postViewModel.loadCategoryCounts(publisher, aname, DATA.SKIN_PRODUCTS, DATA.HAIR_PRODUCTS, DATA.SHOPPING_CENTERS)
@@ -190,8 +189,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Timber.d("User info collected: $resource")
                 if (resource is Resource.Success) {
                     val user = resource.data
-                    Glide.with(context).load(user.imageurl).into(binding!!.imageDrawer)
-                    Glide.with(context).load(user.imageurl).into(binding!!.toolbar.image)
+                    binding!!.imageDrawer.load(user.imageurl)
+                    binding!!.toolbar.image.load(user.imageurl)
                     binding!!.name.text = user.username
                 }
             }
@@ -323,7 +322,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
         dialog.findViewById<View>(R.id.yes).setOnClickListener {
             userViewModel.logout()
-            VOID.IntentClear(context, CLASS.LOGIN)
+            VOID.IntentClear(context, LoginActivity::class.java)
             finish()
         }
         dialog.findViewById<View>(R.id.no).setOnClickListener { dialog.cancel() }

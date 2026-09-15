@@ -1,11 +1,14 @@
 package com.flatcode.beautytouchadmin.Model
 
-class Points {
-    var rewardCount = 0
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-    constructor()
-
-    constructor(rewardCount: Int) {
-        this.rewardCount = rewardCount
-    }
-}
+@Parcelize
+@Entity(tableName = "points")
+data class Points(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    var rewardCount: Int = 0
+) : Parcelable

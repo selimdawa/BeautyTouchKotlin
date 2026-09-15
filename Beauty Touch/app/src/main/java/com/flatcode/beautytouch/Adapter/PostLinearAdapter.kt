@@ -13,7 +13,7 @@ import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unitimport.CLASS
+import com.flatcode.beautytouch.Unit.CLASS
 import com.flatcode.beautytouch.databinding.ItemProductLinearBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

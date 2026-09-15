@@ -4,6 +4,8 @@ import android.net.Uri
 import com.flatcode.beautytouch.Model.Reward
 import com.flatcode.beautytouch.Model.Tools
 import com.flatcode.beautytouch.Model.User
+import com.flatcode.beautytouch.Room.Dao.ToolsDao
+import com.flatcode.beautytouch.Room.Dao.UserDao
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.Resource
 import com.google.firebase.auth.FirebaseAuth
@@ -12,9 +14,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,8 +28,12 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(
     private val database: FirebaseDatabase,
     private val auth: FirebaseAuth,
-    private val storage: FirebaseStorage
+    private val storage: FirebaseStorage,
+    private val userDao: UserDao,
+    private val toolsDao: ToolsDao
 ) {
+
+    private val repositoryScope = CoroutineScope(Dispatchers.IO)
 
     fun getUserInfo(): Flow<Resource<User>> = callbackFlow {
         trySend(Resource.Loading)
@@ -33,14 +43,22 @@ class UserRepository @Inject constructor(
             close()
             return@callbackFlow
         }
+
+        repositoryScope.launch {
+            userDao.getUserById(uid).first()?.let {
+                trySend(Resource.Success(it))
+            }
+        }
+
         val reference = database.getReference(DATA.USERS).child(uid)
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
                 if (user != null) {
+                    repositoryScope.launch {
+                        userDao.insertUser(user)
+                    }
                     trySend(Resource.Success(user))
-                } else {
-                    trySend(Resource.Error("User data not found"))
                 }
             }
 
@@ -54,14 +72,22 @@ class UserRepository @Inject constructor(
 
     fun getAppTools(): Flow<Resource<Tools>> = callbackFlow {
         trySend(Resource.Loading)
+
+        repositoryScope.launch {
+            toolsDao.getTools().first()?.let {
+                trySend(Resource.Success(it))
+            }
+        }
+
         val reference = database.getReference(DATA.M_TOOLS)
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val tools = snapshot.getValue(Tools::class.java)
                 if (tools != null) {
+                    repositoryScope.launch {
+                        toolsDao.insertTools(tools)
+                    }
                     trySend(Resource.Success(tools))
-                } else {
-                    trySend(Resource.Error("Tools not found"))
                 }
             }
 
@@ -75,6 +101,10 @@ class UserRepository @Inject constructor(
 
     fun logout() {
         auth.signOut()
+        repositoryScope.launch {
+            userDao.deleteAllUsers()
+            toolsDao.deleteAllTools()
+        }
     }
 
     fun updateProfile(username: String, imageUrl: String?): Flow<Resource<Boolean>> = callbackFlow {
@@ -86,7 +116,10 @@ class UserRepository @Inject constructor(
             hashMap[DATA.IMAGE_URL] = imageUrl
         }
         database.getReference(DATA.USERS).child(uid).updateChildren(hashMap)
-            .addOnSuccessListener { trySend(Resource.Success(true)) }
+            .addOnSuccessListener { 
+                trySend(Resource.Success(true))
+                // Local update will be triggered by ValueEventListener in getUserInfo
+            }
             .addOnFailureListener { trySend(Resource.Error(it.message ?: "Update failed")) }
         awaitClose()
     }
@@ -147,6 +180,9 @@ class UserRepository @Inject constructor(
                     if (child.child(orderBy).exists()) {
                         child.getValue(User::class.java)?.let { list.add(it) }
                     }
+                }
+                repositoryScope.launch {
+                    userDao.insertUsers(list)
                 }
                 trySend(Resource.Success(list))
             }

@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
+import coil3.load
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
@@ -83,7 +83,7 @@ class ProfileActivity : AppCompatActivity() {
                 Timber.d("User info collected: $resource")
                 if (resource is Resource.Success) {
                     val user = resource.data
-                    Glide.with(this@ProfileActivity).load(user.imageurl).into(binding!!.image)
+                    binding!!.image.load(user.imageurl)
                     binding!!.name.text = user.username
                     binding!!.nameEdit.setText(user.username)
                 }

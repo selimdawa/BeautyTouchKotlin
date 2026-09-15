@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
-    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.kotlinParcelize)
 }
 
 android {
@@ -19,37 +21,21 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    //signingConfigs {
-    //    create("release") {
-    //        storeFile = file("D:\\MyProjects\\Kotlin\\BeautyTouch\\Beauty Touch\\BeautyTouch.jks")
-    //        storePassword = "00000000"
-    //        keyAlias = "BeautyTouch"
-    //        keyPassword = "00000000"
-    //    }
-    //}
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
-    //buildTypes {
-    //    getByName("release") {
-    //        signingConfig = signingConfigs.getByName("release")
-    //        isMinifyEnabled = true
-    //        isShrinkResources = true
-    //        proguardFiles(
-    //            getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-    //        )
-    //    }
-    //}
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-
     buildFeatures {
         dataBinding = true
         buildConfig = true
@@ -61,9 +47,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.datastore.preferences)   //DataStore
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     //Layout
     implementation(libs.material)
     implementation(libs.multicolors)
@@ -78,22 +61,31 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.analytics)
-    //implementation(libs.firebase.crashlytics)
-    //Other's
-    implementation(libs.material.ripple)                //Ripple Effect
-    implementation(libs.nafisbottomnav)                 //Nafis Bottom Navigation
-    implementation(libs.play.services.ads)              //ADs Google AdMob
-
-    // Architecture, MVVM, DI, Room, Navigation, Timber, Coroutines
-    implementation(libs.timber)
+    implementation(libs.firebase.crashlytics)
+    //MVVM
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    //Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    //Navigation
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    //Coroutines
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
+    //Other
+    implementation(libs.material.ripple)                //Ripple Effect
+    implementation(libs.nafisbottomnav)                 //Nafis Bottom Navigation
+    implementation(libs.play.services.ads)              //ADs Google AdMob
+    implementation(libs.timber)
+    //Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
