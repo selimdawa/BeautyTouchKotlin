@@ -3,9 +3,13 @@ package com.flatcode.beautytouchadmin.Unit
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
+import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import coil3.load
 import coil3.request.crossfade
@@ -144,5 +148,29 @@ object VOID {
         val cR = context.contentResolver
         val mime = MimeTypeMap.getSingleton()
         return mime.getExtensionFromMimeType(cR.getType(uri!!))
+    }
+
+    fun applySystemBarsPadding(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(v.paddingLeft, insets.top, v.paddingRight, insets.bottom)
+            windowInsets
+        }
+    }
+
+    fun applyStatusBarPadding(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(v.paddingLeft, insets.top, v.paddingRight, v.paddingBottom)
+            windowInsets
+        }
+    }
+
+    fun applyNavigationBarPadding(view: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, insets.bottom)
+            windowInsets
+        }
     }
 }
