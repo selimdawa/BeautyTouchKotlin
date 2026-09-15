@@ -19,15 +19,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import coil3.load
 import com.flatcode.beautytouch.Auth.LoginActivity
 import com.flatcode.beautytouch.BuildConfig
-import com.flatcode.beautytouch.Fragment.HairProductsFragment
-import com.flatcode.beautytouch.Fragment.HomeFragment
-import com.flatcode.beautytouch.Fragment.ShoppingCentersFragment
-import com.flatcode.beautytouch.Fragment.SkinProductsFragment
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.Resource
@@ -46,6 +43,7 @@ import java.text.MessageFormat
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var binding: ActivityMainBinding? = null
+    private lateinit var navController: NavController
     var activity: Activity? = null
     var context: Context = also { activity = it }
     var home = "Home Page"
@@ -65,6 +63,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding!!.root
         setContentView(view)
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
         binding!!.toolbar.image.setOnClickListener { VOID.Intent1(context, ProfileActivity::class.java) }
         binding!!.toolbar.drawer.setOnClickListener {
@@ -97,14 +99,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         bottomNavigation!!.add(NafisBottomNavigation.Model(4, R.drawable.ic_shopping_centers))
 
         bottomNavigation!!.setOnShowListener { item: NafisBottomNavigation.Model ->
-            var fragment: Fragment? = null
             when (item.id) {
-                1 -> fragment = SkinProductsFragment()
-                2 -> fragment = HomeFragment()
-                3 -> fragment = HairProductsFragment()
-                4 -> fragment = ShoppingCentersFragment()
+                1 -> navController.navigate(R.id.skinProductsFragment)
+                2 -> navController.navigate(R.id.homeFragment)
+                3 -> navController.navigate(R.id.hairProductsFragment)
+                4 -> navController.navigate(R.id.shoppingCentersFragment)
             }
-            loadFragment(fragment)
         }
 
         bottomNavigation!!.setCount(1, number_product)
@@ -196,12 +196,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
-    }
-
-    private fun loadFragment(fragment: Fragment?) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment!!)
-            .commit()
     }
 
     override fun onBackPressed() {

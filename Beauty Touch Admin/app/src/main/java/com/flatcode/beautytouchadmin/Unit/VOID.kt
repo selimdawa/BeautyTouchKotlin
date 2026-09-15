@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
+import androidx.navigation.NavController
 import coil3.load
 import coil3.request.crossfade
 import coil3.request.placeholder
@@ -30,6 +31,15 @@ object VOID {
         val intent = Intent(context, c)
         intent.putExtra(key, value)
         context.startActivity(intent)
+    }
+
+    // Navigation Component Helpers
+    fun navigate(navController: NavController, actionId: Int) {
+        navController.navigate(actionId)
+    }
+
+    fun navigateWithBundle(navController: NavController, actionId: Int, bundle: Bundle) {
+        navController.navigate(actionId, bundle)
     }
 
     fun IntentExtra2(
