@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.Main
 import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.Unit.CLASS
 import com.flatcode.beautytouchadmin.Unit.DATA
 import com.flatcode.beautytouchadmin.Unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemMainBinding
@@ -28,7 +29,6 @@ class MainAdapter(private val context: Context, var list: MutableList<Main>) :
         val image = model.image
         val number = model.number
         val name = model.title
-        val c = model.c
 
         if (image != 0) holder.image.setImageResource(image) else holder.image.setImageResource(R.drawable.ic_load)
         if (number != 0) {
@@ -38,7 +38,24 @@ class MainAdapter(private val context: Context, var list: MutableList<Main>) :
             holder.number.visibility = View.GONE
         }
         holder.name.text = name
-        holder.itemView.setOnClickListener { VOID.Intent1(context, c) }
+        holder.itemView.setOnClickListener {
+            val intentClass = when (name) {
+                "Users" -> CLASS.USERS
+                "Hottest" -> CLASS.HOT_PRODUCTS
+                "My Posts" -> CLASS.POSTS
+                "Add Post" -> CLASS.POST_ADD
+                "Shopping Centers" -> CLASS.SHOPPING_CENTRES
+                "Add Shopping Center" -> CLASS.SHOPPING_CENTRES_ADD
+                "Current Session" -> CLASS.SESSION_NOW
+                "Previous Session" -> CLASS.SESSION_OLD
+                "Slider Show" -> CLASS.SLIDER_SHOW
+                "Ad Monitor" -> CLASS.ADS_METER
+                "About Me" -> CLASS.ABOUT_ME
+                "Tools" -> CLASS.TOOLS
+                else -> null
+            }
+            intentClass?.let { VOID.Intent1(context, it) }
+        }
     }
 
     override fun getItemCount(): Int {

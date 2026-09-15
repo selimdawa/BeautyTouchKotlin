@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unit.CLASS
 import com.flatcode.beautytouch.databinding.ActivityForgetPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,11 +35,11 @@ class ForgetPasswordActivity : AppCompatActivity() {
         dialog!!.setCanceledOnTouchOutside(false)
 
         binding!!.noAccount.setOnClickListener {
-            VOID.Intent1(context, CLASS.REGISTER)
+            VOID.Intent1(context, RegisterActivity::class.java)
             finish()
         }
         binding!!.login.setOnClickListener {
-            VOID.Intent1(context, CLASS.LOGIN)
+            VOID.Intent1(context, LoginActivity::class.java)
             finish()
         }
         binding!!.go.setOnClickListener { validateDate() }

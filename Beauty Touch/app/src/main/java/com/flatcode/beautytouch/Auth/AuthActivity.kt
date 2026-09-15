@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unit.CLASS
 import com.flatcode.beautytouch.databinding.ActivityAuthBinding
 
 class AuthActivity : AppCompatActivity() {
@@ -18,7 +17,7 @@ class AuthActivity : AppCompatActivity() {
         val view = binding!!.root
         setContentView(view)
 
-        binding!!.loginBtn.setOnClickListener { VOID.Intent1(context, CLASS.LOGIN) }
-        binding!!.skipBtn.setOnClickListener { VOID.Intent1(context, CLASS.REGISTER) }
+        binding!!.loginBtn.setOnClickListener { VOID.Intent1(context, LoginActivity::class.java) }
+        binding!!.skipBtn.setOnClickListener { VOID.Intent1(context, RegisterActivity::class.java) }
     }
 }

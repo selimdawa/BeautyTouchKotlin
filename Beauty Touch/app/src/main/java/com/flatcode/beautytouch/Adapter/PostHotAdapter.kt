@@ -9,11 +9,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.flatcode.beautytouch.Activity.PostDetailsActivity
 import com.flatcode.beautytouch.Model.Post
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unit.CLASS
 import com.flatcode.beautytouch.databinding.ItemProductLinearBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -72,7 +72,7 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
             }
         }
         holder.card.setOnClickListener {
-            VOID.IntentExtra(mContext, CLASS.POST_DETAILS, DATA.POST_ID, post.postid)
+            VOID.IntentExtra(mContext, PostDetailsActivity::class.java, DATA.POST_ID, post.postid)
         }
     }
 

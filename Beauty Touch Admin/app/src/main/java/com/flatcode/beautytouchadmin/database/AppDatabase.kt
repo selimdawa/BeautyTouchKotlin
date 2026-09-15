@@ -12,7 +12,8 @@ import com.flatcode.beautytouchadmin.Model.*
         Tools::class,
         ShoppingCenter::class,
         Reward::class,
-        Points::class
+        Points::class,
+        Main::class
     ],
     version = 1,
     exportSchema = true
@@ -25,4 +26,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun shoppingCenterDao(): ShoppingCenterDao
     abstract fun rewardDao(): RewardDao
     abstract fun pointsDao(): PointsDao
+    abstract fun mainDao(): MainDao
 }

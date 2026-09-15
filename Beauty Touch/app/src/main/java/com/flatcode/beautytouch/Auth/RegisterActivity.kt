@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.flatcode.beautytouch.Activity.MainActivity
 import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,10 +36,10 @@ class RegisterActivity : AppCompatActivity() {
         dialog!!.setCanceledOnTouchOutside(false)
 
         binding!!.login.setOnClickListener {
-            VOID.Intent1(context, CLASS.LOGIN)
+            VOID.Intent1(context, LoginActivity::class.java)
             finish()
         }
-        binding!!.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
+        binding!!.forget.setOnClickListener { VOID.Intent1(context, ForgetPasswordActivity::class.java) }
         binding!!.go.setOnClickListener { validateData() }
 
         observeViewModel()
@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         dialog!!.dismiss()
                         Toast.makeText(context, "Account created", Toast.LENGTH_SHORT).show()
-                        VOID.IntentClear(context, CLASS.MAIN)
+                        VOID.IntentClear(context, MainActivity::class.java)
                         finish()
                     }
 

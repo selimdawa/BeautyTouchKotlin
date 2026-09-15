@@ -8,10 +8,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.flatcode.beautytouch.Activity.MainActivity
 import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unitimport.CLASS
 import com.flatcode.beautytouch.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,8 +35,8 @@ class LoginActivity : AppCompatActivity() {
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
 
-        binding!!.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
-        binding!!.noAccount.setOnClickListener { VOID.Intent1(context, CLASS.REGISTER) }
+        binding!!.forget.setOnClickListener { VOID.Intent1(context, ForgetPasswordActivity::class.java) }
+        binding!!.noAccount.setOnClickListener { VOID.Intent1(context, RegisterActivity::class.java) }
         binding!!.loginBtn.setOnClickListener { validateDate() }
 
         observeViewModel()
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
 
                     is Resource.Success -> {
                         dialog!!.dismiss()
-                        VOID.IntentClear(context, CLASS.MAIN)
+                        VOID.IntentClear(context, MainActivity::class.java)
                     }
 
                     is Resource.Error -> {

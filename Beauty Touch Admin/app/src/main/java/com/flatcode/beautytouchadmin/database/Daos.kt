@@ -93,3 +93,15 @@ interface PointsDao {
     @Delete
     suspend fun delete(points: Points)
 }
+
+@Dao
+interface MainDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(main: Main)
+
+    @Query("SELECT * FROM main_menu")
+    fun getAllMainMenu(): Flow<List<Main>>
+
+    @Delete
+    suspend fun delete(main: Main)
+}

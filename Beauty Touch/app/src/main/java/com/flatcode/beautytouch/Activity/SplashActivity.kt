@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unit.CLASS
+import com.flatcode.beautytouch.Auth.AuthActivity
 import com.flatcode.beautytouch.databinding.ActivitySplashBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -31,9 +31,9 @@ class SplashActivity : AppCompatActivity() {
         //get current user, if logged in
         val firebaseUser = auth!!.currentUser
         if (firebaseUser == null) {
-            VOID.Intent1(context, CLASS.AUTH)
+            VOID.Intent1(context, AuthActivity::class.java)
         } else {
-            VOID.Intent1(context, CLASS.MAIN)
+            VOID.Intent1(context, MainActivity::class.java)
         }
         finish()
     }

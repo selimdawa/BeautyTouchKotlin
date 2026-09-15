@@ -1,17 +1,15 @@
 package com.flatcode.beautytouchadmin.Model
 
-class Main {
-    var title: String? = null
-    var image = 0
-    var number = 0
-    var c: Class<*>? = null
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-    constructor()
-
-    constructor(image: Int, title: String?, number: Int, c: Class<*>?) {
-        this.image = image
-        this.number = number
-        this.title = title
-        this.c = c
-    }
-}
+@Parcelize
+@Entity(tableName = "main_menu")
+data class Main(
+    var image: Int = 0,
+    @PrimaryKey
+    var title: String = "",
+    var number: Int = 0
+) : Parcelable

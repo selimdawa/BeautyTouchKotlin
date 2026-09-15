@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import com.flatcode.beautytouch.R
 import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
-import com.flatcode.beautytouch.Unit.CLASS
 import com.flatcode.beautytouch.databinding.ActivityRewardBinding
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -47,10 +46,10 @@ class RewardActivity : AppCompatActivity() {
 
         binding!!.toolbar.nameSpace.setText(R.string.earn_points)
         binding!!.leaderboardCard.setOnClickListener {
-            VOID.Intent1(context, CLASS.LEADERBOARD)
+            VOID.Intent1(context, LeaderboardActivity::class.java)
         }
         binding!!.leaderboardCardOld.setOnClickListener {
-            VOID.Intent1(context, CLASS.LEADERBOARD_OLD)
+            VOID.Intent1(context, LeaderboardOldActivity::class.java)
         }
         MobileAds.initialize(context) { }
         loadRewardedAd()

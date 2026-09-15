@@ -59,4 +59,7 @@ object AppModule {
 
     @Provides
     fun providePointsDao(db: AppDatabase): PointsDao = db.pointsDao()
+
+    @Provides
+    fun provideMainDao(db: AppDatabase): MainDao = db.mainDao()
 }

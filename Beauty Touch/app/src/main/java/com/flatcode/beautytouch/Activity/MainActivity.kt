@@ -22,6 +22,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import coil3.load
+import com.flatcode.beautytouch.Auth.LoginActivity
 import com.flatcode.beautytouch.BuildConfig
 import com.flatcode.beautytouch.Fragment.HairProductsFragment
 import com.flatcode.beautytouch.Fragment.HomeFragment
