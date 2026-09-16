@@ -21,5 +21,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Beauty Touch - Admin"
+rootProject.name = "Little Beauty - Admin"
 include(":app")

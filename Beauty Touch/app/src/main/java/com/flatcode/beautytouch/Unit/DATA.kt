@@ -40,7 +40,7 @@ object DATA {
     var ID = "id"
     var IMAGE = "image"
     var PUBLISHER_NAME = "KTWe3PaSUSbv3xulRKSwUgConC92" //id_
-    var APP_NAME = "Beauty Touch" //app_
+    var APP_NAME = "Little Beauty" //app_
     var WHATSAPP = "https://wa.me/message/E2YOU4NVTIEAD1" //Whatsapp_
     var FB_DESINGER = "fb://profile/100037312172320" //Facebook_designer
     var FB_DESINGER_2 = "https://www.facebook.com/mohamed.deeb.50115" //Facebook_designer

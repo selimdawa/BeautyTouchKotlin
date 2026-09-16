@@ -241,7 +241,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "share app")
         shareIntent.putExtra(
             Intent.EXTRA_TEXT,
-            " Beauty Touch beauty care application, download it now from Google Play " + " https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+            " Little Beauty: beauty care application, download it now from Google Play " + " https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
         )
         startActivity(Intent.createChooser(shareIntent, "Choose how to share"))
     }

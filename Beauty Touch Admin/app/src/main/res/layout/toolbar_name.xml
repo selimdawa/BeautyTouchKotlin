@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="?mc_bg"
@@ -41,6 +41,6 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
             app:tint="@color/white" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
 </layout>
