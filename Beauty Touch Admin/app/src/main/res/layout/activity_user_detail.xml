@@ -42,6 +42,7 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
+                                    android:contentDescription="@null"
                                     android:src="?mc_bg"
                                     app:layout_constraintDimensionRatio="1:1"
                                     tools:ignore="MissingConstraints" />
@@ -65,6 +66,7 @@
                                         android:layout_width="200dp"
                                         android:layout_height="200dp"
                                         android:layout_gravity="center"
+                                        android:contentDescription="@null"
                                         android:src="@color/dark"
                                         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -73,6 +75,7 @@
                                         android:layout_width="190dp"
                                         android:layout_height="190dp"
                                         android:layout_gravity="center"
+                                        android:contentDescription="@null"
                                         android:src="@color/image_profile"
                                         android:visibility="visible"
                                         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />

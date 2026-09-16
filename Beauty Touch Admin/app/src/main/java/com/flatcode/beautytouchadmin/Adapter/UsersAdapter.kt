@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import com.google.android.material.card.MaterialCardView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.User
 import com.flatcode.beautytouchadmin.Unit.CLASS
@@ -53,7 +53,7 @@ class UsersAdapter(private val mContext: Context, var list: MutableList<User?>) 
         var image: ImageView = binding.image
         var name: TextView = binding.name
         var favorites: TextView = binding.favorites
-        var card: CardView = binding.card
+        var card: MaterialCardView = binding.card
     }
 
     private fun nrFavorites(favorites: TextView, userid: String) {

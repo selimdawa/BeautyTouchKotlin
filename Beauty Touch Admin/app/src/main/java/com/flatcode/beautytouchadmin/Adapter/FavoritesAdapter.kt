@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import com.google.android.material.card.MaterialCardView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.Unit.CLASS
@@ -56,7 +56,7 @@ class FavoritesAdapter(private val mContext: Context, var list: MutableList<Post
     }
 
     class ViewHolder(binding: ItemProductLinearBinding) : RecyclerView.ViewHolder(binding.root) {
-        val card: CardView = binding.card
+        val card: MaterialCardView = binding.card
         val image_product: ImageView = binding.imageProduct
         val like: ImageView = binding.like
         val likes: TextView = binding.likes

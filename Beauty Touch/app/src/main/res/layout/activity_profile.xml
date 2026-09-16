@@ -31,12 +31,13 @@
                         android:id="@+id/image"
                         android:layout_width="240dp"
                         android:layout_height="240dp"
+                        android:background="@color/white"
+                        android:contentDescription="Profile Image"
                         android:scaleType="centerCrop"
                         android:src="@color/image_profile"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
                         app:strokeColor="@color/white"
-                        app:strokeWidth="5sp"
-                        android:background="@color/white"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                        app:strokeWidth="5sp" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/edit_image_icon"
@@ -47,11 +48,12 @@
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/button_number"
                         android:backgroundTint="?mc_tick"
+                        android:contentDescription="Edit Profile Image"
                         android:padding="5dp"
                         android:src="@drawable/ic_adds"
                         app:layout_constraintDimensionRatio="1:1"
-                        app:tint="@color/white"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                        app:tint="@color/white" />
 
                 </FrameLayout>
 
@@ -109,13 +111,14 @@
                             android:layout_marginHorizontal="15dp"
                             android:background="@drawable/button_number"
                             android:backgroundTint="?mc_tick"
+                            android:contentDescription="Edit Name"
                             android:gravity="center"
                             android:padding="10dp"
                             android:src="@drawable/ic_edit_white"
                             android:visibility="visible"
                             app:layout_constraintDimensionRatio="1:1"
-                            app:tint="@color/white"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                            app:tint="@color/white" />
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageClose"
@@ -125,13 +128,14 @@
                             android:layout_marginHorizontal="15dp"
                             android:background="@drawable/button_number"
                             android:backgroundTint="?mc_tick"
+                            android:contentDescription="Cancel Edit"
                             android:gravity="center"
                             android:padding="10dp"
                             android:src="@drawable/ic_close"
                             android:visibility="gone"
                             app:layout_constraintDimensionRatio="1:1"
-                            app:tint="@color/white"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                            app:tint="@color/white" />
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageTrue"
@@ -142,13 +146,14 @@
                             android:layout_marginVertical="5sp"
                             android:background="@drawable/button_number"
                             android:backgroundTint="?mc_tick"
+                            android:contentDescription="Save Name"
                             android:gravity="center"
                             android:padding="10dp"
                             android:src="@drawable/ic_true"
                             android:visibility="gone"
                             app:layout_constraintDimensionRatio="1:1"
-                            app:tint="@color/white"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                            app:tint="@color/white" />
 
                     </LinearLayout>
 

@@ -45,6 +45,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
+                                android:contentDescription="@null"
                                 android:src="@drawable/reward"
                                 app:layout_constraintDimensionRatio="2:1"
                                 tools:ignore="MissingConstraints" />
@@ -109,6 +110,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:background="@color/white"
+                                android:contentDescription="@null"
                                 android:src="@drawable/ress"
                                 app:layout_constraintDimensionRatio="2:1"
                                 app:tint="?mc_tick"
@@ -174,6 +176,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:background="@color/white"
+                                android:contentDescription="@null"
                                 android:src="@drawable/leaderboard"
                                 app:layout_constraintDimensionRatio="2:1"
                                 app:tint="?mc_tick"

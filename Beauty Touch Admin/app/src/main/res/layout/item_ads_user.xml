@@ -31,6 +31,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_rank" />
 
                 <TextView
@@ -51,6 +52,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_time" />
 
                 <TextView
@@ -77,6 +79,7 @@
                     android:layout_width="80sp"
                     android:layout_height="80sp"
                     android:scaleType="centerCrop"
+                    android:contentDescription="@null"
                     android:src="@color/image_profile"
                     app:strokeColor="@color/white"
                     app:strokeWidth="2sp"
@@ -108,6 +111,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_load" />
 
                 <TextView
@@ -128,6 +132,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_click" />
 
                 <TextView

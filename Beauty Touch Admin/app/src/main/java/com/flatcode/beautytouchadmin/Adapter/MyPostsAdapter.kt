@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import com.google.android.material.card.MaterialCardView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
@@ -78,7 +78,7 @@ class MyPostsAdapter(
         var likes: TextView = binding.likes
         var name: TextView = binding.name
         var price: TextView = binding.price
-        var card: CardView = binding.card
+        var card: MaterialCardView = binding.card
     }
 
     private fun nrLikes(likes: TextView, postId: String?) {

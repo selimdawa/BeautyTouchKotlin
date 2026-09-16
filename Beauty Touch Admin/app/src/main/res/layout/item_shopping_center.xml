@@ -33,6 +33,7 @@
                         android:id="@+id/image_product"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:contentDescription="@null"
                         android:src="@color/image_profile"
                         app:layout_constraintDimensionRatio="2:1"
                         tools:ignore="MissingConstraints" />
@@ -52,6 +53,7 @@
                         android:id="@+id/image_product2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:contentDescription="@null"
                         android:src="@color/image_profile"
                         app:layout_constraintDimensionRatio="2:1"
                         tools:ignore="MissingConstraints" />
@@ -91,6 +93,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:contentDescription="@null"
                             android:gravity="center"
                             android:rotation="90"
                             android:src="@drawable/ic_more" />

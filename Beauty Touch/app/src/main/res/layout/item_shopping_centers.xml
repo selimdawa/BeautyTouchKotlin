@@ -34,6 +34,7 @@
                         android:id="@+id/image_product"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:contentDescription="Shopping Center Image"
                         android:src="@color/image_profile"
                         app:layout_constraintDimensionRatio="2:1"
                         tools:ignore="MissingConstraints" />
@@ -53,6 +54,7 @@
                         android:id="@+id/image_product2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:contentDescription="Shopping Center Image"
                         android:src="@color/image_profile"
                         app:layout_constraintDimensionRatio="2:1"
                         tools:ignore="MissingConstraints" />

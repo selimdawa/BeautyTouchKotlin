@@ -32,6 +32,7 @@
                     android:id="@+id/image"
                     android:layout_width="300sp"
                     android:layout_height="300sp"
+                    android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     android:src="@color/image_profile" />
 

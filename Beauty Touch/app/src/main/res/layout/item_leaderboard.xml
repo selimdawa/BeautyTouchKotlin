@@ -64,6 +64,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:contentDescription="User Profile Image"
                     android:gravity="center"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />

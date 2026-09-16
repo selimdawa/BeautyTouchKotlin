@@ -32,6 +32,7 @@
                     android:id="@+id/imageView"
                     android:layout_width="350dp"
                     android:layout_height="350dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/icon" />
 
             </LinearLayout>
@@ -98,6 +99,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_margin="10sp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_rate" />
 
             <TextView
@@ -142,6 +144,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
+                        android:contentDescription="Facebook for Designer"
                         android:src="@drawable/ic_facebook"
                         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -198,6 +201,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
+                        android:contentDescription="Facebook for Programmer"
                         android:src="@drawable/ic_facebook"
                         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 

@@ -37,6 +37,7 @@
                     app:strokeColor="@color/black"
                     app:strokeWidth="5sp"
                     android:background="@color/black"
+                    android:contentDescription="@null"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                 <TextView

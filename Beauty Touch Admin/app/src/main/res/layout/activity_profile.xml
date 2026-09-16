@@ -36,6 +36,7 @@
                         app:strokeColor="@color/white"
                         app:strokeWidth="5sp"
                         android:background="@color/white"
+                        android:contentDescription="@null"
                         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -49,6 +50,7 @@
                         android:backgroundTint="?mc_tick"
                         android:padding="5dp"
                         android:src="@drawable/ic_adds"
+                        android:contentDescription="@null"
                         app:layout_constraintDimensionRatio="1:1"
                         app:tint="@color/white"
                         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
@@ -113,6 +115,7 @@
                             android:padding="10dp"
                             android:src="@drawable/ic_edit"
                             android:visibility="visible"
+                            android:contentDescription="@null"
                             app:layout_constraintDimensionRatio="1:1"
                             app:tint="@color/white"
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
@@ -129,6 +132,7 @@
                             android:padding="10dp"
                             android:src="@drawable/ic_close"
                             android:visibility="gone"
+                            android:contentDescription="@null"
                             app:layout_constraintDimensionRatio="1:1"
                             app:tint="@color/white"
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
@@ -146,6 +150,7 @@
                             android:padding="10dp"
                             android:src="@drawable/ic_true"
                             android:visibility="gone"
+                            android:contentDescription="@null"
                             app:layout_constraintDimensionRatio="1:1"
                             app:tint="@color/white"
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />

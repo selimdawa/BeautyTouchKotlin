@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import com.google.android.material.card.MaterialCardView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouchadmin.Model.Post
 import com.flatcode.beautytouchadmin.R
@@ -66,7 +66,7 @@ class HotProductAddAdapter(
     }
 
     class ViewHolder(binding: ItemProductAddBinding) : RecyclerView.ViewHolder(binding.root) {
-        val card: CardView = binding.card
+        val card: MaterialCardView = binding.card
         val image_product: ImageView = binding.imageProduct
         val likes: TextView = binding.likes
         val name: TextView = binding.name

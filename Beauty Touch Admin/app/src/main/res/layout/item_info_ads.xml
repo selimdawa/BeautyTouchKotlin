@@ -66,6 +66,7 @@
                         android:layout_width="30sp"
                         android:layout_height="30sp"
                         android:layout_marginHorizontal="5sp"
+                        android:contentDescription="@null"
                         android:src="@drawable/ic_load" />
 
                     <TextView
@@ -97,6 +98,7 @@
                         android:layout_width="30sp"
                         android:layout_height="30sp"
                         android:layout_marginHorizontal="5sp"
+                        android:contentDescription="@null"
                         android:src="@drawable/ic_click" />
 
                     <TextView

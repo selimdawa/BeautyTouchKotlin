@@ -33,6 +33,7 @@
                         android:id="@+id/image_product"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:contentDescription="Product Image"
                         android:src="@color/image_profile"
                         app:layout_constraintDimensionRatio="1:1"
                         tools:ignore="MissingConstraints" />
@@ -57,6 +58,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginRight="5dp"
+                            android:contentDescription="Save to Favorites"
                             android:src="@drawable/ic_favorites_unselected" />
 
                         <TextView
@@ -100,6 +102,7 @@
                                 android:id="@+id/like"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:contentDescription="Like"
                                 android:src="@drawable/ic_heart_unselected" />
 
                             <TextView
