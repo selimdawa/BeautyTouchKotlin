@@ -21,7 +21,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5sp"
+                android:layout_marginHorizontal="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -32,14 +32,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/current_session_image"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -47,14 +47,14 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/previous_session_image"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -69,13 +69,13 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
-                        android:elevation="0sp"
-                        app:cardCornerRadius="15sp"
-                        app:cardElevation="0sp"
+                        android:elevation="0dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp"
                         app:strokeWidth="0dp">
 
                         <FrameLayout
@@ -99,14 +99,14 @@
 
                             <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/editImageSessionNow"
-                                android:layout_width="30sp"
-                                android:layout_height="30sp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="top|right"
-                                android:layout_margin="5sp"
+                                android:layout_margin="5dp"
                                 android:background="@drawable/button_number"
                                 android:backgroundTint="?mc_tick"
                                 android:contentDescription="@null"
-                                android:padding="2sp"
+                                android:padding="2dp"
                                 android:src="@drawable/ic_adds"
                                 app:layout_constraintDimensionRatio="1:1"
                                 app:tint="@color/white"
@@ -117,13 +117,13 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
-                        android:elevation="0sp"
-                        app:cardCornerRadius="15sp"
-                        app:cardElevation="0sp"
+                        android:elevation="0dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp"
                         app:strokeWidth="0dp">
 
                         <FrameLayout
@@ -147,14 +147,14 @@
 
                             <com.google.android.material.imageview.ShapeableImageView
                                 android:id="@+id/editImageSessionOld"
-                                android:layout_width="30sp"
-                                android:layout_height="30sp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="top|right"
-                                android:layout_margin="5sp"
+                                android:layout_margin="5dp"
                                 android:background="@drawable/button_number"
                                 android:backgroundTint="?mc_tick"
                                 android:contentDescription="@null"
-                                android:padding="2sp"
+                                android:padding="2dp"
                                 android:src="@drawable/ic_adds"
                                 app:layout_constraintDimensionRatio="1:1"
                                 app:tint="@color/white"
@@ -174,14 +174,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/current_session_logo"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -189,14 +189,14 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/previous_session_logo"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -211,9 +211,9 @@
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -234,14 +234,14 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/editLogoSessionNow"
-                            android:layout_width="30sp"
-                            android:layout_height="30sp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_gravity="bottom|left"
-                            android:layout_margin="15sp"
+                            android:layout_margin="15dp"
                             android:background="@drawable/button_number"
                             android:backgroundTint="?mc_tick"
                             android:contentDescription="@null"
-                            android:padding="2sp"
+                            android:padding="2dp"
                             android:src="@drawable/ic_adds"
                             app:layout_constraintDimensionRatio="1:1"
                             app:tint="@color/white"
@@ -250,9 +250,9 @@
                     </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -273,14 +273,14 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/editLogoSessionOld"
-                            android:layout_width="30sp"
-                            android:layout_height="30sp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_gravity="bottom|left"
-                            android:layout_margin="15sp"
+                            android:layout_margin="15dp"
                             android:background="@drawable/button_number"
                             android:backgroundTint="?mc_tick"
                             android:contentDescription="@null"
-                            android:padding="2sp"
+                            android:padding="2dp"
                             android:src="@drawable/ic_adds"
                             app:layout_constraintDimensionRatio="1:1"
                             app:tint="@color/white"
@@ -298,14 +298,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/current_session_number"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -313,14 +313,14 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/previous_session_number"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -336,17 +336,17 @@
 
                     <EditText
                         android:id="@+id/sessionNumberNow"
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="number"
                         android:maxLength="1"
-                        android:padding="10sp"
+                        android:padding="10dp"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="16sp"
@@ -354,17 +354,17 @@
 
                     <EditText
                         android:id="@+id/sessionNumberOld"
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="number"
                         android:maxLength="1"
-                        android:padding="10sp"
+                        android:padding="10dp"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="16sp"
@@ -380,14 +380,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/current_session_name"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -395,14 +395,14 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/previous_session_name"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -418,17 +418,17 @@
 
                     <EditText
                         android:id="@+id/sessionNow"
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="text"
                         android:maxLength="9"
-                        android:padding="10sp"
+                        android:padding="10dp"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="16sp"
@@ -436,17 +436,17 @@
 
                     <EditText
                         android:id="@+id/sessionOld"
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="text"
                         android:maxLength="9"
-                        android:padding="10sp"
+                        android:padding="10dp"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="16sp"
@@ -462,14 +462,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/current_year"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -477,14 +477,14 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/kufi"
                         android:gravity="center"
-                        android:padding="5sp"
+                        android:padding="5dp"
                         android:text="@string/last_year"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
@@ -500,17 +500,17 @@
 
                     <EditText
                         android:id="@+id/yearNow"
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:padding="10sp"
+                        android:padding="10dp"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="16sp"
@@ -518,17 +518,17 @@
 
                     <EditText
                         android:id="@+id/yearOld"
-                        android:layout_width="0sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="5sp"
+                        android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
                         android:gravity="center"
                         android:importantForAutofill="no"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:padding="10sp"
+                        android:padding="10dp"
                         android:textColor="?colorError"
                         android:textColorHint="?colorError"
                         android:textSize="16sp"
@@ -541,13 +541,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginHorizontal="50sp"
-                    android:layout_marginVertical="30sp"
+                    android:layout_marginHorizontal="50dp"
+                    android:layout_marginVertical="30dp"
                     android:background="@drawable/b"
                     android:backgroundTint="?mc_tick"
                     android:contentDescription="@null"
                     android:gravity="center"
-                    android:padding="15sp"
+                    android:padding="15dp"
                     android:rotation="180"
                     android:src="@drawable/ic_back_white"
                     android:text="@string/publish" />

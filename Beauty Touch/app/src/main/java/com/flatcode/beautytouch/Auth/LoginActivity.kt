@@ -86,8 +86,8 @@ class LoginActivity : AppCompatActivity() {
     private fun validateDate() {
 
         //get data
-        email = binding!!.emailEt.text.toString().trim { it <= ' ' } + "@flatcodetest.com"
-        number = binding!!.emailEt.text.toString().trim { it <= ' ' }
+        email = binding!!.phoneEt.text.toString().trim { it <= ' ' } + "@flatcodetest.com"
+        number = binding!!.phoneEt.text.toString().trim { it <= ' ' }
         password = binding!!.passwordEt.text.toString().trim { it <= ' ' }
 
         //validate data

@@ -41,6 +41,7 @@
 
     //Login
     <string name="password">Password</string>
+    <string name="password_hint">********</string>
 
     //Slider_Show
     <string name="plus_slider">+</string>

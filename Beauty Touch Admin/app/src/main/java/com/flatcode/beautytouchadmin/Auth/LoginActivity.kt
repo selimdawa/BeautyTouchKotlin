@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validateDate() {
-        val number = binding!!.emailEt.text.toString().trim()
+        val number = binding!!.phoneEt.text.toString().trim()
         val password = binding!!.passwordEt.text.toString().trim()
 
         if (TextUtils.isEmpty(password)) {

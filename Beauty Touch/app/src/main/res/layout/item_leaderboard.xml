@@ -8,30 +8,27 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="@drawable/d"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:baselineAligned="false"
-            android:gravity="center"
+            android:gravity="bottom"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:fontFamily="@font/kufi"
-                    android:gravity="center"
                     android:text="@string/range"
                     android:textColor="@color/white"
                     android:textSize="26sp" />
@@ -40,51 +37,32 @@
                     android:id="@+id/range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_horizontal"
                     android:minWidth="38dp"
-                    android:paddingHorizontal="5dp"
-                    android:paddingVertical="2dp"
                     android:textColor="@color/white"
                     android:textSize="21sp"
                     android:textStyle="italic" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image_profile"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:contentDescription="User Profile Image"
-                    android:gravity="center"
-                    android:src="@color/image_profile"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
-
-            </LinearLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_profile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/user_profile_image"
+                android:src="@color/image_profile"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:fontFamily="@font/kufi"
-                    android:gravity="center"
                     android:text="@string/points"
                     android:textColor="@color/white"
                     android:textSize="26sp" />
@@ -93,13 +71,7 @@
                     android:id="@+id/points"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_horizontal"
                     android:minWidth="38dp"
-                    android:paddingStart="10dp"
-                    android:paddingTop="2dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="2dp"
                     android:textColor="@color/white"
                     android:textSize="21sp"
                     android:textStyle="italic" />
@@ -108,25 +80,15 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/kufi"
-                android:gravity="center"
-                android:paddingHorizontal="5sp"
-                android:paddingBottom="5sp"
-                android:textColor="@color/white"
-                android:textSize="26sp" />
-
-        </LinearLayout>
+            android:fontFamily="@font/kufi"
+            android:gravity="center"
+            android:paddingBottom="5sp"
+            android:textColor="@color/white"
+            android:textSize="26sp" />
 
     </LinearLayout>
 

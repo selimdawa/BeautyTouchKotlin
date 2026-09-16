@@ -66,6 +66,18 @@
     //Login
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="password_hint">********</string>
+    <string name="user_profile_image">User Profile Image</string>
+    <string name="reward_info">Reward Info</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="edit_profile_image">Edit Profile Image</string>
+    <string name="edit_name">Edit Name</string>
+    <string name="cancel_edit">Cancel Edit</string>
+    <string name="save_name">Save Name</string>
+    <string name="back">Back</string>
+    <string name="facebook_designer">Facebook for Designer</string>
+    <string name="facebook_programmer">Facebook for Programmer</string>
+    <string name="open_menu">Open Menu</string>
 
     //Reward
     <string name="best_participants">Best Participants</string>
@@ -73,6 +85,7 @@
     <string name="range">Range</string>
     <string name="points">Points</string>
     <string name="plus"> + </string>
+    <string name="go">Go</string>
     <string name="reward_one">Reward One : </string>
     <string name="reward_two">Reward Two : </string>
     <string name="reward_three">Reward Three : </string>

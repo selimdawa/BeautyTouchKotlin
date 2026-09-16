@@ -60,7 +60,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
 
     private fun validateDate() {
-        val number = binding!!.emailEt.text.toString().trim()
+        val number = binding!!.phoneEt.text.toString().trim()
         val email = "$number@flatcodetest.com"
 
         if (number.isEmpty()) {

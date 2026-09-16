@@ -245,7 +245,7 @@
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_margin="20sp"
+                android:layout_margin="20dp"
                 android:background="@color/white" />
 
             <LinearLayout
@@ -254,7 +254,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text_indications"
@@ -295,7 +295,7 @@
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_margin="20sp"
+                android:layout_margin="20dp"
                 android:background="@color/white" />
 
             <LinearLayout
@@ -304,7 +304,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text_how_to_use"
@@ -324,7 +324,7 @@
                 android:id="@+id/linear_how_to_use2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20sp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 

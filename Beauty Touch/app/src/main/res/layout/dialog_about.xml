@@ -15,30 +15,13 @@
         android:background="?mc_bg"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="300sp"
-                    android:layout_height="300sp"
-                    android:contentDescription="@null"
-                    android:scaleType="centerCrop"
-                    android:src="@color/image_profile" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@color/image_profile" />
 
         <com.balysv.materialripple.MaterialRippleLayout
             style="@style/RippleStyleWhite"
@@ -52,7 +35,6 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/kufi"
                 android:text="@string/about_my"
-                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -61,7 +43,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="200dp">
 
             <com.balysv.materialripple.MaterialRippleLayout
                 style="@style/RippleStyleWhite"
@@ -76,7 +58,6 @@
                     android:layout_margin="10sp"
                     android:fontFamily="@font/kufi"
                     android:gravity="center"
-                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />

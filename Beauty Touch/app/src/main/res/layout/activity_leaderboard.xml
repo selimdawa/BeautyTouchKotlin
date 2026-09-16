@@ -16,7 +16,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
@@ -26,62 +26,46 @@
                     app:layout_constraintDimensionRatio="1:1"
                     app:strokeWidth="0dp">
 
-                    <FrameLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@color/image_profile">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <ImageView
+                            android:id="@+id/image_session"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/image_profile">
+                            android:layout_height="0dp"
+                            android:contentDescription="@null"
+                            android:src="@color/image_profile"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageView
-                                android:id="@+id/image_session"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:contentDescription="@null"
-                                android:src="@color/image_profile"
-                                app:layout_constraintDimensionRatio="1:1"
-                                tools:ignore="MissingConstraints" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/image_one"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:contentDescription="@null"
+                            android:src="?mc_tick"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/image_logo"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:contentDescription="@null"
+                            android:src="@color/image_profile"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="@+id/image_one"
+                            app:layout_constraintEnd_toEndOf="@+id/image_one"
+                            app:layout_constraintStart_toStartOf="@+id/image_one"
+                            app:layout_constraintTop_toTopOf="@+id/image_one"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center">
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/image_one"
-                                    android:layout_width="150dp"
-                                    android:layout_height="150dp"
-                                    android:layout_gravity="center"
-                                    android:contentDescription="@null"
-                                    android:src="?mc_tick"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/image_logo"
-                                    android:layout_width="140dp"
-                                    android:layout_height="140dp"
-                                    android:layout_gravity="center"
-                                    android:contentDescription="@null"
-                                    android:src="@color/image_profile"
-                                    android:visibility="visible"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
-
-                            </FrameLayout>
-
-                        </LinearLayout>
-
-                    </FrameLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -105,208 +89,170 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/session_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="10sp"
-                    android:background="@drawable/d">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/session_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/kufi"
-                            android:gravity="center"
-                            android:padding="5sp"
-                            android:textColor="?color"
-                            android:textSize="26sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:background="@drawable/d"
+                    android:fontFamily="@font/kufi"
+                    android:gravity="center"
+                    android:padding="5sp"
+                    android:textColor="?color"
+                    android:textSize="26sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10sp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/d">
+                    android:background="@drawable/d"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/reward3"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:contentDescription="@string/reward_info"
+                            android:src="@drawable/ic_info"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:fontFamily="@font/kufi"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:text="@string/plus"
+                            android:textColor="?color"
+                            android:textSize="30sp" />
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/reward3"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="5dp"
-                                android:contentDescription="Reward Info"
-                                android:src="@drawable/ic_info"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/reward2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:contentDescription="@string/reward_info"
+                            android:src="@drawable/ic_info"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="-5dp"
-                                android:layout_marginBottom="-5dp"
-                                android:fontFamily="@font/kufi"
-                                android:gravity="center"
-                                android:text="@string/plus"
-                                android:textColor="?color"
-                                android:textSize="30sp" />
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/reward2"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="5dp"
-                                android:contentDescription="Reward Info"
-                                android:src="@drawable/ic_info"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="-5dp"
-                                android:layout_marginBottom="-5dp"
-                                android:fontFamily="@font/kufi"
-                                android:gravity="center"
-                                android:text="@string/plus"
-                                android:textColor="?color"
-                                android:textSize="30sp" />
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/reward"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="5dp"
-                                android:contentDescription="Reward Info"
-                                android:src="@drawable/ic_info"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="-5dp"
-                                android:layout_marginBottom="-5dp"
-                                android:fontFamily="@font/kufi"
-                                android:gravity="center"
-                                android:text="@string/reward_one"
-                                android:textColor="?color"
-                                android:textSize="30sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:fontFamily="@font/kufi"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:text="@string/plus"
+                            android:textColor="?color"
+                            android:textSize="30sp" />
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/reward5"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="5dp"
-                                android:contentDescription="Reward Info"
-                                android:src="@drawable/ic_info"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/reward"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:contentDescription="@string/reward_info"
+                            android:src="@drawable/ic_info"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="-5dp"
-                                android:layout_marginBottom="-5dp"
-                                android:fontFamily="@font/kufi"
-                                android:gravity="center"
-                                android:text="@string/plus"
-                                android:textColor="?color"
-                                android:textSize="30sp" />
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/reward4"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="5dp"
-                                android:contentDescription="Reward Info"
-                                android:src="@drawable/ic_info"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="-5dp"
-                                android:layout_marginBottom="-5dp"
-                                android:fontFamily="@font/kufi"
-                                android:gravity="center"
-                                android:text="@string/reward_two"
-                                android:textColor="?color"
-                                android:textSize="30sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:fontFamily="@font/kufi"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:text="@string/reward_one"
+                            android:textColor="?color"
+                            android:textSize="30sp" />
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/reward6"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="5dp"
-                                android:contentDescription="Reward Info"
-                                android:src="@drawable/ic_info"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                    </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="-5dp"
-                                android:layout_marginBottom="-5dp"
-                                android:fontFamily="@font/kufi"
-                                android:gravity="center"
-                                android:text="@string/reward_three"
-                                android:textColor="?color"
-                                android:textSize="30sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                        </LinearLayout>
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/reward5"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:contentDescription="@string/reward_info"
+                            android:src="@drawable/ic_info"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:fontFamily="@font/kufi"
+                            android:gravity="center"
+                            android:text="@string/plus"
+                            android:textColor="?color"
+                            android:textSize="30sp" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/reward4"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:contentDescription="@string/reward_info"
+                            android:src="@drawable/ic_info"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:fontFamily="@font/kufi"
+                            android:gravity="center"
+                            android:text="@string/reward_two"
+                            android:textColor="?color"
+                            android:textSize="30sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/reward6"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:contentDescription="@string/reward_info"
+                            android:src="@drawable/ic_info"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="-5dp"
+                            android:fontFamily="@font/kufi"
+                            android:gravity="center"
+                            android:text="@string/reward_three"
+                            android:textColor="?color"
+                            android:textSize="30sp" />
 
                     </LinearLayout>
 
