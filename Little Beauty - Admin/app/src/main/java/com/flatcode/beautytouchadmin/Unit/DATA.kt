@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Unit
+package com.flatcode.beautytouchadmin.unit
 
 import com.google.firebase.auth.FirebaseAuth
 

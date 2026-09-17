@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".Unit.MyApplication"
+        android:name=".unit.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -24,7 +24,7 @@
         tools:replace="android:supportsRtl"
         tools:targetApi="31">
         <activity
-            android:name=".Activity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,67 +35,67 @@
         </activity>
 
         <activity
-            android:name=".Activity.ToolsActivity"
+            android:name=".activity.ToolsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.AboutMeActivity"
+            android:name=".activity.AboutMeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ShoppingCentresEditActivity"
+            android:name=".activity.ShoppingCentresEditActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ShoppingCentersAddActivity"
+            android:name=".activity.ShoppingCentersAddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.PostEditActivity"
+            android:name=".activity.PostEditActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ADsInfoActivity"
+            android:name=".activity.ADsInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ADsMeterActivity"
+            android:name=".activity.ADsMeterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Auth.LoginActivity"
+            android:name=".auth.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.SessionOldInfoActivity"
+            android:name=".activity.SessionOldInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.SessionNowInfoActivity"
+            android:name=".activity.SessionNowInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.PostDetailsActivity"
+            android:name=".activity.PostDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.PostAddActivity"
+            android:name=".activity.PostAddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.SliderShowActivity"
+            android:name=".activity.SliderShowActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ShoppingCentersActivity"
+            android:name=".activity.ShoppingCentersActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.HotProductActivity"
+            android:name=".activity.HotProductActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.UserDetailActivity"
+            android:name=".activity.UserDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.PostsActivity"
+            android:name=".activity.PostsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ProfileActivity"
+            android:name=".activity.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.UsersActivity"
+            android:name=".activity.UsersActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Auth.ForgetPasswordActivity"
+            android:name=".auth.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
 
         <activity

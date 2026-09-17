@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Auth
+package com.flatcode.beautytouchadmin.auth
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.ViewModel.AuthViewModel
+import com.flatcode.beautytouchadmin.unit.CLASS
+import com.flatcode.beautytouchadmin.unit.VOID
+import com.flatcode.beautytouchadmin.viewmodel.AuthViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityForgetPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

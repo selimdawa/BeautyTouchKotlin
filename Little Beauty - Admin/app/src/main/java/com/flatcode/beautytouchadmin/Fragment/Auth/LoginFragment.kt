@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Fragment.Auth
+package com.flatcode.beautytouchadmin.fragment.auth
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -14,8 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.ViewModel.AuthViewModel
+import com.flatcode.beautytouchadmin.unit.DATA
+import com.flatcode.beautytouchadmin.viewmodel.AuthViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

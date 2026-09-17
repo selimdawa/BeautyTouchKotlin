@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Fragment
+package com.flatcode.beautytouchadmin.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.flatcode.beautytouchadmin.Adapter.MainAdapter
-import com.flatcode.beautytouchadmin.Model.Main
+import com.flatcode.beautytouchadmin.adapter.MainAdapter
+import com.flatcode.beautytouchadmin.model.Main
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.ViewModel.MainState
-import com.flatcode.beautytouchadmin.ViewModel.MainViewModel
+import com.flatcode.beautytouchadmin.unit.DATA
+import com.flatcode.beautytouchadmin.unit.VOID
+import com.flatcode.beautytouchadmin.viewmodel.MainState
+import com.flatcode.beautytouchadmin.viewmodel.MainViewModel
 import com.flatcode.beautytouchadmin.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

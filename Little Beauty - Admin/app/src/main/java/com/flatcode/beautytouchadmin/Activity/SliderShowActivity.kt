@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Activity
+package com.flatcode.beautytouchadmin.activity
 
 import android.Manifest
 import android.app.Activity
@@ -15,9 +15,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.ViewModel.SliderViewModel
+import com.flatcode.beautytouchadmin.unit.DATA
+import com.flatcode.beautytouchadmin.unit.VOID
+import com.flatcode.beautytouchadmin.viewmodel.SliderViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivitySliderShowBinding
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint

@@ -25,8 +25,8 @@ class PostLinearAdapter(private val mContext: Context?, private val mPost: List<
     RecyclerView.Adapter<PostLinearAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemProductLinearBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemProductLinearBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -81,26 +81,15 @@ class PostLinearAdapter(private val mContext: Context?, private val mPost: List<
         return mPost.size
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        var card: CardView
-        var image_product: ImageView
-        var like: ImageView
-        var save: ImageView
-        var likes: TextView
-        var name: TextView
-        var price: TextView
-        var color: LinearLayout
-
-        init {
-            card = binding!!.card
-            image_product = binding!!.imageProduct
-            like = binding!!.like
-            name = binding!!.name
-            save = binding!!.save
-            likes = binding!!.likes
-            price = binding!!.price
-            color = binding!!.color
-        }
+    class ViewHolder(val binding: ItemProductLinearBinding) : RecyclerView.ViewHolder(binding.root) {
+        val card: CardView = binding.card
+        val image_product: ImageView = binding.imageProduct
+        val like: ImageView = binding.like
+        val save: ImageView = binding.save
+        val likes: TextView = binding.likes
+        val name: TextView = binding.name
+        val price: TextView = binding.price
+        val color: LinearLayout = binding.color
     }
 
     private fun isLiked(postId: String?, imageView: ImageView) {
@@ -147,9 +136,5 @@ class PostLinearAdapter(private val mContext: Context?, private val mPost: List<
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-    }
-
-    companion object {
-        private var binding: ItemProductLinearBinding? = null
     }
 }

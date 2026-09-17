@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Unit
+package com.flatcode.beautytouchadmin.unit
 
 import android.content.Context
 import androidx.datastore.core.DataStore

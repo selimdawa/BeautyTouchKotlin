@@ -1,7 +1,7 @@
-package com.flatcode.beautytouchadmin.Repository
+package com.flatcode.beautytouchadmin.repository
 
 import android.net.Uri
-import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.unit.DATA
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Activity
+package com.flatcode.beautytouchadmin.activity
 
 import android.content.Context
 import android.os.Bundle
@@ -7,9 +7,9 @@ import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.ViewModel.SplashViewModel
+import com.flatcode.beautytouchadmin.unit.CLASS
+import com.flatcode.beautytouchadmin.unit.VOID
+import com.flatcode.beautytouchadmin.viewmodel.SplashViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 

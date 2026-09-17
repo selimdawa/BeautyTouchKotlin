@@ -1,11 +1,11 @@
-package com.flatcode.beautytouchadmin.ViewModel
+package com.flatcode.beautytouchadmin.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.beautytouchadmin.Model.ShoppingCenter
-import com.flatcode.beautytouchadmin.Repository.ShoppingRepository
-import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.model.ShoppingCenter
+import com.flatcode.beautytouchadmin.repository.ShoppingRepository
+import com.flatcode.beautytouchadmin.unit.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

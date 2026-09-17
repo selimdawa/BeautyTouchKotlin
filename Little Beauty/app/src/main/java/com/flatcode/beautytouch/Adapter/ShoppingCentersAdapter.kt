@@ -19,8 +19,8 @@ class ShoppingCentersAdapter(
 ) : RecyclerView.Adapter<ShoppingCentersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemShoppingCentersBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemShoppingCentersBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -64,33 +64,19 @@ class ShoppingCentersAdapter(
         return mShoppingCenters.size
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        var image_product: ImageView
-        var image_product2: ImageView
-        var name: TextView
-        var location: TextView
-        var numberPhone: TextView
-        var linearName: LinearLayout
-        var linearLocation: LinearLayout
-        var linearNumberPhone: LinearLayout
-        var view: View
-        var view2: View
-
-        init {
-            image_product = binding!!.imageProduct
-            image_product2 = binding!!.imageProduct2
-            name = binding!!.name
-            location = binding!!.location
-            numberPhone = binding!!.numberPhone
-            linearName = binding!!.linearName
-            linearLocation = binding!!.linearLocation
-            linearNumberPhone = binding!!.linearNumberPhone
-            view = binding!!.view
-            view2 = binding!!.view2
-        }
+    class ViewHolder(val binding: ItemShoppingCentersBinding) : RecyclerView.ViewHolder(binding.root) {
+        val image_product: ImageView = binding.imageProduct
+        val image_product2: ImageView = binding.imageProduct2
+        val name: TextView = binding.name
+        val location: TextView = binding.location
+        val numberPhone: TextView = binding.numberPhone
+        val linearName: LinearLayout = binding.linearName
+        val linearLocation: LinearLayout = binding.linearLocation
+        val linearNumberPhone: LinearLayout = binding.linearNumberPhone
+        val view: View = binding.view
+        val view2: View = binding.view2
     }
 
     companion object {
-        private var binding: ItemShoppingCentersBinding? = null
     }
 }

@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Activity
+package com.flatcode.beautytouchadmin.activity
 
 import android.app.Dialog
 import android.content.Context
@@ -17,13 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.flatcode.beautytouchadmin.Adapter.ShoppingCentersAdapter
-import com.flatcode.beautytouchadmin.Model.ShoppingCenter
+import com.flatcode.beautytouchadmin.adapter.ShoppingCentersAdapter
+import com.flatcode.beautytouchadmin.model.ShoppingCenter
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.VOID
-import com.flatcode.beautytouchadmin.ViewModel.ShoppingViewModel
+import com.flatcode.beautytouchadmin.unit.CLASS
+import com.flatcode.beautytouchadmin.unit.DATA
+import com.flatcode.beautytouchadmin.unit.VOID
+import com.flatcode.beautytouchadmin.viewmodel.ShoppingViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityShoppingCentersBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

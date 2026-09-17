@@ -82,4 +82,9 @@ class ShoppingCentersFragment : Fragment() {
         viewModel.loadShoppingCenters(publisher, aname)
         super.onResume()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

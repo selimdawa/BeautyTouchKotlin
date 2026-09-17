@@ -34,6 +34,10 @@ import com.flatcode.beautytouch.Unit.DATA
 import com.flatcode.beautytouch.Unit.Resource
 import com.flatcode.beautytouch.Unit.VOID
 import com.flatcode.beautytouch.databinding.ActivityMainBinding
+import com.flatcode.beautytouch.databinding.DialogAboutBinding
+import com.flatcode.beautytouch.databinding.DialogAppBinding
+import com.flatcode.beautytouch.databinding.DialogCloseappBinding
+import com.flatcode.beautytouch.databinding.DialogLogoutBinding
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
@@ -214,17 +218,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (binding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding!!.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
+            val dialogBinding = DialogCloseappBinding.inflate(layoutInflater)
             val dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(R.layout.dialog_closeapp)
+            dialog.setContentView(dialogBinding.root)
             dialog.setCancelable(true)
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val lp: WindowManager.LayoutParams = WindowManager.LayoutParams()
             lp.copyFrom(dialog.window!!.attributes)
             lp.width = WindowManager.LayoutParams.WRAP_CONTENT
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-            dialog.findViewById<View>(R.id.yes).setOnClickListener { finish() }
-            dialog.findViewById<View>(R.id.no).setOnClickListener { dialog.cancel() }
+            dialogBinding.yes.setOnClickListener { finish() }
+            dialogBinding.no.setOnClickListener { dialog.cancel() }
             dialog.show()
             dialog.window!!.attributes = lp
         }
@@ -247,24 +252,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun showDialogAboutMy() {
+        val dialogBinding = DialogAboutBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_about)
+        dialog.setContentView(dialogBinding.root)
         dialog.setCancelable(true)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val lp: WindowManager.LayoutParams = WindowManager.LayoutParams()
         lp.copyFrom(dialog.window!!.attributes)
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        val image = dialog.findViewById<ImageView>(R.id.image)
-        val text: TextView = dialog.findViewById(R.id.text)
 
         lifecycleScope.launch {
             userViewModel.appTools.collect { resource ->
                 if (resource is Resource.Success) {
                     val tools = resource.data
-                    VOID.Glide(true, context, tools.imageMe, image)
-                    text.text = tools.aboutMe
+                    VOID.Glide(true, context, tools.imageMe, dialogBinding.image)
+                    dialogBinding.text.text = tools.aboutMe
                 }
             }
         }
@@ -275,64 +279,64 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun showDialogAboutApp() {
+        val dialogBinding = DialogAppBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_app)
+        dialog.setContentView(dialogBinding.root)
         dialog.setCancelable(true)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val lp: WindowManager.LayoutParams = WindowManager.LayoutParams()
         lp.copyFrom(dialog.window!!.attributes)
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        dialog.findViewById<View>(R.id.linear_rate).setOnClickListener { VOID.RateUs(activity!!) }
-        dialog.findViewById<View>(R.id.facebook_design)
-            .setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View) {
-                    startActivity(openFacebookIntent)
-                }
+        dialogBinding.linearRate.setOnClickListener { VOID.RateUs(activity!!) }
+        dialogBinding.facebookDesign.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                startActivity(openFacebookIntent)
+            }
 
-                val openFacebookIntent: Intent
-                    get() = try {
-                        getPackageManager().getPackageInfo("com.facebook.katana", 0)
-                        Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_DESINGER))
-                    } catch (e: Exception) {
-                        Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_DESINGER_2))
-                    }
-            })
-        dialog.findViewById<View>(R.id.facebook_programmer)
-            .setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View) {
-                    startActivity(openFacebookIntent)
+            val openFacebookIntent: Intent
+                get() = try {
+                    getPackageManager().getPackageInfo("com.facebook.katana", 0)
+                    Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_DESINGER))
+                } catch (e: Exception) {
+                    Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_DESINGER_2))
                 }
+        })
+        dialogBinding.facebookProgrammer.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                startActivity(openFacebookIntent)
+            }
 
-                val openFacebookIntent: Intent
-                    get() = try {
-                        getPackageManager().getPackageInfo("com.facebook.katana", 0)
-                        Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_PROGRAMMER))
-                    } catch (e: Exception) {
-                        Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_PROGRAMMER_2))
-                    }
-            })
+            val openFacebookIntent: Intent
+                get() = try {
+                    getPackageManager().getPackageInfo("com.facebook.katana", 0)
+                    Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_PROGRAMMER))
+                } catch (e: Exception) {
+                    Intent(Intent.ACTION_VIEW, Uri.parse(DATA.FB_PROGRAMMER_2))
+                }
+        })
         dialog.show()
         dialog.window!!.attributes = lp
     }
 
     private fun showDialogLogout() {
+        val dialogBinding = DialogLogoutBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_logout)
+        dialog.setContentView(dialogBinding.root)
         dialog.setCancelable(true)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val lp: WindowManager.LayoutParams = WindowManager.LayoutParams()
         lp.copyFrom(dialog.window!!.attributes)
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        dialog.findViewById<View>(R.id.yes).setOnClickListener {
+        dialogBinding.yes.setOnClickListener {
             userViewModel.logout()
             VOID.IntentClear(context, LoginActivity::class.java)
             finish()
         }
-        dialog.findViewById<View>(R.id.no).setOnClickListener { dialog.cancel() }
+        dialogBinding.no.setOnClickListener { dialog.cancel() }
         dialog.show()
         dialog.window!!.attributes = lp
     }

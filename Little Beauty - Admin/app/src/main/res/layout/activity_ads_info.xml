@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="?colorOnBackground"
     android:orientation="vertical"
-    tools:context=".Activity.ADsInfoActivity">
+    tools:context=".activity.ADsInfoActivity"
+    tools:ignore="all">
 
     <include
         android:id="@+id/toolbar"

@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.ViewModel
+package com.flatcode.beautytouchadmin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth

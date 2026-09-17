@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Adapter
+package com.flatcode.beautytouchadmin.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,11 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
 import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.beautytouchadmin.Model.Post
+import com.flatcode.beautytouchadmin.model.Post
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.unit.CLASS
+import com.flatcode.beautytouchadmin.unit.DATA
+import com.flatcode.beautytouchadmin.unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemProductAddBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

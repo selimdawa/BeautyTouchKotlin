@@ -1,8 +1,8 @@
-package com.flatcode.beautytouchadmin.Unit
+package com.flatcode.beautytouchadmin.unit
 
-import com.flatcode.beautytouchadmin.Activity.*
-import com.flatcode.beautytouchadmin.Auth.ForgetPasswordActivity
-import com.flatcode.beautytouchadmin.Auth.LoginActivity
+import com.flatcode.beautytouchadmin.activity.*
+import com.flatcode.beautytouchadmin.auth.ForgetPasswordActivity
+import com.flatcode.beautytouchadmin.auth.LoginActivity
 
 object CLASS {
     var LOGIN: Class<*> = LoginActivity::class.java

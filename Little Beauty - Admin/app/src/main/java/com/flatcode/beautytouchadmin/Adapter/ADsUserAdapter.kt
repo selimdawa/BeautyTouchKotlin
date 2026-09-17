@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Adapter
+package com.flatcode.beautytouchadmin.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,12 +10,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.beautytouchadmin.Filter.ADsUserFilter
-import com.flatcode.beautytouchadmin.Model.User
-import com.flatcode.beautytouchadmin.Unit.CLASS
-import com.flatcode.beautytouchadmin.Unit.DATA
-import com.flatcode.beautytouchadmin.Unit.MyApplication
-import com.flatcode.beautytouchadmin.Unit.VOID
+import com.flatcode.beautytouchadmin.filter.ADsUserFilter
+import com.flatcode.beautytouchadmin.model.User
+import com.flatcode.beautytouchadmin.unit.CLASS
+import com.flatcode.beautytouchadmin.unit.DATA
+import com.flatcode.beautytouchadmin.unit.MyApplication
+import com.flatcode.beautytouchadmin.unit.VOID
 import com.flatcode.beautytouchadmin.databinding.ItemAdsUserBinding
 import java.text.MessageFormat
 

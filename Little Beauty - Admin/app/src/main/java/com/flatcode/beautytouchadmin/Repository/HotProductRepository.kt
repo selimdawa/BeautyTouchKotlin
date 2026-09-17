@@ -1,7 +1,7 @@
-package com.flatcode.beautytouchadmin.Repository
+package com.flatcode.beautytouchadmin.repository
 
-import com.flatcode.beautytouchadmin.Model.Post
-import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.model.Post
+import com.flatcode.beautytouchadmin.unit.DATA
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

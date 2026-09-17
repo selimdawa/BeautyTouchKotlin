@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Activity
+package com.flatcode.beautytouchadmin.activity
 
 import android.content.Context
 import android.os.Bundle
@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.flatcode.beautytouchadmin.Adapter.UsersAdapter
-import com.flatcode.beautytouchadmin.Model.User
+import com.flatcode.beautytouchadmin.adapter.UsersAdapter
+import com.flatcode.beautytouchadmin.model.User
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.ViewModel.UsersViewModel
+import com.flatcode.beautytouchadmin.viewmodel.UsersViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivityUsersBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

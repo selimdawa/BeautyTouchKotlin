@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Adapter
+package com.flatcode.beautytouchadmin.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.beautytouchadmin.Filter.ADsInfoFilter
-import com.flatcode.beautytouchadmin.Model.ADs
-import com.flatcode.beautytouchadmin.Unit.DATA
+import com.flatcode.beautytouchadmin.filter.ADsInfoFilter
+import com.flatcode.beautytouchadmin.model.ADs
+import com.flatcode.beautytouchadmin.unit.DATA
 import com.flatcode.beautytouchadmin.databinding.ItemInfoAdsBinding
 import java.text.MessageFormat
 

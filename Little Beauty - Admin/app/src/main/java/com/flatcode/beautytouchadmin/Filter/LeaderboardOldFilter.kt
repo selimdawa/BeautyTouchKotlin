@@ -1,8 +1,8 @@
-package com.flatcode.beautytouchadmin.Filter
+package com.flatcode.beautytouchadmin.filter
 
 import android.widget.Filter
-import com.flatcode.beautytouchadmin.Adapter.LeaderboardOldAdapter
-import com.flatcode.beautytouchadmin.Model.User
+import com.flatcode.beautytouchadmin.adapter.LeaderboardOldAdapter
+import com.flatcode.beautytouchadmin.model.User
 import java.util.*
 
 class LeaderboardOldFilter(var list: MutableList<User?>, var adapter: LeaderboardOldAdapter) : Filter() {

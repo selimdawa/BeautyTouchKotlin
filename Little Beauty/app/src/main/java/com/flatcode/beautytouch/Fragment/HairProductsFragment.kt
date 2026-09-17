@@ -82,4 +82,9 @@ class HairProductsFragment : Fragment() {
         viewModel.loadPostsByCategory(DATA.HAIR_PRODUCTS, publisher, aname)
         super.onResume()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import coil3.load
 import com.flatcode.beautytouch.R
+import com.flatcode.beautytouch.databinding.ItemSliderBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -20,8 +21,8 @@ class ImageSliderAdapter(var context: Context?, var setTotalCount: Int) :
     var ImageLink: String? = null
 
     override fun onCreateViewHolder(parent: ViewGroup): SliderViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_slider, parent, false)
-        return SliderViewHolder(view)
+        val binding = ItemSliderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SliderViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: SliderViewHolder, position: Int) {
@@ -131,13 +132,7 @@ class ImageSliderAdapter(var context: Context?, var setTotalCount: Int) :
         return setTotalCount
     }
 
-    class SliderViewHolder(var itemView: View) : ViewHolder(
-        itemView
-    ) {
-        var Imageslider: ImageView
-
-        init {
-            Imageslider = itemView.findViewById(R.id.imageView)
-        }
+    class SliderViewHolder(val binding: ItemSliderBinding) : ViewHolder(binding.root) {
+        val Imageslider: ImageView = binding.imageView
     }
 }

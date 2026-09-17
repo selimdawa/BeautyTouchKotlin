@@ -24,8 +24,8 @@ class PostDetailAdapter(private val mContext: Context, private val mPost: Mutabl
     RecyclerView.Adapter<PostDetailAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemPostDetailBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemPostDetailBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -186,60 +186,32 @@ class PostDetailAdapter(private val mContext: Context, private val mPost: Mutabl
         return mPost!!.size
     }
 
-    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-        var image_product: ImageView
-        var save: ImageView
-        var like: ImageView
-        var image_product_1: ImageView
-        var image_product_2: ImageView
-        var image_product_3: ImageView
-        var image_product_4: ImageView
-        var image_product_5: ImageView
-        var image_product_6: ImageView
-        var image_product_7: ImageView
-        var image_product_8: ImageView
-        var image_product_9: ImageView
-        var image_product_10: ImageView
-        var product_name: TextView
-        var price_product: TextView
-        var like_number: TextView
-        var text_indications: TextView
-        var indications: TextView
-        var text_how_to_use: TextView
-        var how_to_use: TextView
-        var linear_indications: LinearLayout
-        var linear_indications2: LinearLayout
-        var linear_how_to_use: LinearLayout
-        var linear_how_to_use2: LinearLayout
-        var scroll_image: HorizontalScrollView
-
-        init {
-            image_product = binding!!.imageProduct
-            product_name = binding!!.productName
-            save = binding!!.save
-            price_product = binding!!.priceProduct
-            like_number = binding!!.likeNumber
-            like = binding!!.like
-            linear_indications = binding!!.linearIndications
-            text_indications = binding!!.textIndications
-            linear_indications2 = binding!!.linearIndications2
-            indications = binding!!.indications
-            linear_how_to_use = binding!!.linearHowToUse
-            text_how_to_use = binding!!.textHowToUse
-            linear_how_to_use2 = binding!!.linearHowToUse2
-            how_to_use = binding!!.howToUse
-            image_product_1 = binding!!.imageProduct1
-            image_product_2 = binding!!.imageProduct2
-            image_product_3 = binding!!.imageProduct3
-            image_product_4 = binding!!.imageProduct4
-            image_product_5 = binding!!.imageProduct5
-            image_product_6 = binding!!.imageProduct6
-            image_product_7 = binding!!.imageProduct7
-            image_product_8 = binding!!.imageProduct8
-            image_product_9 = binding!!.imageProduct9
-            image_product_10 = binding!!.imageProduct10
-            scroll_image = binding!!.scrollImage
-        }
+    class ViewHolder(val binding: ItemPostDetailBinding) : RecyclerView.ViewHolder(binding.root) {
+        val image_product: ImageView = binding.imageProduct
+        val save: ImageView = binding.save
+        val like: ImageView = binding.like
+        val image_product_1: ImageView = binding.imageProduct1
+        val image_product_2: ImageView = binding.imageProduct2
+        val image_product_3: ImageView = binding.imageProduct3
+        val image_product_4: ImageView = binding.imageProduct4
+        val image_product_5: ImageView = binding.imageProduct5
+        val image_product_6: ImageView = binding.imageProduct6
+        val image_product_7: ImageView = binding.imageProduct7
+        val image_product_8: ImageView = binding.imageProduct8
+        val image_product_9: ImageView = binding.imageProduct9
+        val image_product_10: ImageView = binding.imageProduct10
+        val product_name: TextView = binding.productName
+        val price_product: TextView = binding.priceProduct
+        val like_number: TextView = binding.likeNumber
+        val text_indications: TextView = binding.textIndications
+        val indications: TextView = binding.indications
+        val text_how_to_use: TextView = binding.textHowToUse
+        val how_to_use: TextView = binding.howToUse
+        val linear_indications: LinearLayout = binding.linearIndications
+        val linear_indications2: LinearLayout = binding.linearIndications2
+        val linear_how_to_use: LinearLayout = binding.linearHowToUse
+        val linear_how_to_use2: LinearLayout = binding.linearHowToUse2
+        val scroll_image: HorizontalScrollView = binding.scrollImage
     }
 
     private fun isLiked(postId: String?, imageView: ImageView) {
@@ -290,6 +262,5 @@ class PostDetailAdapter(private val mContext: Context, private val mPost: Mutabl
     }
 
     companion object {
-        private var binding: ItemPostDetailBinding? = null
     }
 }

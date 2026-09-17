@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Fragment
+package com.flatcode.beautytouchadmin.fragment
 
 import android.os.Bundle
 import android.os.Handler
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.flatcode.beautytouchadmin.R
-import com.flatcode.beautytouchadmin.ViewModel.SplashViewModel
+import com.flatcode.beautytouchadmin.viewmodel.SplashViewModel
 import com.flatcode.beautytouchadmin.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 

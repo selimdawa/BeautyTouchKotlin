@@ -115,4 +115,9 @@ class HomeFragment : Fragment() {
         viewModel.loadHomeData(publisher, aname)
         super.onResume()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

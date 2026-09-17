@@ -1,9 +1,9 @@
-package com.flatcode.beautytouchadmin.ViewModel
+package com.flatcode.beautytouchadmin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.beautytouchadmin.Model.Post
-import com.flatcode.beautytouchadmin.Repository.HotProductRepository
+import com.flatcode.beautytouchadmin.model.Post
+import com.flatcode.beautytouchadmin.repository.HotProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

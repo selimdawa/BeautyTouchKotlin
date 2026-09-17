@@ -82,4 +82,9 @@ class SkinProductsFragment : Fragment() {
         viewModel.loadPostsByCategory(DATA.SKIN_PRODUCTS, publisher, aname)
         super.onResume()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }

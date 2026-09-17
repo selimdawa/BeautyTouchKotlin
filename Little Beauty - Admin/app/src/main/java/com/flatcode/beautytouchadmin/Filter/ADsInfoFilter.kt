@@ -1,8 +1,8 @@
-package com.flatcode.beautytouchadmin.Filter
+package com.flatcode.beautytouchadmin.filter
 
 import android.widget.Filter
-import com.flatcode.beautytouchadmin.Adapter.ADsInfoAdapter
-import com.flatcode.beautytouchadmin.Model.ADs
+import com.flatcode.beautytouchadmin.adapter.ADsInfoAdapter
+import com.flatcode.beautytouchadmin.model.ADs
 import java.util.*
 
 class ADsInfoFilter(var list: MutableList<ADs?>, var adapter: ADsInfoAdapter) : Filter() {

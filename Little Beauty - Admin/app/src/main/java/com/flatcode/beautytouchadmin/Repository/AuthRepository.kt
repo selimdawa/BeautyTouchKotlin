@@ -1,4 +1,4 @@
-package com.flatcode.beautytouchadmin.Repository
+package com.flatcode.beautytouchadmin.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await

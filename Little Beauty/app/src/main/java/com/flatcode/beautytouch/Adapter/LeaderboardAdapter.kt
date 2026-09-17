@@ -29,8 +29,8 @@ class LeaderboardAdapter(private val mContext: Context, var list: ArrayList<User
     private var filter: LeaderboardFilter? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemLeaderboardBinding.inflate(LayoutInflater.from(mContext), parent, false)
-        return ViewHolder(binding!!.root)
+        val binding = ItemLeaderboardBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -64,20 +64,12 @@ class LeaderboardAdapter(private val mContext: Context, var list: ArrayList<User
         return filter!!
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        var image_profile: ImageView
-        var username: TextView
-        var range: TextView
-        var points: TextView
-        var linear_one: LinearLayout
-
-        init {
-            username = binding!!.username
-            image_profile = binding!!.imageProfile
-            range = binding!!.range
-            points = binding!!.points
-            linear_one = binding!!.linearOne
-        }
+    class ViewHolder(val binding: ItemLeaderboardBinding) : RecyclerView.ViewHolder(binding.root) {
+        val image_profile: ImageView = binding.imageProfile
+        val username: TextView = binding.username
+        val range: TextView = binding.range
+        val points: TextView = binding.points
+        val linear_one: LinearLayout = binding.linearOne
     }
 
     private fun SessionInfo(points: TextView, id: String?) {
@@ -106,10 +98,6 @@ class LeaderboardAdapter(private val mContext: Context, var list: ArrayList<User
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-    }
-
-    companion object {
-        private var binding: ItemLeaderboardBinding? = null
     }
 
     init {
