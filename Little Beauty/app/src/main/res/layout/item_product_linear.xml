@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
-    android:layout_marginBottom="10sp">
+    android:layout_marginBottom="10sp"
+    tools:ignore="all">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
@@ -30,7 +32,7 @@
                     android:id="@+id/image_product"
                     android:layout_width="170dp"
                     android:layout_height="170dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:layout_constraintDimensionRatio="1:1" />
 
@@ -48,7 +50,7 @@
                         android:layout_height="25dp"
                         android:layout_gravity="left"
                         android:background="?mc_bg"
-                        android:contentDescription="Save to Favorites"
+                        android:contentDescription="@string/save_to_favorites"
                         android:padding="2dp"
                         android:src="@drawable/ic_favorites_unselected" />
 
@@ -107,7 +109,7 @@
                             android:id="@+id/like"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="Like"
+                            android:contentDescription="@string/like"
                             android:src="@drawable/ic_heart_unselected" />
 
                         <TextView

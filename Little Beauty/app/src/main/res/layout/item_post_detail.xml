@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="all">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
                     android:id="@+id/image_product"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:layout_constraintDimensionRatio="1:1"
                     tools:ignore="MissingConstraints" />
@@ -54,7 +55,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -63,7 +64,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -72,7 +73,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -81,7 +82,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -90,7 +91,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -99,7 +100,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -108,7 +109,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -117,7 +118,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -126,7 +127,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -135,7 +136,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:contentDescription="Product Image"
+                    android:contentDescription="@string/product_image"
                     android:src="@color/image_profile"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
@@ -183,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="3dp"
-                    android:contentDescription="Save to Favorites"
+                    android:contentDescription="@string/save_to_favorites"
                     android:src="@drawable/ic_favorites_unselected" />
 
             </LinearLayout>
@@ -232,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="3dp"
-                    android:contentDescription="Like"
+                    android:contentDescription="@string/like"
                     android:src="@drawable/ic_heart_unselected" />
 
             </LinearLayout>

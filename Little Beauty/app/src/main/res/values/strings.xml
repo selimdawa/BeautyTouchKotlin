@@ -98,4 +98,10 @@
     <string name="admob_interstitial">ca-app-pub-3940256099942544/8691691433</string>
     <string name="admob_reward">ca-app-pub-3940256099942544/5224354917</string>
 
+    <!-- Extracted -->
+    <string name="product_image">Product Image</string>
+    <string name="save_to_favorites">Save to Favorites</string>
+    <string name="like">Like</string>
+    <string name="shopping_center_image">Shopping Center Image</string>
+
 </resources>
