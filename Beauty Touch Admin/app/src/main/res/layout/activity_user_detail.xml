@@ -1,149 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorOnBackground"
+    android:orientation="vertical"
+    tools:context=".Activity.UserDetailActivity">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?colorOnBackground"
-        android:orientation="vertical"
-        tools:context=".Activity.UserDetailActivity">
+        android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:strokeWidth="0dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:strokeWidth="0dp">
+                        android:layout_height="wrap_content">
 
-                        <FrameLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
+                            <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="0dp"
+                                android:contentDescription="@null"
+                                android:src="?mc_bg"
+                                app:layout_constraintDimensionRatio="1:1"
+                                tools:ignore="MissingConstraints" />
 
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:contentDescription="@null"
-                                    android:src="?mc_bg"
-                                    app:layout_constraintDimensionRatio="1:1"
-                                    tools:ignore="MissingConstraints" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                            <LinearLayout
+                            <FrameLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:orientation="vertical">
+                                android:layout_gravity="center">
 
-                                <FrameLayout
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/image_one"
+                                    android:layout_width="200dp"
+                                    android:layout_height="200dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@color/dark"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/image"
+                                    android:layout_width="190dp"
+                                    android:layout_height="190dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@color/image_profile"
+                                    android:visibility="visible"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+                                <TextView
+                                    android:id="@+id/name"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center">
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="bottom|center"
+                                    android:layout_marginTop="250dp"
+                                    android:fontFamily="@font/kufi"
+                                    android:gravity="center"
+                                    android:textColor="@color/white"
+                                    android:textSize="40sp" />
 
-                                    <com.google.android.material.imageview.ShapeableImageView
-                                        android:id="@+id/image_one"
-                                        android:layout_width="200dp"
-                                        android:layout_height="200dp"
-                                        android:layout_gravity="center"
-                                        android:contentDescription="@null"
-                                        android:src="@color/dark"
-                                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                            </FrameLayout>
 
-                                    <com.google.android.material.imageview.ShapeableImageView
-                                        android:id="@+id/image"
-                                        android:layout_width="190dp"
-                                        android:layout_height="190dp"
-                                        android:layout_gravity="center"
-                                        android:contentDescription="@null"
-                                        android:src="@color/image_profile"
-                                        android:visibility="visible"
-                                        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                        </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/name"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="bottom|center"
-                                        android:layout_marginTop="250dp"
-                                        android:fontFamily="@font/kufi"
-                                        android:gravity="center"
-                                        android:textColor="@color/white"
-                                        android:textSize="40sp" />
+                    </FrameLayout>
 
-                                </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                            </LinearLayout>
+            </LinearLayout>
 
-                        </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/favorites"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20sp"
+                    android:layout_marginVertical="10sp"
+                    android:fontFamily="@font/kufi"
+                    android:gravity="center"
+                    android:text="@string/favorites"
+                    android:textColor="?mc_tick"
+                    android:textSize="21sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="3dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/favorites"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="20sp"
-                        android:layout_marginVertical="10sp"
-                        android:fontFamily="@font/kufi"
-                        android:gravity="center"
-                        android:text="@string/favorites"
-                        android:textColor="?mc_tick"
-                        android:textSize="21sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="3dp"
-                        android:layout_marginEnd="3dp"
-                        android:orientation="vertical">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycler_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="5sp"
-                            android:orientation="horizontal"
-                            android:visibility="visible"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/item_product_linear" />
-
-                    </LinearLayout>
+                        android:layout_marginHorizontal="5sp"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_product_linear" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
 
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</layout>
+</LinearLayout>

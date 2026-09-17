@@ -1,301 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorOnBackground"
+    android:orientation="vertical"
+    tools:context=".Activity.ShoppingCentersAddActivity">
 
-    <LinearLayout
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_content" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?colorOnBackground"
-        android:orientation="vertical"
-        tools:context=".Activity.ShoppingCentersAddActivity">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_content" />
-
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/linearImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/linearImage"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:strokeWidth="0dp">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:elevation="0dp"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="0dp"
-                        app:cardMaxElevation="0dp"
-                        app:strokeWidth="0dp">
+                        android:layout_height="wrap_content">
 
-                        <RelativeLayout
+                        <FrameLayout
+                            android:id="@+id/frameImage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <FrameLayout
-                                android:id="@+id/frameImage"
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="match_parent"
+                                android:background="?colorOnBackground">
 
-                                <androidx.constraintlayout.widget.ConstraintLayout
+                                <ImageView
+                                    android:id="@+id/imageOne"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="?colorOnBackground">
-
-                                    <ImageView
-                                        android:id="@+id/imageOne"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:contentDescription="@null"
-                                        android:src="@color/image_profile"
-                                        app:layout_constraintDimensionRatio="2:1"
-                                        tools:ignore="MissingConstraints" />
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/addImage"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_gravity="top|right"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/button_number"
-                                    android:backgroundTint="?mc_tick"
+                                    android:layout_height="0dp"
                                     android:contentDescription="@null"
-                                    android:padding="2dp"
-                                    android:src="@drawable/ic_adds"
-                                    app:layout_constraintDimensionRatio="1:1"
-                                    app:tint="@color/white"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                                    android:src="@color/image_profile"
+                                    app:layout_constraintDimensionRatio="2:1"
+                                    tools:ignore="MissingConstraints" />
 
-                            </FrameLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            <View
-                                android:id="@+id/view"
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/addImage"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="top|right"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/button_number"
+                                android:backgroundTint="?mc_tick"
+                                android:contentDescription="@null"
+                                android:padding="2dp"
+                                android:src="@drawable/ic_adds"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:tint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+
+                        </FrameLayout>
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/frameImage"
+                            android:background="@color/white" />
+
+                        <FrameLayout
+                            android:id="@+id/frameImageTwo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_below="@+id/frameImage"
-                                android:background="@color/white" />
+                                android:layout_height="match_parent"
+                                android:background="?colorOnBackground">
 
-                            <FrameLayout
-                                android:id="@+id/frameImageTwo"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/view">
-
-                                <androidx.constraintlayout.widget.ConstraintLayout
+                                <ImageView
+                                    android:id="@+id/imageTwo"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="?colorOnBackground">
-
-                                    <ImageView
-                                        android:id="@+id/imageTwo"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:contentDescription="@null"
-                                        android:src="@color/image_profile"
-                                        app:layout_constraintDimensionRatio="2:1"
-                                        tools:ignore="MissingConstraints" />
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/addImageTwo"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_gravity="bottom|left"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/button_number"
-                                    android:backgroundTint="?mc_tick"
+                                    android:layout_height="0dp"
                                     android:contentDescription="@null"
-                                    android:padding="2dp"
-                                    android:src="@drawable/ic_adds"
-                                    app:layout_constraintDimensionRatio="1:1"
-                                    app:tint="@color/white"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+                                    android:src="@color/image_profile"
+                                    app:layout_constraintDimensionRatio="2:1"
+                                    tools:ignore="MissingConstraints" />
 
-                            </FrameLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        </RelativeLayout>
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/addImageTwo"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="bottom|left"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/button_number"
+                                android:backgroundTint="?mc_tick"
+                                android:contentDescription="@null"
+                                android:padding="2dp"
+                                android:src="@drawable/ic_adds"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:tint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-                    </com.google.android.material.card.MaterialCardView>
+                        </FrameLayout>
 
-                </LinearLayout>
+                    </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="10dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/center_name"
-                        android:textColor="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:background="@drawable/button"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:maxLength="100"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:textColor="?colorError"
-                        android:textColorHint="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/location_one"
-                        android:textColor="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/button"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:maxLength="50"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:textColor="?colorError"
-                        android:textColorHint="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/location_two"
-                        android:textColor="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/location2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/button"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:maxLength="150"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:textColor="?colorError"
-                        android:textColorHint="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/location_three"
-                        android:textColor="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/location3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/button"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:maxLength="150"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:textColor="?colorError"
-                        android:textColorHint="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/number_phone"
-                        android:textColor="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/numberPhone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/button"
-                        android:gravity="end"
-                        android:importantForAutofill="no"
-                        android:inputType="number"
-                        android:maxLength="10"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:textColor="?colorError"
-                        android:textColorHint="?colorError"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
-
-                </LinearLayout>
-
-                <ImageButton
-                    android:id="@+id/go"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@drawable/b"
-                    android:backgroundTint="?mc_tick"
-                    android:contentDescription="@null"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:rotation="180"
-                    android:src="@drawable/ic_arrow_back"
-                    android:text="@string/publish" />
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/center_name"
+                    android:textColor="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-</layout>
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/button"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="?colorError"
+                    android:textColorHint="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/location_one"
+                    android:textColor="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="?colorError"
+                    android:textColorHint="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/location_two"
+                    android:textColor="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/location2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLength="150"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="?colorError"
+                    android:textColorHint="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/location_three"
+                    android:textColor="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/location3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLength="150"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="?colorError"
+                    android:textColorHint="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/number_phone"
+                    android:textColor="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/numberPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button"
+                    android:gravity="end"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="?colorError"
+                    android:textColorHint="?colorError"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/go"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/b"
+                android:backgroundTint="?mc_tick"
+                android:contentDescription="@null"
+                android:gravity="center"
+                android:padding="15dp"
+                android:rotation="180"
+                android:src="@drawable/ic_arrow_back"
+                android:text="@string/publish" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

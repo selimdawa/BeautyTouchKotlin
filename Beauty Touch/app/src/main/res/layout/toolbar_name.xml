@@ -1,48 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="?colorOnBackground">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="?colorOnBackground">
+    <io.selimdawa.multicolors.MultiColorButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="start"
+        android:layout_marginEnd="10dp" />
 
-        <io.selimdawa.multicolors.MultiColorButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="start"
-            android:layout_marginEnd="10dp" />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="15sp"
+        android:contentDescription="@string/profile_image"
+        android:src="@color/image_profile"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="15sp"
-            android:contentDescription="@string/profile_image"
-            android:src="@color/image_profile"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle" />
+    <TextView
+        android:id="@+id/nameSpace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/bad_script"
+        android:text="@string/app_name"
+        android:textColor="?mc_tick"
+        android:textSize="21sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/nameSpace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/bad_script"
-            android:text="@string/app_name"
-            android:textColor="?mc_tick"
-            android:textSize="21sp"
-            android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/drawer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="start"
+        android:contentDescription="@string/open_menu"
+        android:src="@drawable/ic_drawer"
+        app:tint="?mc_tick" />
 
-        <ImageView
-            android:id="@+id/drawer"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="start"
-            android:contentDescription="@string/open_menu"
-            android:src="@drawable/ic_drawer"
-            app:tint="?mc_tick" />
-
-    </com.google.android.material.appbar.MaterialToolbar>
-
-</layout>
+</com.google.android.material.appbar.MaterialToolbar>
