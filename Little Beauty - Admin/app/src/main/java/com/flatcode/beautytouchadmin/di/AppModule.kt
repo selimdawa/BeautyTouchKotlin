@@ -2,7 +2,7 @@ package com.flatcode.beautytouchadmin.di
 
 import android.content.Context
 import androidx.room.Room
-import com.flatcode.beautytouchadmin.database.*
+import com.flatcode.beautytouchadmin.db.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage

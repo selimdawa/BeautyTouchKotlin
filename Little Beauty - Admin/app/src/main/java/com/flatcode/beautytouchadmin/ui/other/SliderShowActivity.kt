@@ -1,0 +1,147 @@
+package com.flatcode.beautytouchadmin.ui.other
+
+import android.Manifest
+import android.app.Activity
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.utils.DATA
+import com.flatcode.beautytouchadmin.utils.VOID
+import com.flatcode.beautytouchadmin.databinding.ActivitySliderShowBinding
+import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.text.MessageFormat
+
+@AndroidEntryPoint
+class SliderShowActivity : AppCompatActivity() {
+
+    private var binding: ActivitySliderShowBinding? = null
+    private var activity: Activity? = null
+    private val context: Context = also { activity = it }
+    private var imageUri: Uri? = null
+    private var dialog: ProgressDialog? = null
+    private var IMAGE_NUMBER = 0
+    private val viewModel: SliderViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySliderShowBinding.inflate(layoutInflater)
+        setContentView(binding!!.root)
+
+        binding!!.toolbar.nameSpace.setText(R.string.slider_show)
+        binding!!.toolbar.back.setOnClickListener { onBackPressed() }
+
+        dialog = ProgressDialog(context)
+        dialog!!.setTitle("Please wait...")
+        dialog!!.setCanceledOnTouchOutside(false)
+
+        setupClickListeners()
+        observeViewModel()
+    }
+
+    private fun setupClickListeners() {
+        val buttons = listOf(
+            binding!!.addOne, binding!!.addTwo, binding!!.addThree, binding!!.addFour, binding!!.addFive,
+            binding!!.addSix, binding!!.addSeven, binding!!.addEight, binding!!.addNine, binding!!.addTeen,
+            binding!!.addEleven, binding!!.addTwelfth, binding!!.addThirteen, binding!!.addFourteenth,
+            binding!!.addFifteenth, binding!!.addSixteen, binding!!.addSeventeen, binding!!.addEighteen,
+            binding!!.addNineteen, binding!!.addTwenty
+        )
+        buttons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                VOID.CropImageSlider(activity)
+                IMAGE_NUMBER = index + 1
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.sliders.collect { sliders ->
+                    updateUI(sliders)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    dialog!!.dismiss()
+                    result.onSuccess {
+                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    }.onFailure {
+                        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateUI(sliders: Map<String, String>) {
+        val count = sliders.size
+        binding!!.toolbar.nameSpace.text = MessageFormat.format("Slider Show ( {0} )", count)
+        
+        val images = listOf(
+            binding!!.imageOne, binding!!.imageTwo, binding!!.imageThree, binding!!.imageFour, binding!!.imageFive,
+            binding!!.imageSix, binding!!.imageSeven, binding!!.imageEight, binding!!.imageNine, binding!!.imageTeen,
+            binding!!.imageEleven, binding!!.imageTwelfth, binding!!.imageThirteen, binding!!.imageFourteenth,
+            binding!!.imageFifteenth, binding!!.imageSixteen, binding!!.imageSeventeen, binding!!.imageEighteen,
+            binding!!.imageNineteen, binding!!.imageTwenty
+        )
+        val linears = listOf(
+            binding!!.linearOne, binding!!.linearTwo, binding!!.linearThree, binding!!.linearFour, binding!!.linearFive,
+            binding!!.linearSix, binding!!.linearSeven, binding!!.linearEight, binding!!.linearNine, binding!!.linearTeen,
+            binding!!.linearEleven, binding!!.linearTwelfth, binding!!.linearThirteen, binding!!.linearFourteenth,
+            binding!!.linearFifteenth, binding!!.linearSixteen, binding!!.linearSeventeen, binding!!.linearEighteen,
+            binding!!.linearNineteen, binding!!.linearTwenty
+        )
+
+        for (i in 0 until 20) {
+            val key = (i + 1).toString()
+            val url = sliders[key] ?: ""
+            VOID.Glide(false, context, url, images[i])
+            linears[i].visibility = if (count >= i) View.VISIBLE else View.GONE
+        }
+        binding!!.bar.visibility = View.GONE
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK) {
+            val uri = CropImage.getPickImageResultUri(context, data)
+            if (CropImage.isReadExternalStoragePermissionsRequired(context, uri)) {
+                imageUri = uri
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+            } else {
+                VOID.CropImageSlider(activity)
+            }
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == RESULT_OK) {
+                imageUri = result.uri
+                dialog!!.setMessage("Posting photo...")
+                dialog!!.show()
+                viewModel.uploadSlider(
+                    IMAGE_NUMBER.toString(), imageUri!!,
+                    VOID.getFileExtension(imageUri, context)!!
+                )
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                Toast.makeText(this, "Something went wrong! $error", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}

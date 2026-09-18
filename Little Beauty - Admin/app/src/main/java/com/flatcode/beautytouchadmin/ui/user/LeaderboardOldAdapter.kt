@@ -1,0 +1,99 @@
+package com.flatcode.beautytouchadmin.ui.user
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.flatcode.beautytouchadmin.filter.LeaderboardOldFilter
+import com.flatcode.beautytouchadmin.model.User
+import com.flatcode.beautytouchadmin.utils.CLASS
+import com.flatcode.beautytouchadmin.utils.DATA
+import com.flatcode.beautytouchadmin.utils.VOID
+import com.flatcode.beautytouchadmin.databinding.ItemLeaderboradBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.text.MessageFormat
+
+class LeaderboardOldAdapter(
+    private val mContext: Context, 
+    var list: MutableList<User?>, 
+    var isUser: Boolean,
+    private val pointsKey: String? = null
+) : RecyclerView.Adapter<LeaderboardOldAdapter.ViewHolder>(), Filterable {
+
+    var filterList: MutableList<User?> = list
+    private var filter: LeaderboardOldFilter? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemLeaderboradBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = list[position] ?: return
+        val id = DATA.EMPTY + item.id
+        val username = DATA.EMPTY + item.username
+        val image = DATA.EMPTY + item.imageurl
+        val rankValue = list.size - position
+
+        holder.rank.text = MessageFormat.format("{0}", rankValue)
+        VOID.Glide(true, mContext, image, holder.profileImage)
+        if (username == DATA.EMPTY) {
+            holder.username.visibility = View.GONE
+        } else {
+            holder.username.visibility = View.VISIBLE
+            holder.username.text = username
+        }
+
+        if (pointsKey != null) {
+            fetchPoints(pointsKey, holder.numberADsLoad, id)
+        }
+
+        holder.item.setOnClickListener {
+            VOID.IntentExtra(mContext, CLASS.ADS_INFO, DATA.PROFILE_ID, id)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+    override fun getFilter(): Filter {
+        if (filter == null) {
+            filter = LeaderboardOldFilter(filterList as ArrayList<User?>, this)
+        }
+        return filter!!
+    }
+
+    class ViewHolder(binding: ItemLeaderboradBinding) : RecyclerView.ViewHolder(binding.root) {
+        val profileImage: ImageView = binding.profileImage
+        val username: TextView = binding.username
+        val numberADsLoad: TextView = binding.numberADsLoad
+        val rank: TextView = binding.rank
+        val item: LinearLayout = binding.item
+    }
+
+    private fun fetchPoints(key: String, points: TextView, id: String) {
+        val reference = FirebaseDatabase.getInstance().getReference(DATA.USERS).child(id)
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = DATA.EMPTY + dataSnapshot.child(key).value
+                if (dataSnapshot.child(key).exists()) {
+                    points.text = MessageFormat.format("{0}", value)
+                } else {
+                    points.text = "0"
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+    }
+}

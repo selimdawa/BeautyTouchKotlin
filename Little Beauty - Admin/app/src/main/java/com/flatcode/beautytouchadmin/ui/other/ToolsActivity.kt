@@ -1,0 +1,179 @@
+package com.flatcode.beautytouchadmin.ui.other
+
+import android.Manifest
+import android.app.Activity
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.text.TextUtils
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.flatcode.beautytouchadmin.R
+import com.flatcode.beautytouchadmin.utils.VOID
+import com.flatcode.beautytouchadmin.databinding.ActivityToolsBinding
+import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class ToolsActivity : AppCompatActivity() {
+
+    private var binding: ActivityToolsBinding? = null
+    private var activity: Activity? = null
+    private var context: Context = also { activity = it }
+    private var imageUri: Uri? = null
+    private var imageUri2: Uri? = null
+    private var imageUri3: Uri? = null
+    private var imageUri4: Uri? = null
+    private var dialog: ProgressDialog? = null
+    private val IMAGE_NOW = 1
+    private val IMAGE_OLD = 2
+    private val LOGO_NOW = 3
+    private val LOGO_OLD = 4
+    private var IMAGE_NUMBER = 0
+    private val viewModel: ToolsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityToolsBinding.inflate(layoutInflater)
+        setContentView(binding!!.root)
+
+        dialog = ProgressDialog(context)
+        dialog!!.setTitle("Please wait...")
+        dialog!!.setCanceledOnTouchOutside(false)
+
+        binding!!.editImageSessionNow.setOnClickListener {
+            VOID.CropImageSession(activity)
+            IMAGE_NUMBER = IMAGE_NOW
+        }
+        binding!!.editImageSessionOld.setOnClickListener {
+            VOID.CropImageSession(activity)
+            IMAGE_NUMBER = IMAGE_OLD
+        }
+        binding!!.editLogoSessionNow.setOnClickListener {
+            VOID.CropImageSession(activity)
+            IMAGE_NUMBER = LOGO_NOW
+        }
+        binding!!.editLogoSessionOld.setOnClickListener {
+            VOID.CropImageSession(activity)
+            IMAGE_NUMBER = LOGO_OLD
+        }
+        binding!!.toolbar.nameSpace.setText(R.string.tools)
+        binding!!.toolbar.back.setOnClickListener { onBackPressed() }
+        binding!!.go.setOnClickListener { validateData() }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.tools.collect { tools ->
+                    tools?.let {
+                        VOID.Glide(false, context, it.imageSession, binding!!.imageSessionNow)
+                        VOID.Glide(false, context, it.oldImageSession, binding!!.imageSessionOld)
+                        VOID.Glide(false, context, it.imageLogo, binding!!.logoSessionNow)
+                        VOID.Glide(false, context, it.oldImageLogo, binding!!.logoSessionOld)
+                        binding!!.sessionNow.setText(it.session)
+                        binding!!.sessionOld.setText(it.oldSession)
+                        binding!!.sessionNumberNow.setText(it.sessionNumber)
+                        binding!!.sessionNumberOld.setText(it.oldSessionNumber)
+                        binding!!.yearNow.setText(it.year)
+                        binding!!.yearOld.setText(it.oldYear)
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    dialog!!.dismiss()
+                    result.onSuccess {
+                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    }.onFailure {
+                        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun validateData() {
+        val sessionNow = binding!!.sessionNow.text.toString().trim()
+        val sessionOld = binding!!.sessionOld.text.toString().trim()
+        val sessionNumberNow = binding!!.sessionNumberNow.text.toString().trim()
+        val sessionNumberOld = binding!!.sessionNumberOld.text.toString().trim()
+        val yearNow = binding!!.yearNow.text.toString().trim()
+        val yearOld = binding!!.yearOld.text.toString().trim()
+
+        if (TextUtils.isEmpty(sessionNow)) {
+            Toast.makeText(context, "Enter the Session number", Toast.LENGTH_SHORT).show()
+        } else if (TextUtils.isEmpty(sessionNumberNow)) {
+            Toast.makeText(context, "Enter the Session name", Toast.LENGTH_SHORT).show()
+        } else if (TextUtils.isEmpty(yearNow)) {
+            Toast.makeText(context, "Enter the year", Toast.LENGTH_SHORT).show()
+        } else {
+            dialog!!.setMessage("Editing....")
+            dialog!!.show()
+            viewModel.updateTools(
+                sessionNow, sessionOld, sessionNumberNow, sessionNumberOld, yearNow, yearOld,
+                imageUri, imageUri2, imageUri3, imageUri4,
+                imageUri?.let { VOID.getFileExtension(it, context) },
+                imageUri2?.let { VOID.getFileExtension(it, context) },
+                imageUri3?.let { VOID.getFileExtension(it, context) },
+                imageUri4?.let { VOID.getFileExtension(it, context) }
+            )
+        }
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK) {
+            val uri = CropImage.getPickImageResultUri(context, data)
+            if (CropImage.isReadExternalStoragePermissionsRequired(context, uri)) {
+                when (IMAGE_NUMBER) {
+                    IMAGE_NOW -> imageUri = uri
+                    IMAGE_OLD -> imageUri2 = uri
+                    LOGO_NOW -> imageUri3 = uri
+                    LOGO_OLD -> imageUri4 = uri
+                }
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+            } else {
+                VOID.CropImageSquare(activity)
+            }
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == RESULT_OK) {
+                when (IMAGE_NUMBER) {
+                    IMAGE_NOW -> {
+                        imageUri = result.uri
+                        binding!!.imageSessionNow.setImageURI(imageUri)
+                    }
+                    IMAGE_OLD -> {
+                        imageUri2 = result.uri
+                        binding!!.imageSessionOld.setImageURI(imageUri2)
+                    }
+                    LOGO_NOW -> {
+                        imageUri3 = result.uri
+                        binding!!.logoSessionNow.setImageURI(imageUri3)
+                    }
+                    LOGO_OLD -> {
+                        imageUri4 = result.uri
+                        binding!!.logoSessionOld.setImageURI(imageUri4)
+                    }
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                Toast.makeText(this, "Something went wrong! $error", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}

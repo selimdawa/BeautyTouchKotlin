@@ -1,7 +1,7 @@
 package com.flatcode.beautytouchadmin.filter
 
 import android.widget.Filter
-import com.flatcode.beautytouchadmin.adapter.LeaderboardOldAdapter
+import com.flatcode.beautytouchadmin.ui.user.LeaderboardOldAdapter
 import com.flatcode.beautytouchadmin.model.User
 import java.util.*
 

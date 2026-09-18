@@ -1,14 +1,14 @@
 package com.flatcode.beautytouchadmin.di
 
-import com.flatcode.beautytouchadmin.Repository.ADsRepository
-import com.flatcode.beautytouchadmin.Repository.AuthRepository
-import com.flatcode.beautytouchadmin.Repository.HotProductRepository
-import com.flatcode.beautytouchadmin.Repository.MainRepository
-import com.flatcode.beautytouchadmin.Repository.PostRepository
-import com.flatcode.beautytouchadmin.Repository.ShoppingRepository
-import com.flatcode.beautytouchadmin.Repository.SliderRepository
-import com.flatcode.beautytouchadmin.Repository.ToolsRepository
-import com.flatcode.beautytouchadmin.Repository.UserRepository
+import com.flatcode.beautytouchadmin.repository.ADsRepository
+import com.flatcode.beautytouchadmin.repository.AuthRepository
+import com.flatcode.beautytouchadmin.repository.HotProductRepository
+import com.flatcode.beautytouchadmin.repository.MainRepository
+import com.flatcode.beautytouchadmin.repository.PostRepository
+import com.flatcode.beautytouchadmin.repository.ShoppingRepository
+import com.flatcode.beautytouchadmin.repository.SliderRepository
+import com.flatcode.beautytouchadmin.repository.ToolsRepository
+import com.flatcode.beautytouchadmin.repository.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage

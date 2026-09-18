@@ -1,0 +1,147 @@
+package com.flatcode.beautytouchadmin.ui.profile
+
+import android.Manifest
+import android.app.Activity
+import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.flatcode.beautytouchadmin.utils.DATA
+import com.flatcode.beautytouchadmin.utils.VOID
+import com.flatcode.beautytouchadmin.databinding.ActivityProfileBinding
+import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class ProfileActivity : AppCompatActivity() {
+
+    private var binding: ActivityProfileBinding? = null
+    private var activity: Activity? = null
+    private var context: Context = also { activity = it }
+    private var imageUri: Uri? = null
+    private var dialog: ProgressDialog? = null
+    private val viewModel: ProfileViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
+        setContentView(binding!!.root)
+
+        dialog = ProgressDialog(context)
+        dialog!!.setTitle("Please wait...")
+        dialog!!.setCanceledOnTouchOutside(false)
+
+        binding!!.back.setOnClickListener { onBackPressed() }
+        binding!!.editImageIcon.setOnClickListener { VOID.CropImageSquare(activity) }
+
+        binding!!.imageEdit.setOnClickListener {
+            binding!!.imageEdit.visibility = View.GONE
+            binding!!.imageClose.visibility = View.VISIBLE
+            binding!!.imageTrue.visibility = View.VISIBLE
+            binding!!.name.visibility = View.GONE
+            binding!!.nameEdit.visibility = View.VISIBLE
+        }
+        binding!!.imageClose.setOnClickListener {
+            binding!!.imageEdit.visibility = View.VISIBLE
+            binding!!.imageClose.visibility = View.GONE
+            binding!!.imageTrue.visibility = if (imageUri != null) View.VISIBLE else View.GONE
+            binding!!.name.visibility = View.VISIBLE
+            binding!!.nameEdit.visibility = View.GONE
+        }
+        binding!!.imageTrue.setOnClickListener {
+            binding!!.imageClose.visibility = View.GONE
+            binding!!.imageEdit.visibility = View.VISIBLE
+            binding!!.imageTrue.visibility = View.GONE
+            binding!!.name.visibility = View.VISIBLE
+            binding!!.name.text = binding!!.nameEdit.text.toString()
+            binding!!.nameEdit.visibility = View.GONE
+            validateData()
+        }
+
+        viewModel.loadUserInfo(DATA.FirebaseUserUid)
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.user.collect { user ->
+                    user?.let {
+                        VOID.Glide(true, context, it.imageurl, binding!!.image)
+                        binding!!.name.text = it.username
+                        binding!!.nameEdit.setText(it.username)
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.actionStatus.collect { result ->
+                    dialog!!.dismiss()
+                    result.onSuccess {
+                        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                    }.onFailure {
+                        Toast.makeText(context, "Something went wrong! " + it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun validateData() {
+        val username = binding!!.nameEdit.text.toString().trim()
+        if (TextUtils.isEmpty(username)) {
+            Toast.makeText(context, "Please enter the name", Toast.LENGTH_SHORT).show()
+        } else {
+            dialog!!.setMessage("Modifications are loaded...")
+            dialog!!.show()
+            viewModel.updateProfile(
+                DATA.FirebaseUserUid, username, imageUri,
+                imageUri?.let { VOID.getFileExtension(it, context) }
+            )
+        }
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK) {
+            val uri = CropImage.getPickImageResultUri(context, data)
+            if (CropImage.isReadExternalStoragePermissionsRequired(context, uri)) {
+                imageUri = uri
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+            } else {
+                VOID.CropImageSquare(activity)
+            }
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == RESULT_OK) {
+                imageUri = result.uri
+                binding!!.image.setImageURI(imageUri)
+                binding!!.imageTrue.visibility = View.VISIBLE
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                Toast.makeText(this, "Something went wrong! $error", Toast.LENGTH_SHORT).show()
+                binding!!.imageTrue.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadUserInfo(DATA.FirebaseUserUid)
+    }
+}

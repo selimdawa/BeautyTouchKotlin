@@ -1,4 +1,4 @@
-package com.flatcode.beautytouch.Model
+package com.flatcode.beautytouch.model
 
 import android.os.Parcelable
 import androidx.room.Entity

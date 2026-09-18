@@ -1,13 +1,13 @@
-package com.flatcode.beautytouch.Repository
+package com.flatcode.beautytouch.repository
 
 import android.net.Uri
-import com.flatcode.beautytouch.Model.Reward
-import com.flatcode.beautytouch.Model.Tools
-import com.flatcode.beautytouch.Model.User
-import com.flatcode.beautytouch.Room.Dao.ToolsDao
-import com.flatcode.beautytouch.Room.Dao.UserDao
-import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.Resource
+import com.flatcode.beautytouch.model.Reward
+import com.flatcode.beautytouch.model.Tools
+import com.flatcode.beautytouch.model.User
+import com.flatcode.beautytouch.db.ToolsDao
+import com.flatcode.beautytouch.db.UserDao
+import com.flatcode.beautytouch.utils.DATA
+import com.flatcode.beautytouch.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

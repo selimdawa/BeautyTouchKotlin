@@ -1,7 +1,7 @@
-package com.flatcode.beautytouch.Repository
+package com.flatcode.beautytouch.repository
 
-import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.Resource
+import com.flatcode.beautytouch.utils.DATA
+import com.flatcode.beautytouch.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.channels.awaitClose

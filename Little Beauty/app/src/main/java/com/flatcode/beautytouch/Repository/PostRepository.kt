@@ -1,11 +1,11 @@
-package com.flatcode.beautytouch.Repository
+package com.flatcode.beautytouch.repository
 
-import com.flatcode.beautytouch.Model.Post
-import com.flatcode.beautytouch.Model.ShoppingCenter
-import com.flatcode.beautytouch.Room.Dao.PostDao
-import com.flatcode.beautytouch.Room.Dao.ShoppingCenterDao
-import com.flatcode.beautytouch.Unit.DATA
-import com.flatcode.beautytouch.Unit.Resource
+import com.flatcode.beautytouch.model.Post
+import com.flatcode.beautytouch.model.ShoppingCenter
+import com.flatcode.beautytouch.db.PostDao
+import com.flatcode.beautytouch.db.ShoppingCenterDao
+import com.flatcode.beautytouch.utils.DATA
+import com.flatcode.beautytouch.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

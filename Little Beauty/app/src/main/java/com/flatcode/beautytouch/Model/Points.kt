@@ -1,4 +1,4 @@
-package com.flatcode.beautytouch.Model
+package com.flatcode.beautytouch.model
 
 class Points {
     var rewardCount = 0
