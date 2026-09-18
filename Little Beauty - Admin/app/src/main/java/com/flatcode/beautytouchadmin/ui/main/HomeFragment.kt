@@ -13,34 +13,28 @@ import com.flatcode.beautytouchadmin.model.Main
 import com.flatcode.beautytouchadmin.R
 import com.flatcode.beautytouchadmin.utils.DATA
 import com.flatcode.beautytouchadmin.utils.VOID
+import com.flatcode.beautytouchadmin.utils.viewBinding
 import com.flatcode.beautytouchadmin.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private var binding: FragmentHomeBinding? = null
+    private val binding by viewBinding(FragmentHomeBinding::bind)
     private val list = mutableListOf<Main>()
     private var adapter: MainAdapter? = null
     private val viewModel: MainViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding!!.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding!!.toolbar.image.setOnClickListener {
+        binding.toolbar.image.setOnClickListener {
             // TODO: Use NavController to navigate to Profile
         }
 
         adapter = MainAdapter(requireContext(), list as ArrayList<Main>)
-        binding!!.recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
         observeViewModel()
     }
@@ -59,7 +53,7 @@ class HomeFragment : Fragment() {
 
     private fun updateUI(state: MainState) {
         state.user?.let { user ->
-            VOID.Glide(true, requireContext(), user.imageurl, binding!!.toolbar.image)
+            VOID.Glide(true, requireContext(), user.imageurl, binding.toolbar.image)
         }
 
         list.clear()
@@ -77,12 +71,7 @@ class HomeFragment : Fragment() {
         list.add(Main(R.drawable.ic_settings, "Tools", 0))
 
         adapter?.notifyDataSetChanged()
-        binding!!.progress.visibility = View.GONE
-        binding!!.recyclerView.visibility = View.VISIBLE
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
+        binding.progress.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
     }
 }

@@ -23,7 +23,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private var binding: ActivityLoginBinding? = null
+    private lateinit var binding: ActivityLoginBinding
     var context: Context = this@LoginActivity
     private val viewModel: AuthViewModel by viewModels()
     private var dialog: ProgressDialog? = null
@@ -32,10 +32,9 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(top = systemBars.top, bottom = systemBars.bottom)
             insets
@@ -45,17 +44,17 @@ class LoginActivity : AppCompatActivity() {
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
 
-        binding!!.forget.setOnClickListener {
+        binding.forget.setOnClickListener {
             VOID.Intent1(
                 context, ForgetPasswordActivity::class.java
             )
         }
-        binding!!.noAccount.setOnClickListener {
+        binding.noAccount.setOnClickListener {
             VOID.Intent1(
                 context, RegisterActivity::class.java
             )
         }
-        binding!!.loginBtn.setOnClickListener { validateDate() }
+        binding.loginBtn.setOnClickListener { validateDate() }
 
         observeViewModel()
     }
@@ -93,9 +92,9 @@ class LoginActivity : AppCompatActivity() {
     private fun validateDate() {
 
         //get data
-        email = binding!!.phoneEt.text.toString().trim { it <= ' ' } + "@flatcodetest.com"
-        number = binding!!.phoneEt.text.toString().trim { it <= ' ' }
-        password = binding!!.passwordEt.text.toString().trim { it <= ' ' }
+        email = binding.phoneEt.text.toString().trim { it <= ' ' } + "@flatcodetest.com"
+        number = binding.phoneEt.text.toString().trim { it <= ' ' }
+        password = binding.passwordEt.text.toString().trim { it <= ' ' }
 
         //validate data
         if (TextUtils.isEmpty(password)) {

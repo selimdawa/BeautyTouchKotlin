@@ -21,7 +21,9 @@ import timber.log.Timber
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var binding: FragmentHomeBinding? = null
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     var hotpostAdapter: PostHotAdapter? = null
     var hotpostLists: MutableList<Post?>? = null
     var allpostAdapter: PostLinearAdapter? = null
@@ -33,19 +35,19 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         hotpostLists = ArrayList()
         hotpostAdapter = PostHotAdapter(context, hotpostLists as ArrayList<Post?>)
-        binding!!.recyclerView.adapter = hotpostAdapter
+        binding.recyclerView.adapter = hotpostAdapter
 
         allpostLists = ArrayList()
         allpostAdapter = PostLinearAdapter(context, allpostLists as ArrayList<Post?>)
-        binding!!.recyclerView2.adapter = allpostAdapter
+        binding.recyclerView2.adapter = allpostAdapter
 
         observeViewModel()
-        return binding!!.root
+        return binding.root
     }
 
     private fun observeViewModel() {
@@ -53,7 +55,7 @@ class HomeFragment : Fragment() {
             viewModel.sliderCount.collect { resource ->
                 Timber.d("Slider count collected: $resource")
                 if (resource is Resource.Success) {
-                    binding!!.imageSlider.sliderAdapter = ImageSliderAdapter(context, resource.data)
+                    binding.imageSlider.sliderAdapter = ImageSliderAdapter(context, resource.data)
                 }
             }
         }
@@ -62,20 +64,20 @@ class HomeFragment : Fragment() {
                 Timber.d("Hot products collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
-                        binding!!.progressCircular.visibility = View.VISIBLE
-                        binding!!.recyclerView.visibility = View.GONE
+                        binding.progressCircular.visibility = View.VISIBLE
+                        binding.recyclerView.visibility = View.GONE
                     }
 
                     is Resource.Success -> {
                         hotpostLists!!.clear()
                         hotpostLists!!.addAll(resource.data)
                         hotpostAdapter!!.notifyDataSetChanged()
-                        binding!!.progressCircular.visibility = View.GONE
-                        binding!!.recyclerView.visibility = View.VISIBLE
+                        binding.progressCircular.visibility = View.GONE
+                        binding.recyclerView.visibility = View.VISIBLE
                     }
 
                     is Resource.Error -> {
-                        binding!!.progressCircular.visibility = View.GONE
+                        binding.progressCircular.visibility = View.GONE
                         Timber.e("Hot products error: ${resource.message}")
                     }
 
@@ -88,20 +90,20 @@ class HomeFragment : Fragment() {
                 Timber.d("All posts collected: $resource")
                 when (resource) {
                     is Resource.Loading -> {
-                        binding!!.progressCircular2.visibility = View.VISIBLE
-                        binding!!.recyclerView2.visibility = View.GONE
+                        binding.progressCircular2.visibility = View.VISIBLE
+                        binding.recyclerView2.visibility = View.GONE
                     }
 
                     is Resource.Success -> {
                         allpostLists!!.clear()
                         allpostLists!!.addAll(resource.data)
                         allpostAdapter!!.notifyDataSetChanged()
-                        binding!!.progressCircular2.visibility = View.GONE
-                        binding!!.recyclerView2.visibility = View.VISIBLE
+                        binding.progressCircular2.visibility = View.GONE
+                        binding.recyclerView2.visibility = View.VISIBLE
                     }
 
                     is Resource.Error -> {
-                        binding!!.progressCircular2.visibility = View.GONE
+                        binding.progressCircular2.visibility = View.GONE
                         Timber.e("All posts error: ${resource.message}")
                     }
 
@@ -118,6 +120,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }

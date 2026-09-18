@@ -53,7 +53,7 @@ import java.text.MessageFormat
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private var binding: ActivityMainBinding? = null
+    private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     var activity: Activity? = null
     var context: Context = also { activity = it }
@@ -73,13 +73,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            binding!!.toolbar.root.updatePadding(top = systemBars.top)
-            binding!!.bottomNavigation?.updatePadding(bottom = systemBars.bottom)
+            binding.toolbar.root.updatePadding(top = systemBars.top)
+            binding.bottomNavigation?.updatePadding(bottom = systemBars.bottom)
             insets
         }
 
@@ -87,31 +86,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding!!.toolbar.image.setOnClickListener { VOID.Intent1(context, ProfileActivity::class.java) }
-        binding!!.toolbar.drawer.setOnClickListener {
-            binding!!.drawerLayout.openDrawer(GravityCompat.START)
+        binding.toolbar.image.setOnClickListener { VOID.Intent1(context, ProfileActivity::class.java) }
+        binding.toolbar.drawer.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
         MobileAds.initialize(this) { }
         VOID.InterstitialAd(activity!!)
 
-        binding!!.myProfile.setOnClickListener {
+        binding.myProfile.setOnClickListener {
             VOID.Intent1(context, ProfileActivity::class.java)
-            binding!!.drawerLayout.closeDrawer(GravityCompat.START)
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
-        binding!!.favorites.setOnClickListener { VOID.Intent1(context, FavoritesActivity::class.java) }
-        binding!!.messenger.setOnClickListener {
+        binding.favorites.setOnClickListener { VOID.Intent1(context, FavoritesActivity::class.java) }
+        binding.messenger.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse("https://wa.me/message/E2YOU4NVTIEAD1")
             startActivity(i)
         }
-        binding!!.reward.setOnClickListener { VOID.Intent1(context, RewardActivity::class.java) }
-        binding!!.aboutApp.setOnClickListener { showDialogAboutApp() }
-        binding!!.shareApp.setOnClickListener { ShareApp() }
-        binding!!.aboutMy.setOnClickListener { showDialogAboutMy() }
-        binding!!.logout.setOnClickListener { showDialogLogout() }
+        binding.reward.setOnClickListener { VOID.Intent1(context, RewardActivity::class.java) }
+        binding.aboutApp.setOnClickListener { showDialogAboutApp() }
+        binding.shareApp.setOnClickListener { ShareApp() }
+        binding.aboutMy.setOnClickListener { showDialogAboutMy() }
+        binding.logout.setOnClickListener { showDialogLogout() }
 
-        bottomNavigation = binding!!.bottomNavigation
+        bottomNavigation = binding.bottomNavigation
         bottomNavigation!!.add(NafisBottomNavigation.Model(1, R.drawable.ic_skin))
         bottomNavigation!!.add(NafisBottomNavigation.Model(2, R.drawable.ic_home))
         bottomNavigation!!.add(NafisBottomNavigation.Model(3, R.drawable.ic_hair))
@@ -164,12 +163,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         val toggle = ActionBarDrawerToggle(
-            this, binding!!.drawerLayout,
+            this, binding.drawerLayout,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
-        binding!!.drawerLayout.addDrawerListener(toggle)
+        binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        binding!!.imageDrawer.setOnClickListener { VOID.Intent1(context, ProfileActivity::class.java) }
+        binding.imageDrawer.setOnClickListener { VOID.Intent1(context, ProfileActivity::class.java) }
 
         observeViewModels()
         postViewModel.loadCategoryCounts(publisher, aname, DATA.SKIN_PRODUCTS, DATA.HAIR_PRODUCTS, DATA.SHOPPING_CENTERS)
@@ -181,7 +180,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             postViewModel.skinCount.collect { resource ->
                 Timber.d("Skin count collected: $resource")
                 if (resource is Resource.Success) {
-                    binding!!.numberProductSkin.text = MessageFormat.format("{0}", resource.data)
+                    binding.numberProductSkin.text = MessageFormat.format("{0}", resource.data)
                     bottomNavigation!!.setCount(1, resource.data.toString())
                 }
             }
@@ -190,7 +189,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             postViewModel.hairCount.collect { resource ->
                 Timber.d("Hair count collected: $resource")
                 if (resource is Resource.Success) {
-                    binding!!.numberProductHair.text = MessageFormat.format("{0}", resource.data)
+                    binding.numberProductHair.text = MessageFormat.format("{0}", resource.data)
                     bottomNavigation!!.setCount(3, resource.data.toString())
                 }
             }
@@ -199,7 +198,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             postViewModel.shoppingCount.collect { resource ->
                 Timber.d("Shopping count collected: $resource")
                 if (resource is Resource.Success) {
-                    binding!!.numberShoppingCenters.text = MessageFormat.format("{0}", resource.data)
+                    binding.numberShoppingCenters.text = MessageFormat.format("{0}", resource.data)
                     bottomNavigation!!.setCount(4, resource.data.toString())
                 }
             }
@@ -209,17 +208,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Timber.d("User info collected: $resource")
                 if (resource is Resource.Success) {
                     val user = resource.data
-                    binding!!.imageDrawer.load(user.imageurl)
-                    binding!!.toolbar.image.load(user.imageurl)
-                    binding!!.name.text = user.username
+                    binding.imageDrawer.load(user.imageurl)
+                    binding.toolbar.image.load(user.imageurl)
+                    binding.name.text = user.username
                 }
             }
         }
     }
 
     override fun onBackPressed() {
-        if (binding!!.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding!!.drawerLayout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             val dialogBinding = DialogCloseappBinding.inflate(layoutInflater)
             val dialog = Dialog(this)
@@ -239,7 +238,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        binding!!.drawerLayout.closeDrawer(GravityCompat.START)
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 

@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.beautytouch.ui.post.PostDetailsActivity
 import com.flatcode.beautytouch.model.Post
@@ -30,29 +28,29 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val post = mPost[position]
+        val post = mPost[position] ?: return
 
-        VOID.Glide(false, mContext, post!!.postimage, holder.image_product)
+        VOID.Glide(false, mContext, post.postimage, holder.binding.imageProduct)
 
         if (post.name == DATA.EMPTY) {
-            holder.name.visibility = View.GONE
+            holder.binding.name.visibility = View.GONE
         } else {
-            holder.name.visibility = View.VISIBLE
-            holder.name.text = post.name
+            holder.binding.name.visibility = View.VISIBLE
+            holder.binding.name.text = post.name
         }
         if (post.price == DATA.EMPTY) {
-            holder.price.visibility = View.GONE
+            holder.binding.price.visibility = View.GONE
         } else {
-            holder.price.visibility = View.VISIBLE
-            holder.price.text = MessageFormat.format("{0} SYP", post.price)
+            holder.binding.price.visibility = View.VISIBLE
+            holder.binding.price.text = MessageFormat.format("{0} SYP", post.price)
         }
 
-        isLiked(post.postid, holder.like)
-        isSaved(post.postid, holder.save)
-        nrLikes(holder.likes, post.postid)
+        isLiked(post.postid, holder.binding.like)
+        isSaved(post.postid, holder.binding.save)
+        nrLikes(holder.binding.likes, post.postid)
 
-        holder.like.setOnClickListener {
-            if (holder.like.tag == "like") {
+        holder.binding.like.setOnClickListener {
+            if (holder.binding.like.tag == "like") {
                 FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(post.postid!!)
                     .child(DATA.FirebaseUserUid).setValue(true)
             } else {
@@ -60,8 +58,8 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
                     .child(DATA.FirebaseUserUid).removeValue()
             }
         }
-        holder.save.setOnClickListener {
-            if (holder.save.tag == "save") {
+        holder.binding.save.setOnClickListener {
+            if (holder.binding.save.tag == "save") {
                 FirebaseDatabase.getInstance().reference.child(DATA.SAVES)
                     .child(DATA.FirebaseUserUid)
                     .child(post.postid!!).setValue(true)
@@ -71,7 +69,7 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
                     .child(post.postid!!).removeValue()
             }
         }
-        holder.card.setOnClickListener {
+        holder.binding.card.setOnClickListener {
             VOID.IntentExtra(mContext, PostDetailsActivity::class.java, DATA.POST_ID, post.postid)
         }
     }
@@ -80,16 +78,7 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
         return mPost.size
     }
 
-    class ViewHolder(val binding: ItemProductLinearBinding) : RecyclerView.ViewHolder(binding.root) {
-        val card: CardView = binding.card
-        val image_product: ImageView = binding.imageProduct
-        val like: ImageView = binding.like
-        val save: ImageView = binding.save
-        val likes: TextView = binding.likes
-        val name: TextView = binding.name
-        val price: TextView = binding.price
-        val color: LinearLayout = binding.color
-    }
+    class ViewHolder(val binding: ItemProductLinearBinding) : RecyclerView.ViewHolder(binding.root)
 
     private fun isLiked(postId: String?, imageView: ImageView) {
         val reference = FirebaseDatabase.getInstance().reference.child(DATA.LIKES).child(postId!!)
@@ -135,8 +124,5 @@ class PostHotAdapter(private val mContext: Context?, private val mPost: List<Pos
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-    }
-
-    companion object {
     }
 }

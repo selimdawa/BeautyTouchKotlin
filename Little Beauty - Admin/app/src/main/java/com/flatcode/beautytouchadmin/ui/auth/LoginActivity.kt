@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.beautytouchadmin.utils.CLASS
 import com.flatcode.beautytouchadmin.utils.DATA
 import com.flatcode.beautytouchadmin.utils.VOID
+import com.flatcode.beautytouchadmin.utils.viewBinding
 import com.flatcode.beautytouchadmin.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private var binding: ActivityLoginBinding? = null
+    private val binding by viewBinding(ActivityLoginBinding::inflate)
     private val context: Context = this@LoginActivity
     private var dialog: ProgressDialog? = null
     private val viewModel: AuthViewModel by viewModels()
@@ -29,15 +30,13 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
 
         dialog = ProgressDialog(this)
         dialog!!.setTitle("Please wait...")
         dialog!!.setCanceledOnTouchOutside(false)
 
-        binding!!.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
-        binding!!.loginBtn.setOnClickListener { validateDate() }
+        binding.forget.setOnClickListener { VOID.Intent1(context, CLASS.FORGET_PASSWORD) }
+        binding.loginBtn.setOnClickListener { validateDate() }
 
         observeViewModel()
     }
@@ -58,8 +57,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validateDate() {
-        val number = binding!!.phoneEt.text.toString().trim()
-        val password = binding!!.passwordEt.text.toString().trim()
+        val number = binding.phoneEt.text.toString().trim()
+        val password = binding.passwordEt.text.toString().trim()
 
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(context, "Password entry error!", Toast.LENGTH_SHORT).show()

@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
 
-    private var binding: ActivitySplashBinding? = null
+    private lateinit var binding: ActivitySplashBinding
     var context: Context = this@SplashActivity
     var auth: FirebaseAuth? = null
     var time_per_second = 2
@@ -22,8 +22,7 @@ class SplashActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
         Handler().postDelayed({ checkUser() }, time_final.toLong())
